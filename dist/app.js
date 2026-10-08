@@ -19,6 +19,8 @@ function readProgress(){
 let progress=readProgress();
 let view='explorer',selected='elo-011',activeTopic='',activeGroup='',level='all',highlight='',repeat=false;
 let audioRun=0,audioTimer,voiceNames={pt:'',en:'',zh:''};
+// Mantém a fala viva enquanto o sintetizador nativo entrega seus eventos.
+let currentUtterance=null;
 // Estimativas iniciais ajustáveis: caracteres chineses representam mais fala por unidade.
 const SHADOWING_MIN_PAUSE_MS=1500;
 const SHADOWING_MS_PER_CHARACTER={pt:90,en:90,zh:350};
@@ -118,7 +120,7 @@ function populateVoices(){
   $$('[data-voice]').forEach(sel=>{const l=sel.dataset.voice,vs=allowedVoices(l);sel.innerHTML=vs.length?vs.map(v=>`<option value="${esc(v.name)}">${esc(v.name)} · ${esc(v.lang)}${v.localService?' · local':''}</option>`).join(''):'<option value="">Sem voz para este idioma</option>';const v=voiceFor(l);if(v){sel.value=v.name;voiceNames[l]=v.name}sel.onchange=()=>{voiceNames[l]=sel.value;stopAudio()}});
 }
 function setAudioStatus(message){$$('.audio-status').forEach(el=>el.textContent=message)}
-function stopAudio(){audioRun++;clearTimeout(audioTimer);if('speechSynthesis' in window)speechSynthesis.cancel();setAudioStatus('Áudio parado.');}
+function stopAudio(){audioRun++;clearTimeout(audioTimer);if('speechSynthesis' in window)speechSynthesis.cancel();currentUtterance=null;setAudioStatus('Áudio parado.');}
 function playLanguage(d,lang){speakQueue([{lang,text:lang==='en'?d.natural:d[lang].text}])}
 function speakQueue(items,once=false){
   stopAudio();if(!('speechSynthesis' in window)){toast('Este navegador não oferece síntese de voz.');setAudioStatus('Áudio indisponível neste navegador.');return;}
@@ -150,6 +152,7 @@ function speakQueue(items,once=false){
       else finish();
     };
     u.onerror=e=>{if(['canceled','interrupted'].includes(e.error))return;setAudioStatus('Falha no áudio. Experimente outra voz.');toast('A voz selecionada não reproduziu. Verifique a conexão ou troque a voz.')};
+    currentUtterance=u;
     speechSynthesis.speak(u);
   }
   next();
