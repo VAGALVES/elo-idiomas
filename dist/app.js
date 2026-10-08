@@ -218,9 +218,10 @@ function renderPractice(step=1){
   $('#start-production').onclick=()=>{cancelActivity();renderPractice(2);$('#check-order').focus()};
  }else{
   renderOrder(d);
-  $('#check-order').onclick=()=>{const answer=chosen.map(i=>d[exerciseLanguage].tokens[i].text).join('|');const target=d[exerciseLanguage].tokens.map(t=>t.text).join('|');const ok=answer===target;$('#order-feedback').textContent=ok?'Ordem correta. Compare com a resposta abaixo.':'Ainda não é a ordem original. Compare sua tentativa com a resposta abaixo.';renderPracticeAnswer(d)};
+  $('#check-order').onclick=()=>{const answer=chosen.map(i=>d[exerciseLanguage].tokens[i].text).join('|');const target=d[exerciseLanguage].tokens.map(t=>t.text).join('|');const ok=answer===target;$('#order-feedback').textContent=ok?'Ordem correta. Compare com a resposta abaixo.':'Ainda não';if(ok)renderPracticeAnswer(d)};
   $('#show-answer').onclick=()=>{practiceAttempt.revealed=true;$('#order-feedback').textContent='Resposta revelada. Compare a ordem dos blocos.';renderPracticeAnswer(d);submitPracticeGrade(d,0)};
-  $('#reset-order').onclick=()=>{cancelActivity();renderPractice(2);$('#check-order').focus()};
+  // Reiniciar os blocos preserva o gabarito e a autoavaliação caso já estejam visíveis.
+  $('#reset-order').onclick=()=>{cancelActivity();chosen=[];renderOrder(d);$('#order-feedback').textContent='';$('#check-order').focus()};
   $('#reset-order').disabled=practiceAttempt.graded;
  }
  $('#practice-sequence').onclick=()=>speakQueue((recognition?['en','zh']:[exerciseLanguage]).map(l=>({lang:l,text:l==='en'?d.natural:d[l].text})),true);$('#practice-stop').onclick=stopAudio;
