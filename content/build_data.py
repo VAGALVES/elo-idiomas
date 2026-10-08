@@ -1,4 +1,4 @@
-"""Compila as 60 situações autorais para o acervo estático do app. Sem dependências."""
+"""Compila as situações autorais para o acervo estático do app. Sem dependências."""
 import json,re
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
@@ -25,6 +25,8 @@ def tokens(raw):
         out.append({'text':word,'c':cls,'punct':punct})
     return out
 def sentence(ts,lang):return ('' if lang=='zh' else ' ').join(t['text']+t['punct'] for t in ts)
+catalog=json.loads((ROOT/'content/topics.json').read_text())
+topic_by_label={t['label']:t for t in catalog['topics']}
 lessons=[]
 for i,line in enumerate((ROOT/'content/lessons.txt').read_text().splitlines()):
     a=line.split('|'); assert len(a)==13,(i,len(a))
@@ -32,8 +34,11 @@ for i,line in enumerate((ROOT/'content/lessons.txt').read_text().splitlines()):
     d={'id':f'elo-{i+1:03d}','level':level,'topic':topic,'title':title,'pinyin':pinyin,'natural':natural,'phonetic':phonetic,'features':features.split(','),'speech':speech,'compare':compare,'literal':literal}
     for lang,raw in [('pt',pt),('en',en),('zh',zh)]:
         ts=tokens(raw); d[lang]={'text':sentence(ts,lang),'tokens':ts}
+    assert topic in topic_by_label,topic
+    d['topicId']=topic_by_label[topic]['id']
     lessons.append(d)
-assert len(lessons)==60
-for level in ['A1','A2','B1','B2','C1','C2']:assert sum(d['level']==level for d in lessons)==10
-(ROOT/'dist/data.js').write_text('// Gerado por content/build_data.py. Edite content/lessons.txt.\nconst CLASSES = '+json.dumps(classes,ensure_ascii=False)+';\nconst LESSONS = '+json.dumps(lessons,ensure_ascii=False,indent=2)+';\n')
+assert len({d['id'] for d in lessons})==len(lessons)
+for topic in catalog['topics']:assert any(d['topicId']==topic['id'] for d in lessons),topic['id']
+for level in ['A1','A2','B1','B2','C1','C2']:assert sum(d['level']==level for d in lessons)>=10
+(ROOT/'dist/data.js').write_text('// Gerado por content/build_data.py. Edite content/lessons.txt.\nconst CLASSES = '+json.dumps(classes,ensure_ascii=False)+';\nconst TOPIC_GROUPS = '+json.dumps(catalog['groups'],ensure_ascii=False)+';\nconst TOPICS = '+json.dumps(catalog['topics'],ensure_ascii=False)+';\nconst LESSONS = '+json.dumps(lessons,ensure_ascii=False,indent=2)+';\n')
 print(f'{len(lessons)} situações / {len(lessons)*3} versões alinhadas.')

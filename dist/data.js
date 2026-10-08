@@ -1,10 +1,12 @@
 // Gerado por content/build_data.py. Edite content/lessons.txt.
 const CLASSES = {"n": ["Substantivo", "#235fa5", "Nomeia pessoas, objetos, lugares e ideias."], "v": ["Verbo", "#b63645", "Expressa ação, estado ou processo; inclui auxiliares e modais."], "adj": ["Adjetivo", "#8149aa", "Caracteriza nomes ou participa do predicado."], "adv": ["Advérbio", "#a6530b", "Modifica ações, características ou a frase inteira."], "pro": ["Pronome", "#197051", "Representa participantes ou retoma elementos."], "det": ["Determinante / artigo", "#157780", "Delimita o nome; inclui artigos e possessivos usados antes dele."], "prep": ["Preposição", "#876039", "Relaciona elementos; contrações portuguesas aparecem na mesma palavra."], "conj": ["Conjunção", "#b53b79", "Liga ideias ou orações."], "num": ["Numeral", "#5053a3", "Expressa quantidade ou ordem."], "clf": ["Classificador", "#82670b", "Organiza a contagem de nomes em mandarim."], "part": ["Partícula", "#586174", "Marca infinitivo, aspecto, relação ou modalidade conforme o idioma."], "loc": ["Localizador", "#566f38", "Situa algo no espaço ou no tempo em mandarim."]};
+const TOPIC_GROUPS = [{"id": "dia", "label": "Dia a dia"}, {"id": "viagem", "label": "Viagens"}, {"id": "mundo", "label": "Vida e mundo"}, {"id": "projetos", "label": "Estudo e trabalho"}];
+const TOPICS = [{"id": "food", "label": "Restaurante e alimentação", "group": "dia", "description": "Pedidos, cardápio, bebidas e conta", "keywords": "restaurante comida café jantar almoço alimentação"}, {"id": "home", "label": "Casa e rotina", "group": "dia", "description": "Moradia, tarefas e vida em casa", "keywords": "casa moradia rotina aluguel limpeza"}, {"id": "shopping", "label": "Compras e dinheiro", "group": "dia", "description": "Preços, pagamentos e escolhas", "keywords": "compras dinheiro loja mercado cartão banco"}, {"id": "health", "label": "Saúde e bem-estar", "group": "dia", "description": "Sintomas, consulta e necessidades", "keywords": "saúde médico hospital farmácia emergência bem-estar"}, {"id": "services", "label": "Serviços e tecnologia", "group": "dia", "description": "Internet, telefone e encomendas", "keywords": "serviços tecnologia internet telefone correio wifi"}, {"id": "hotel", "label": "Hotel e hospedagem", "group": "viagem", "description": "Reserva, chegada, quarto e saída", "keywords": "hotel hospedagem reserva check-in checkout recepção"}, {"id": "transport", "label": "Transporte e viagens", "group": "viagem", "description": "Deslocamentos, passagens e horários", "keywords": "transporte viagem metrô ônibus táxi trem aeroporto"}, {"id": "nature", "label": "Natureza e clima", "group": "mundo", "description": "Tempo, paisagens e cuidado ambiental", "keywords": "natureza clima chuva parque trilha ambiente sustentabilidade"}, {"id": "leisure", "label": "Lazer e cultura", "group": "mundo", "description": "Cinema, museu, música e convites", "keywords": "lazer cultura cinema museu música esporte entretenimento"}, {"id": "people", "label": "Relações e comunicação", "group": "mundo", "description": "Apresentações, ajuda e convivência", "keywords": "relações família amigos comunicação apresentação sentimentos"}, {"id": "society", "label": "Sociedade e ideias", "group": "mundo", "description": "Opiniões, evidências e debate", "keywords": "sociedade ideias opinião debate cidadania argumentos"}, {"id": "study", "label": "Estudos e aprendizado", "group": "projetos", "description": "Compreensão, idiomas e estudo", "keywords": "estudos aprendizado escola universidade idioma educação"}, {"id": "work", "label": "Trabalho e negócios", "group": "projetos", "description": "Reuniões, projetos e decisões", "keywords": "trabalho negócios emprego reunião relatório dados fornecedor"}];
 const LESSONS = [
   {
     "id": "elo-001",
     "level": "A1",
-    "topic": "Cotidiano",
+    "topic": "Relações e comunicação",
     "title": "Pedir ajuda",
     "pinyin": "ni3 neng2 bang1 wo3 ma5",
     "natural": "Can you help me?",
@@ -95,12 +97,13 @@ const LESSONS = [
           "punct": "？"
         }
       ]
-    }
+    },
+    "topicId": "people"
   },
   {
     "id": "elo-002",
     "level": "A1",
-    "topic": "Cotidiano",
+    "topic": "Relações e comunicação",
     "title": "Apresentar-se",
     "pinyin": "wo3 lai2 zi4 ba1 xi1",
     "natural": "I'm from Brazil.",
@@ -181,12 +184,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "people"
   },
   {
     "id": "elo-003",
     "level": "A1",
-    "topic": "Compras",
+    "topic": "Compras e dinheiro",
     "title": "Pedir uma maçã",
     "pinyin": "wo3 xiang3 yao4 yi2 ge4 ping2 guo3",
     "natural": "I want an apple.",
@@ -282,12 +286,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "shopping"
   },
   {
     "id": "elo-004",
     "level": "A1",
-    "topic": "Cotidiano",
+    "topic": "Restaurante e alimentação",
     "title": "Beber chá",
     "pinyin": "wo3 he1 cha2",
     "natural": "I drink tea.",
@@ -357,12 +362,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "food"
   },
   {
     "id": "elo-005",
     "level": "A1",
-    "topic": "Transporte",
+    "topic": "Transporte e viagens",
     "title": "Procurar o metrô",
     "pinyin": "di4 tie3 zhan4 zai4 nar3",
     "natural": "Where's the station?",
@@ -443,12 +449,13 @@ const LESSONS = [
           "punct": "？"
         }
       ]
-    }
+    },
+    "topicId": "transport"
   },
   {
     "id": "elo-006",
     "level": "A1",
-    "topic": "Compras",
+    "topic": "Compras e dinheiro",
     "title": "Perguntar o preço",
     "pinyin": "zhe4 ge5 duo1 shao5 qian2",
     "natural": "How much is this?",
@@ -523,12 +530,13 @@ const LESSONS = [
           "punct": "？"
         }
       ]
-    }
+    },
+    "topicId": "shopping"
   },
   {
     "id": "elo-007",
     "level": "A1",
-    "topic": "Cotidiano",
+    "topic": "Estudos e aprendizado",
     "title": "Dizer que não entende",
     "pinyin": "wo3 bu4 ming2 bai5",
     "natural": "I don't understand.",
@@ -604,12 +612,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "study"
   },
   {
     "id": "elo-008",
     "level": "A1",
-    "topic": "Cotidiano",
+    "topic": "Relações e comunicação",
     "title": "Agradecer",
     "pinyin": "fei1 chang2 gan3 xie4 ni3",
     "natural": "Thank you very much.",
@@ -679,12 +688,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "people"
   },
   {
     "id": "elo-009",
     "level": "A1",
-    "topic": "Moradia",
+    "topic": "Casa e rotina",
     "title": "Morar aqui",
     "pinyin": "wo3 men5 zhu4 zai4 zhe4 li3",
     "natural": "We live here.",
@@ -759,12 +769,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "home"
   },
   {
     "id": "elo-010",
     "level": "A1",
-    "topic": "Compras",
+    "topic": "Transporte e viagens",
     "title": "Pedir dois ingressos",
     "pinyin": "wo3 xu1 yao4 liang3 zhang1 piao4",
     "natural": "I need two tickets.",
@@ -859,12 +870,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "transport"
   },
   {
     "id": "elo-011",
     "level": "A2",
-    "topic": "Cotidiano",
+    "topic": "Relações e comunicação",
     "title": "Preciso ir",
     "pinyin": "wo3 dei3 zou3 le5",
     "natural": "I've gotta go.",
@@ -956,12 +968,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "people"
   },
   {
     "id": "elo-012",
     "level": "A2",
-    "topic": "Compras",
+    "topic": "Restaurante e alimentação",
     "title": "Pedir café",
     "pinyin": "wo3 xiang3 yao4 yi4 bei1 ka1 fei1",
     "natural": "I'd like a cup of coffee.",
@@ -1083,12 +1096,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "food"
   },
   {
     "id": "elo-013",
     "level": "A2",
-    "topic": "Cotidiano",
+    "topic": "Restaurante e alimentação",
     "title": "Perguntar se comeu",
     "pinyin": "ni3 chi1 fan4 le5 ma5",
     "natural": "Did you eat?",
@@ -1164,12 +1178,13 @@ const LESSONS = [
           "punct": "？"
         }
       ]
-    }
+    },
+    "topicId": "food"
   },
   {
     "id": "elo-014",
     "level": "A2",
-    "topic": "Moradia",
+    "topic": "Relações e comunicação",
     "title": "Dizer que não é seu",
     "pinyin": "zhe4 bu2 shi4 wo3 de5",
     "natural": "This isn't mine.",
@@ -1260,12 +1275,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "people"
   },
   {
     "id": "elo-015",
     "level": "A2",
-    "topic": "Trabalho",
+    "topic": "Estudos e aprendizado",
     "title": "Pedir repetição",
     "pinyin": "ni3 neng2 zai4 shuo1 yi2 bian4 ma5",
     "natural": "Can you say that again?",
@@ -1371,12 +1387,13 @@ const LESSONS = [
           "punct": "？"
         }
       ]
-    }
+    },
+    "topicId": "study"
   },
   {
     "id": "elo-016",
     "level": "A2",
-    "topic": "Transporte",
+    "topic": "Transporte e viagens",
     "title": "Perguntar a duração",
     "pinyin": "zhe4 xu1 yao4 duo1 chang2 shi2 jian1",
     "natural": "How long does it take?",
@@ -1462,12 +1479,13 @@ const LESSONS = [
           "punct": "？"
         }
       ]
-    }
+    },
+    "topicId": "transport"
   },
   {
     "id": "elo-017",
     "level": "A2",
-    "topic": "Compras",
+    "topic": "Compras e dinheiro",
     "title": "Pagar com cartão",
     "pinyin": "wo3 ke3 yi3 shua1 ka3 ma5",
     "natural": "Can I pay by card?",
@@ -1563,12 +1581,13 @@ const LESSONS = [
           "punct": "？"
         }
       ]
-    }
+    },
+    "topicId": "shopping"
   },
   {
     "id": "elo-018",
     "level": "A2",
-    "topic": "Moradia",
+    "topic": "Transporte e viagens",
     "title": "Estar a caminho",
     "pinyin": "wo3 yi3 jing1 zai4 lu4 shang4 le5",
     "natural": "I'm on my way.",
@@ -1669,12 +1688,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "transport"
   },
   {
     "id": "elo-019",
     "level": "A2",
-    "topic": "Trabalho",
+    "topic": "Relações e comunicação",
     "title": "Marcar amanhã",
     "pinyin": "wo3 men5 ming2 tian1 ke3 yi3 tan2 yi2 xia4 ma5",
     "natural": "Can we talk tomorrow?",
@@ -1764,12 +1784,13 @@ const LESSONS = [
           "punct": "？"
         }
       ]
-    }
+    },
+    "topicId": "people"
   },
   {
     "id": "elo-020",
     "level": "A2",
-    "topic": "Compras",
+    "topic": "Compras e dinheiro",
     "title": "Escolher o menor",
     "pinyin": "wo3 geng4 xi3 huan5 xiao3 yi4 dianr3 de5",
     "natural": "I prefer the smaller one.",
@@ -1870,12 +1891,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "shopping"
   },
   {
     "id": "elo-021",
     "level": "B1",
-    "topic": "Estudo",
+    "topic": "Estudos e aprendizado",
     "title": "Estudar em casa",
     "pinyin": "wo3 jin1 tian1 zai4 jia1 xue2 xi2 zhong1 wen2",
     "natural": "I study Chinese at home today.",
@@ -1991,12 +2013,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "study"
   },
   {
     "id": "elo-022",
     "level": "B1",
-    "topic": "Trabalho",
+    "topic": "Trabalho e negócios",
     "title": "Receber a amostra",
     "pinyin": "wo3 yi3 jing1 shou1 dao4 yang4 pin3 le5",
     "natural": "I've already received the sample.",
@@ -2102,12 +2125,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "work"
   },
   {
     "id": "elo-023",
     "level": "B1",
-    "topic": "Trabalho",
+    "topic": "Saúde e bem-estar",
     "title": "Um pouco melhor",
     "pinyin": "zhe4 hao3 yi4 dianr3 le5",
     "natural": "It's a little better.",
@@ -2198,12 +2222,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "health"
   },
   {
     "id": "elo-024",
     "level": "B1",
-    "topic": "Transporte",
+    "topic": "Trabalho e negócios",
     "title": "Encontro na próxima semana",
     "pinyin": "wo3 men5 xia4 zhou1 ke3 yi3 jian4 mian4",
     "natural": "We can meet next week.",
@@ -2309,12 +2334,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "work"
   },
   {
     "id": "elo-025",
     "level": "B1",
-    "topic": "Cotidiano",
+    "topic": "Transporte e viagens",
     "title": "Já esteve em Xangai?",
     "pinyin": "ni3 qu4 guo5 shang4 hai3 ma5",
     "natural": "Have you ever been to Shanghai?",
@@ -2420,12 +2446,13 @@ const LESSONS = [
           "punct": "？"
         }
       ]
-    }
+    },
+    "topicId": "transport"
   },
   {
     "id": "elo-026",
     "level": "B1",
-    "topic": "Trabalho",
+    "topic": "Trabalho e negócios",
     "title": "Explicar um atraso",
     "pinyin": "yin1 wei4 xia4 yu3 song4 huo4 yan2 chi2 le5",
     "natural": "The delivery was delayed because it rained.",
@@ -2536,12 +2563,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "work"
   },
   {
     "id": "elo-027",
     "level": "B1",
-    "topic": "Cotidiano",
+    "topic": "Natureza e clima",
     "title": "Se chover, ficar em casa",
     "pinyin": "ru2 guo3 xia4 yu3 wo3 jiu4 dai1 zai4 jia1 li3",
     "natural": "If it rains, I'll stay home.",
@@ -2672,12 +2700,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "nature"
   },
   {
     "id": "elo-028",
     "level": "B1",
-    "topic": "Trabalho",
+    "topic": "Estudos e aprendizado",
     "title": "Pedir que fale mais devagar",
     "pinyin": "ni3 neng2 shuo1 de5 man4 yi4 dianr3 ma5",
     "natural": "Could you speak more slowly?",
@@ -2788,12 +2817,13 @@ const LESSONS = [
           "punct": "？"
         }
       ]
-    }
+    },
+    "topicId": "study"
   },
   {
     "id": "elo-029",
     "level": "B1",
-    "topic": "Moradia",
+    "topic": "Trabalho e negócios",
     "title": "Ainda não terminou",
     "pinyin": "wo3 hai2 mei2 zuo4 wan2",
     "natural": "I haven't finished yet.",
@@ -2889,12 +2919,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "work"
   },
   {
     "id": "elo-030",
     "level": "B1",
-    "topic": "Compras",
+    "topic": "Compras e dinheiro",
     "title": "Comparar preços",
     "pinyin": "zhe4 ge5 xing2 hao4 bi3 na4 ge5 pian2 yi5",
     "natural": "This model's cheaper than that one.",
@@ -3020,12 +3051,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "shopping"
   },
   {
     "id": "elo-031",
     "level": "B2",
-    "topic": "Trabalho",
+    "topic": "Trabalho e negócios",
     "title": "Enviar atualização",
     "pinyin": "ni3 neng2 fa1 yi2 fen4 jin4 zhan3 bao4 gao4 ma5",
     "natural": "Could you send an update?",
@@ -3141,12 +3173,13 @@ const LESSONS = [
           "punct": "？"
         }
       ]
-    }
+    },
+    "topicId": "work"
   },
   {
     "id": "elo-032",
     "level": "B2",
-    "topic": "Trabalho",
+    "topic": "Trabalho e negócios",
     "title": "Aprovar uma amostra",
     "pinyin": "yang4 pin3 yi3 jing1 tong1 guo4 shen3 he2 le5",
     "natural": "The sample has been approved.",
@@ -3242,12 +3275,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "work"
   },
   {
     "id": "elo-033",
     "level": "B2",
-    "topic": "Trabalho",
+    "topic": "Trabalho e negócios",
     "title": "Colocar a amostra aqui",
     "pinyin": "qing3 ba3 yang4 pin3 fang4 zai4 zhe4 li3",
     "natural": "Please put the sample here.",
@@ -3358,12 +3392,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "work"
   },
   {
     "id": "elo-034",
     "level": "B2",
-    "topic": "Trabalho",
+    "topic": "Trabalho e negócios",
     "title": "Resolver apesar do problema",
     "pinyin": "sui1 ran2 you3 wen4 ti2 dan4 shi4 wo3 men5 ke3 yi3 jie3 jue2",
     "natural": "Although there's a problem, we can solve it.",
@@ -3499,12 +3534,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "work"
   },
   {
     "id": "elo-035",
     "level": "B2",
-    "topic": "Dados",
+    "topic": "Trabalho e negócios",
     "title": "Queda nas vendas",
     "pinyin": "xiao1 shou4 e2 da4 fu2 xia4 jiang4 le5",
     "natural": "Sales have declined considerably.",
@@ -3590,12 +3626,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "work"
   },
   {
     "id": "elo-036",
     "level": "B2",
-    "topic": "Trabalho",
+    "topic": "Trabalho e negócios",
     "title": "Prazo até sexta-feira",
     "pinyin": "wo3 men5 xu1 yao4 zai4 xing1 qi1 wu3 zhi1 qian2 wan2 cheng2 zhe4 xiang4 gong1 zuo4",
     "natural": "We need to finish this by Friday.",
@@ -3725,12 +3762,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "work"
   },
   {
     "id": "elo-037",
     "level": "B2",
-    "topic": "Trabalho",
+    "topic": "Trabalho e negócios",
     "title": "Esperar confirmação",
     "pinyin": "wo3 men5 zheng4 zai4 deng3 gong1 ying4 shang1 que4 ren4",
     "natural": "We're waiting for the supplier to confirm.",
@@ -3852,12 +3890,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "work"
   },
   {
     "id": "elo-038",
     "level": "B2",
-    "topic": "Trabalho",
+    "topic": "Trabalho e negócios",
     "title": "Revisar antes de enviar",
     "pinyin": "wo3 men5 xian1 he2 dui4 xi4 jie2 zai4 fa1 bao4 gao4",
     "natural": "Let's review the details before we send the report.",
@@ -4013,12 +4052,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "work"
   },
   {
     "id": "elo-039",
     "level": "B2",
-    "topic": "Dados",
+    "topic": "Trabalho e negócios",
     "title": "Preços oscilando",
     "pinyin": "jia4 ge2 bo1 dong4 hen3 da4",
     "natural": "Prices are fluctuating widely.",
@@ -4109,12 +4149,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "work"
   },
   {
     "id": "elo-040",
     "level": "B2",
-    "topic": "Trabalho",
+    "topic": "Trabalho e negócios",
     "title": "Mudar o plano se necessário",
     "pinyin": "ru2 guo3 you3 bi4 yao4 wo3 men5 ke3 yi3 tiao2 zheng3 ji4 hua4",
     "natural": "If necessary, we can adjust the plan.",
@@ -4240,12 +4281,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "work"
   },
   {
     "id": "elo-041",
     "level": "C1",
-    "topic": "Trabalho",
+    "topic": "Relações e comunicação",
     "title": "Discordar com cuidado",
     "pinyin": "zhe4 he2 wo3 yu4 qi1 de5 bu2 tai4 yi2 yang4",
     "natural": "It's not quite what I expected.",
@@ -4381,12 +4423,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "people"
   },
   {
     "id": "elo-042",
     "level": "C1",
-    "topic": "Trabalho",
+    "topic": "Relações e comunicação",
     "title": "Condição irreal no passado",
     "pinyin": "ru2 guo3 wo3 zao3 zhi1 dao4 jiu4 hui4 deng3 yi2 xia4",
     "natural": "If I'd known, I'd have waited.",
@@ -4518,12 +4561,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "people"
   },
   {
     "id": "elo-043",
     "level": "C1",
-    "topic": "Trabalho",
+    "topic": "Compras e dinheiro",
     "title": "Preço e qualidade",
     "pinyin": "wo3 men5 bu4 jin3 kao3 lv4 jia4 ge2 hai2 zhong4 shi4 zhi4 liang4",
     "natural": "We not only consider price but also value quality.",
@@ -4674,12 +4718,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "shopping"
   },
   {
     "id": "elo-044",
     "level": "C1",
-    "topic": "Dados",
+    "topic": "Trabalho e negócios",
     "title": "Superar expectativas",
     "pinyin": "jie2 guo3 bi3 wo3 men5 yu4 qi1 de5 geng4 hao3",
     "natural": "The result was better than we'd expected.",
@@ -4816,12 +4861,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "work"
   },
   {
     "id": "elo-045",
     "level": "C1",
-    "topic": "Trabalho",
+    "topic": "Natureza e clima",
     "title": "Esclarecer o objetivo",
     "pinyin": "mu4 di4 bu2 shi4 xue1 jian3 cheng2 ben3 er2 shi4 jian3 shao3 lang4 fei4",
     "natural": "The goal isn't to cut costs but to reduce waste.",
@@ -4987,12 +5033,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "nature"
   },
   {
     "id": "elo-046",
     "level": "C1",
-    "topic": "Trabalho",
+    "topic": "Trabalho e negócios",
     "title": "Impedir um erro",
     "pinyin": "yao4 bu2 shi4 ni3 bang1 mang2 wo3 men5 jiu4 hui4 cuo4 guo4 jie2 zhi3 ri4 qi1",
     "natural": "Without your help, we'd have missed the deadline.",
@@ -5148,12 +5195,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "work"
   },
   {
     "id": "elo-047",
     "level": "C1",
-    "topic": "Dados",
+    "topic": "Sociedade e ideias",
     "title": "Separar correlação e causa",
     "pinyin": "zhe4 xie1 shu4 ju4 biao3 ming2 cun2 zai4 guan1 lian2 dan4 bu4 neng2 zheng4 ming2 yin1 guo3 guan1 xi5",
     "natural": "These data suggest a relationship but don't establish causation.",
@@ -5324,12 +5372,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "society"
   },
   {
     "id": "elo-048",
     "level": "C1",
-    "topic": "Trabalho",
+    "topic": "Relações e comunicação",
     "title": "Reconhecer uma objeção",
     "pinyin": "wo3 li3 jie3 ni3 de5 gu4 lv4 dan4 bu4 tong2 yi4 zhe4 ge5 jie2 lun4",
     "natural": "I understand your concern, although I disagree with the conclusion.",
@@ -5500,12 +5549,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "people"
   },
   {
     "id": "elo-049",
     "level": "C1",
-    "topic": "Trabalho",
+    "topic": "Trabalho e negócios",
     "title": "Condicionar a aprovação",
     "pinyin": "zhi3 yao4 xiu1 gai3 wan2 cheng2 wo3 men5 jiu4 ke3 yi3 pi1 zhun3",
     "natural": "We can approve it provided that the changes are completed.",
@@ -5656,12 +5706,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "work"
   },
   {
     "id": "elo-050",
     "level": "C1",
-    "topic": "Dados",
+    "topic": "Sociedade e ideias",
     "title": "Priorizar a precisão",
     "pinyin": "fen1 xi1 yue4 xiang2 xi4 jue2 ce4 jiu4 yue4 ke3 kao4",
     "natural": "The more detailed the analysis, the more reliable the decision.",
@@ -5817,12 +5868,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "society"
   },
   {
     "id": "elo-051",
     "level": "C2",
-    "topic": "Dados",
+    "topic": "Sociedade e ideias",
     "title": "Evitar uma conclusão precoce",
     "pinyin": "jin3 ping2 zhe4 xie1 shu4 ju4 jiu4 xia4 jie2 lun4 wei2 shi2 guo4 zao3",
     "natural": "It would be premature to draw conclusions from these data.",
@@ -5978,12 +6030,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "society"
   },
   {
     "id": "elo-052",
     "level": "C2",
-    "topic": "Trabalho",
+    "topic": "Trabalho e negócios",
     "title": "Retomar o foco",
     "pinyin": "ji2 bian4 ru2 ci3 wo3 men5 reng2 ran2 xu1 yao4 yi2 ge4 ke3 xing2 de5 ji4 hua4",
     "natural": "Be that as it may, we still need a workable plan.",
@@ -6159,12 +6212,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "work"
   },
   {
     "id": "elo-053",
     "level": "C2",
-    "topic": "Dados",
+    "topic": "Sociedade e ideias",
     "title": "Distinguir evidência e ausência",
     "pinyin": "mei2 you3 zheng4 ju4 bing4 bu4 yi4 wei4 zhe5 mei2 you3 xiao4 guo3",
     "natural": "The absence of evidence doesn't prove the absence of an effect.",
@@ -6336,12 +6390,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "society"
   },
   {
     "id": "elo-054",
     "level": "C2",
-    "topic": "Trabalho",
+    "topic": "Trabalho e negócios",
     "title": "Evitar falsa escolha",
     "pinyin": "wo3 men5 bu2 bi4 zai4 su4 du4 he2 yan2 jin3 xing4 zhi1 jian1 er4 xuan3 yi1",
     "natural": "We don't have to choose between speed and rigor.",
@@ -6498,12 +6553,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "work"
   },
   {
     "id": "elo-055",
     "level": "C2",
-    "topic": "Dados",
+    "topic": "Sociedade e ideias",
     "title": "Rever uma premissa",
     "pinyin": "zhi3 you3 zui4 chu1 de5 jia3 she4 cheng2 li4 zhe4 ge5 jie2 lun4 cai2 zhan4 de5 zhu4 jiao3",
     "natural": "The conclusion holds only if the initial assumption is valid.",
@@ -6684,12 +6740,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "society"
   },
   {
     "id": "elo-056",
     "level": "C2",
-    "topic": "Trabalho",
+    "topic": "Sociedade e ideias",
     "title": "Concessão sem desistir",
     "pinyin": "zhe4 xiang4 ti2 yi4 wu2 lun4 kan4 qi3 lai5 duo1 me5 you3 shuo1 fu2 li4 dou1 xu1 yao4 chong2 xin1 shen3 shi4",
     "natural": "However convincing it may seem, the proposal needs revision.",
@@ -6860,12 +6917,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "society"
   },
   {
     "id": "elo-057",
     "level": "C2",
-    "topic": "Dados",
+    "topic": "Sociedade e ideias",
     "title": "Separar hipótese e fato",
     "pinyin": "zhe4 reng2 ran2 shi4 yi4 zhong3 jia3 she4 er2 fei1 yi3 jing1 zheng4 shi2 de5 shi4 shi2",
     "natural": "This remains a hypothesis rather than an established fact.",
@@ -7041,12 +7099,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "society"
   },
   {
     "id": "elo-058",
     "level": "C2",
-    "topic": "Trabalho",
+    "topic": "Sociedade e ideias",
     "title": "Reconhecer limites",
     "pinyin": "cheng2 ren4 fang1 fa3 de5 ju2 xian4 xing4 bing4 bu4 yi4 wei4 zhe5 fou3 ding4 qi2 yan2 jiu1 jie2 guo3",
     "natural": "Acknowledging the method's limitations doesn't invalidate its findings.",
@@ -7217,12 +7276,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "society"
   },
   {
     "id": "elo-059",
     "level": "C2",
-    "topic": "Dados",
+    "topic": "Sociedade e ideias",
     "title": "Reavaliar diante de evidências",
     "pinyin": "jian4 yu2 xin1 de5 zheng4 ju4 wo3 men5 xu1 yao4 chong2 xin1 kao3 lv4 zi4 ji3 de5 li4 chang3",
     "natural": "In light of new evidence, we need to reconsider our position.",
@@ -7404,12 +7464,13 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "society"
   },
   {
     "id": "elo-060",
     "level": "C2",
-    "topic": "Trabalho",
+    "topic": "Sociedade e ideias",
     "title": "Precisão acima da certeza",
     "pinyin": "tiao3 zhan4 zai4 yu2 ru2 he2 zai4 bu4 xi1 sheng1 qing1 xi1 du4 de5 qian2 ti2 xia4 chuan2 da2 bu4 que4 ding4 xing4",
     "natural": "The challenge is to communicate uncertainty without compromising clarity.",
@@ -7586,6 +7647,3269 @@ const LESSONS = [
           "punct": "。"
         }
       ]
-    }
+    },
+    "topicId": "society"
+  },
+  {
+    "id": "elo-061",
+    "level": "A1",
+    "topic": "Hotel e hospedagem",
+    "title": "Confirmar uma reserva",
+    "pinyin": "wo3 you3 yu4 ding4",
+    "natural": "I have a reservation.",
+    "phonetic": "ai HÉV‿a ré-zer-VÊI-shan",
+    "features": [
+      "Linking",
+      "Formas fracas"
+    ],
+    "speech": "Have + a se liga sem pausa: have‿a. O artigo a é curto e sem destaque.",
+    "compare": "PT e EN usam artigo antes do nome; ZH pode dizer 有预订 sem artigo. O sujeito vem antes do verbo nos três.",
+    "literal": "Eu + ter + reserva.",
+    "pt": {
+      "text": "Eu tenho uma reserva.",
+      "tokens": [
+        {
+          "text": "Eu",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "tenho",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "uma",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "reserva",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "I have a reservation.",
+      "tokens": [
+        {
+          "text": "I",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "have",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "a",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "reservation",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "我有预订。",
+      "tokens": [
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "有",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "预订",
+          "c": "n",
+          "punct": "。"
+        }
+      ]
+    },
+    "topicId": "hotel"
+  },
+  {
+    "id": "elo-062",
+    "level": "A2",
+    "topic": "Hotel e hospedagem",
+    "title": "Pedir outro quarto",
+    "pinyin": "wo3 men5 ke3 yi3 huan4 fang2 jian1 ma5",
+    "natural": "Can we change rooms?",
+    "phonetic": "kan ui TCHÊINDJ RÚMZ",
+    "features": [
+      "Formas fracas",
+      "Linking"
+    ],
+    "speech": "Can perde destaque e pode soar /kən/. Ligue can‿we; rooms mantém o z final sonoro.",
+    "compare": "EN coloca can antes do sujeito; ZH conserva sujeito + modal + verbo e encerra com 吗. PT pode omitir nós.",
+    "literal": "Nós + poder + trocar + quarto + pergunta.",
+    "pt": {
+      "text": "Podemos trocar de quarto?",
+      "tokens": [
+        {
+          "text": "Podemos",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "trocar",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "de",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "quarto",
+          "c": "n",
+          "punct": "?"
+        }
+      ]
+    },
+    "en": {
+      "text": "Can we change rooms?",
+      "tokens": [
+        {
+          "text": "Can",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "we",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "change",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "rooms",
+          "c": "n",
+          "punct": "?"
+        }
+      ]
+    },
+    "zh": {
+      "text": "我们可以换房间吗？",
+      "tokens": [
+        {
+          "text": "我们",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "可以",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "换",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "房间",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "吗",
+          "c": "part",
+          "punct": "？"
+        }
+      ]
+    },
+    "topicId": "hotel"
+  },
+  {
+    "id": "elo-063",
+    "level": "A2",
+    "topic": "Hotel e hospedagem",
+    "title": "Perguntar sobre o café da manhã",
+    "pinyin": "bao1 han2 zao3 can1 ma5",
+    "natural": "Is breakfast included?",
+    "phonetic": "iz BRÉK-fast‿in-KLÚ-did",
+    "features": [
+      "Linking"
+    ],
+    "speech": "Ligue o t final de breakfast ao início de included: breakfast‿included. Is costuma ser breve.",
+    "compare": "EN inverte is; PT pode usar só a entonação. ZH omite o tópico já conhecido e pergunta se inclui café da manhã.",
+    "literal": "Incluir + café da manhã + pergunta.",
+    "pt": {
+      "text": "O café da manhã está incluído?",
+      "tokens": [
+        {
+          "text": "O",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "café",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "da",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "manhã",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "está",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "incluído",
+          "c": "adj",
+          "punct": "?"
+        }
+      ]
+    },
+    "en": {
+      "text": "Is breakfast included?",
+      "tokens": [
+        {
+          "text": "Is",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "breakfast",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "included",
+          "c": "adj",
+          "punct": "?"
+        }
+      ]
+    },
+    "zh": {
+      "text": "包含早餐吗？",
+      "tokens": [
+        {
+          "text": "包含",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "早餐",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "吗",
+          "c": "part",
+          "punct": "？"
+        }
+      ]
+    },
+    "topicId": "hotel"
+  },
+  {
+    "id": "elo-064",
+    "level": "B1",
+    "topic": "Hotel e hospedagem",
+    "title": "Negociar a saída",
+    "pinyin": "wo3 xiang3 wan3 yi4 dianr3 tui4 fang2",
+    "natural": "I'd like to check out later.",
+    "phonetic": "aid LÁIK ta TCHÉK‿aut LÊIɾer",
+    "features": [
+      "Contração",
+      "Linking",
+      "Flapping"
+    ],
+    "speech": "I would → I'd; to pode soar /tə/. Check‿out forma um bloco; o t de later pode virar o toque rápido /ɾ/ americano.",
+    "compare": "EN usa check out como verbo com partícula. ZH coloca 晚一点儿, um pouco mais tarde, antes de 退房.",
+    "literal": "Eu + querer + tarde + um pouco + encerrar hospedagem.",
+    "pt": {
+      "text": "Eu gostaria de sair mais tarde.",
+      "tokens": [
+        {
+          "text": "Eu",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "gostaria",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "de",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "sair",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "mais",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "tarde",
+          "c": "adv",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "I would like to check out later.",
+      "tokens": [
+        {
+          "text": "I",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "would",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "like",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "to",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "check",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "out",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "later",
+          "c": "adv",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "我想晚一点儿退房。",
+      "tokens": [
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "想",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "晚",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "一点儿",
+          "c": "num",
+          "punct": ""
+        },
+        {
+          "text": "退房",
+          "c": "v",
+          "punct": "。"
+        }
+      ]
+    },
+    "topicId": "hotel"
+  },
+  {
+    "id": "elo-065",
+    "level": "A1",
+    "topic": "Restaurante e alimentação",
+    "title": "Pedir o cardápio",
+    "pinyin": "wo3 ke3 yi3 kan4 cai4 dan1 ma5",
+    "natural": "Can I see the menu?",
+    "phonetic": "kan‿ai SÍI dha MÉN-iu",
+    "features": [
+      "Linking",
+      "Formas fracas"
+    ],
+    "speech": "Can‿I une consoante e vogal. Can e the ficam mais leves que see e menu.",
+    "compare": "EN inverte o modal e o sujeito. ZH usa 可以 antes de 看 e 吗 ao final, mantendo 我 no começo.",
+    "literal": "Eu + poder + ver + cardápio + pergunta.",
+    "pt": {
+      "text": "Posso ver o cardápio?",
+      "tokens": [
+        {
+          "text": "Posso",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "ver",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "o",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "cardápio",
+          "c": "n",
+          "punct": "?"
+        }
+      ]
+    },
+    "en": {
+      "text": "Can I see the menu?",
+      "tokens": [
+        {
+          "text": "Can",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "I",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "see",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "the",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "menu",
+          "c": "n",
+          "punct": "?"
+        }
+      ]
+    },
+    "zh": {
+      "text": "我可以看菜单吗？",
+      "tokens": [
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "可以",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "看",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "菜单",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "吗",
+          "c": "part",
+          "punct": "？"
+        }
+      ]
+    },
+    "topicId": "food"
+  },
+  {
+    "id": "elo-066",
+    "level": "A2",
+    "topic": "Restaurante e alimentação",
+    "title": "Pedir água",
+    "pinyin": "wo3 xiang3 yao4 yi4 bei1 shui3",
+    "natural": "I'd like a glass of water.",
+    "phonetic": "aid LÁIK‿a GLÉS‿av UÓɾer",
+    "features": [
+      "Contração",
+      "Linking",
+      "Flapping"
+    ],
+    "speech": "I would → I'd; like‿a e glass‿of se ligam. Of pode soar /əv/; water pode ter /ɾ/ no inglês americano.",
+    "compare": "PT e EN usam nome de recipiente + de/of. ZH usa 杯 como classificador de medida entre numeral e 水.",
+    "literal": "Eu + gostaria + querer + um + copo + água.",
+    "pt": {
+      "text": "Eu gostaria de um copo de água.",
+      "tokens": [
+        {
+          "text": "Eu",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "gostaria",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "de",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "um",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "copo",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "de",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "água",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "I would like a glass of water.",
+      "tokens": [
+        {
+          "text": "I",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "would",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "like",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "a",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "glass",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "of",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "water",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "我想要一杯水。",
+      "tokens": [
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "想",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "要",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "一",
+          "c": "num",
+          "punct": ""
+        },
+        {
+          "text": "杯",
+          "c": "clf",
+          "punct": ""
+        },
+        {
+          "text": "水",
+          "c": "n",
+          "punct": "。"
+        }
+      ]
+    },
+    "topicId": "food"
+  },
+  {
+    "id": "elo-067",
+    "level": "B1",
+    "topic": "Restaurante e alimentação",
+    "title": "Informar uma alergia",
+    "pinyin": "wo3 dui4 hua1 sheng1 guo4 min3",
+    "natural": "I'm allergic to peanuts.",
+    "phonetic": "aim‿a-LÂR-djik ta PÍI-nats",
+    "features": [
+      "Contração",
+      "Linking",
+      "Formas fracas"
+    ],
+    "speech": "I am → I'm, ligado ao início de allergic. To enfraquece para /tə/; destaque allergic e peanuts.",
+    "compare": "PT usa ter alergia; EN usa be allergic. ZH coloca 对花生 antes do predicado 过敏 para indicar a substância.",
+    "literal": "Eu + em relação a + amendoim + alérgico.",
+    "pt": {
+      "text": "Eu tenho alergia a amendoim.",
+      "tokens": [
+        {
+          "text": "Eu",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "tenho",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "alergia",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "a",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "amendoim",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "I am allergic to peanuts.",
+      "tokens": [
+        {
+          "text": "I",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "am",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "allergic",
+          "c": "adj",
+          "punct": ""
+        },
+        {
+          "text": "to",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "peanuts",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "我对花生过敏。",
+      "tokens": [
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "对",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "花生",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "过敏",
+          "c": "adj",
+          "punct": "。"
+        }
+      ]
+    },
+    "topicId": "food"
+  },
+  {
+    "id": "elo-068",
+    "level": "A2",
+    "topic": "Restaurante e alimentação",
+    "title": "Pedir a conta",
+    "pinyin": "wo3 men5 ke3 yi3 jie2 zhang4 ma5",
+    "natural": "Can we have the bill?",
+    "phonetic": "kan ui HÉV dha BÍL",
+    "features": [
+      "Formas fracas",
+      "Linking"
+    ],
+    "speech": "Can e the ficam curtos. Ligue can‿we e mantenha bill como foco do pedido, sem vogal depois do l.",
+    "compare": "PT e EN usam um nome para conta; ZH usa o verbo 结账, pagar/fechar a conta. 吗 transforma a frase em pergunta.",
+    "literal": "Nós + poder + fechar a conta + pergunta.",
+    "pt": {
+      "text": "Podemos pedir a conta?",
+      "tokens": [
+        {
+          "text": "Podemos",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "pedir",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "a",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "conta",
+          "c": "n",
+          "punct": "?"
+        }
+      ]
+    },
+    "en": {
+      "text": "Can we have the bill?",
+      "tokens": [
+        {
+          "text": "Can",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "we",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "have",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "the",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "bill",
+          "c": "n",
+          "punct": "?"
+        }
+      ]
+    },
+    "zh": {
+      "text": "我们可以结账吗？",
+      "tokens": [
+        {
+          "text": "我们",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "可以",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "结账",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "吗",
+          "c": "part",
+          "punct": "？"
+        }
+      ]
+    },
+    "topicId": "food"
+  },
+  {
+    "id": "elo-069",
+    "level": "A1",
+    "topic": "Natureza e clima",
+    "title": "Comentar a chuva",
+    "pinyin": "xia4 yu3 le5",
+    "natural": "It's raining.",
+    "phonetic": "its RÊI-ning",
+    "features": [
+      "Contração",
+      "Ritmo"
+    ],
+    "speech": "It is → it's. O grupo /ts/ deve ficar junto, sem uma vogal extra; raining recebe destaque.",
+    "compare": "EN exige o sujeito it. PT não usa sujeito lexical. ZH usa 下雨; 了 aqui destaca a nova situação de chuva.",
+    "literal": "Cair + chuva + nova situação.",
+    "pt": {
+      "text": "Está chovendo.",
+      "tokens": [
+        {
+          "text": "Está",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "chovendo",
+          "c": "v",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "It is raining.",
+      "tokens": [
+        {
+          "text": "It",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "is",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "raining",
+          "c": "v",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "下雨了。",
+      "tokens": [
+        {
+          "text": "下",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "雨",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "了",
+          "c": "part",
+          "punct": "。"
+        }
+      ]
+    },
+    "topicId": "nature"
+  },
+  {
+    "id": "elo-070",
+    "level": "A2",
+    "topic": "Natureza e clima",
+    "title": "Passear no parque",
+    "pinyin": "wo3 men5 qu4 gong1 yuan2 san4 bu4 ba5",
+    "natural": "Let's walk in the park.",
+    "phonetic": "lets UÓK‿in dha PÁRK",
+    "features": [
+      "Contração",
+      "Linking"
+    ],
+    "speech": "Let us → let's, usado como convite. Walk‿in liga k e i; the fica curto.",
+    "compare": "PT usa vamos como convite. EN usa let's. ZH combina ir ao parque e passear, com 吧 suavizando a proposta.",
+    "literal": "Nós + ir + parque + passear + proposta.",
+    "pt": {
+      "text": "Vamos caminhar no parque.",
+      "tokens": [
+        {
+          "text": "Vamos",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "caminhar",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "no",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "parque",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "Let us walk in the park.",
+      "tokens": [
+        {
+          "text": "Let",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "us",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "walk",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "in",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "the",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "park",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "我们去公园散步吧。",
+      "tokens": [
+        {
+          "text": "我们",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "去",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "公园",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "散步",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "吧",
+          "c": "part",
+          "punct": "。"
+        }
+      ]
+    },
+    "topicId": "nature"
+  },
+  {
+    "id": "elo-071",
+    "level": "B1",
+    "topic": "Natureza e clima",
+    "title": "Verificar uma trilha",
+    "pinyin": "xia4 yu3 hou4 zhe4 tiao2 xiao3 lu4 an1 quan2 ma5",
+    "natural": "Is this trail safe after the rain?",
+    "phonetic": "iz dhis TRÊIL SÊIF‿ÉF-ter dha RÊIN",
+    "features": [
+      "Linking",
+      "Formas fracas"
+    ],
+    "speech": "Safe‿after liga f à vogal inicial. Is e the recebem menos destaque que trail, safe e rain.",
+    "compare": "ZH coloca o contexto temporal 下雨后 no início e usa 条 para a trilha; 安全 funciona como predicado sem 是.",
+    "literal": "Chover + depois + esta + classificador + trilha + segura + pergunta.",
+    "pt": {
+      "text": "Esta trilha é segura depois da chuva?",
+      "tokens": [
+        {
+          "text": "Esta",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "trilha",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "é",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "segura",
+          "c": "adj",
+          "punct": ""
+        },
+        {
+          "text": "depois",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "da",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "chuva",
+          "c": "n",
+          "punct": "?"
+        }
+      ]
+    },
+    "en": {
+      "text": "Is this trail safe after the rain?",
+      "tokens": [
+        {
+          "text": "Is",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "this",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "trail",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "safe",
+          "c": "adj",
+          "punct": ""
+        },
+        {
+          "text": "after",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "the",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "rain",
+          "c": "n",
+          "punct": "?"
+        }
+      ]
+    },
+    "zh": {
+      "text": "下雨后这条小路安全吗？",
+      "tokens": [
+        {
+          "text": "下",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "雨",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "后",
+          "c": "loc",
+          "punct": ""
+        },
+        {
+          "text": "这",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "条",
+          "c": "clf",
+          "punct": ""
+        },
+        {
+          "text": "小路",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "安全",
+          "c": "adj",
+          "punct": ""
+        },
+        {
+          "text": "吗",
+          "c": "part",
+          "punct": "？"
+        }
+      ]
+    },
+    "topicId": "nature"
+  },
+  {
+    "id": "elo-072",
+    "level": "B2",
+    "topic": "Natureza e clima",
+    "title": "Reduzir o uso de plástico",
+    "pinyin": "wo3 men5 xu1 yao4 jian3 shao3 su4 liao4 de5 shi3 yong4",
+    "natural": "We need to use less plastic.",
+    "phonetic": "ui NÍID ta IÚZ les PLÉS-tik",
+    "features": [
+      "Formas fracas",
+      "Linking"
+    ],
+    "speech": "To pode soar /tə/ e se junta a need. Use é verbo e termina em /z/; não acrescente vogal depois de plastic.",
+    "compare": "PT e EN quantificam plástico com menos/less. ZH reorganiza como reduzir o uso do plástico; 的 liga material e uso.",
+    "literal": "Nós + precisar + reduzir + plástico + de + uso.",
+    "pt": {
+      "text": "Precisamos usar menos plástico.",
+      "tokens": [
+        {
+          "text": "Precisamos",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "usar",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "menos",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "plástico",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "We need to use less plastic.",
+      "tokens": [
+        {
+          "text": "We",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "need",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "to",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "use",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "less",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "plastic",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "我们需要减少塑料的使用。",
+      "tokens": [
+        {
+          "text": "我们",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "需要",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "减少",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "塑料",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "的",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "使用",
+          "c": "n",
+          "punct": "。"
+        }
+      ]
+    },
+    "topicId": "nature"
+  },
+  {
+    "id": "elo-073",
+    "level": "A1",
+    "topic": "Saúde e bem-estar",
+    "title": "Dizer que sente dor",
+    "pinyin": "wo3 tou2 teng2",
+    "natural": "My head hurts.",
+    "phonetic": "mai HÉD HÂRTS",
+    "features": [
+      "Ritmo",
+      "Linking"
+    ],
+    "speech": "Diga a sequência sem inserir vogal entre head e hurts. Preserve o h aspirado de hurts; não é preciso reduzir toda palavra.",
+    "compare": "PT e EN usam possessivo. ZH pode usar 我 como tópico e 头疼 como comentário: quanto a mim, a cabeça dói.",
+    "literal": "Eu + cabeça + dolorida.",
+    "pt": {
+      "text": "Minha cabeça dói.",
+      "tokens": [
+        {
+          "text": "Minha",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "cabeça",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "dói",
+          "c": "v",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "My head hurts.",
+      "tokens": [
+        {
+          "text": "My",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "head",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "hurts",
+          "c": "v",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "我头疼。",
+      "tokens": [
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "头",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "疼",
+          "c": "adj",
+          "punct": "。"
+        }
+      ]
+    },
+    "topicId": "health"
+  },
+  {
+    "id": "elo-074",
+    "level": "A2",
+    "topic": "Saúde e bem-estar",
+    "title": "Procurar uma farmácia",
+    "pinyin": "fu4 jin4 you3 yao4 dian4 ma5",
+    "natural": "Is there a pharmacy nearby?",
+    "phonetic": "iz dhér‿a FÁR-ma-si nír-BÁI",
+    "features": [
+      "Linking",
+      "Formas fracas"
+    ],
+    "speech": "There‿a liga r ao artigo fraco no inglês americano. Destaque pharmacy e nearby.",
+    "compare": "EN usa a construção existencial there is invertida. ZH começa pelo lugar 附近 e usa 有 para existência.",
+    "literal": "Proximidades + ter + farmácia + pergunta.",
+    "pt": {
+      "text": "Há uma farmácia perto daqui?",
+      "tokens": [
+        {
+          "text": "Há",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "uma",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "farmácia",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "perto",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "daqui",
+          "c": "adv",
+          "punct": "?"
+        }
+      ]
+    },
+    "en": {
+      "text": "Is there a pharmacy nearby?",
+      "tokens": [
+        {
+          "text": "Is",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "there",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "a",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "pharmacy",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "nearby",
+          "c": "adv",
+          "punct": "?"
+        }
+      ]
+    },
+    "zh": {
+      "text": "附近有药店吗？",
+      "tokens": [
+        {
+          "text": "附近",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "有",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "药店",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "吗",
+          "c": "part",
+          "punct": "？"
+        }
+      ]
+    },
+    "topicId": "health"
+  },
+  {
+    "id": "elo-075",
+    "level": "B1",
+    "topic": "Saúde e bem-estar",
+    "title": "Marcar uma consulta",
+    "pinyin": "wo3 xu1 yao4 yu4 yue1 kan4 yi1 sheng1",
+    "natural": "I need to make an appointment.",
+    "phonetic": "ai NÍID ta MÊIK‿an‿a-PÓINT-mant",
+    "features": [
+      "Linking",
+      "Formas fracas"
+    ],
+    "speech": "To enfraquece; make‿an‿appointment forma uma sequência sem pausas entre as palavras.",
+    "compare": "PT e EN usam verbo + nome para agendar. ZH combina 预约 com 看医生, consultar um médico.",
+    "literal": "Eu + precisar + agendar + ver + médico.",
+    "pt": {
+      "text": "Eu preciso marcar uma consulta.",
+      "tokens": [
+        {
+          "text": "Eu",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "preciso",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "marcar",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "uma",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "consulta",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "I need to make an appointment.",
+      "tokens": [
+        {
+          "text": "I",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "need",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "to",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "make",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "an",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "appointment",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "我需要预约看医生。",
+      "tokens": [
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "需要",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "预约",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "看",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "医生",
+          "c": "n",
+          "punct": "。"
+        }
+      ]
+    },
+    "topicId": "health"
+  },
+  {
+    "id": "elo-076",
+    "level": "A2",
+    "topic": "Saúde e bem-estar",
+    "title": "Pedir ajuda urgente",
+    "pinyin": "wo3 xian4 zai4 xu1 yao4 yi1 sheng1",
+    "natural": "I need a doctor now.",
+    "phonetic": "ai NÍID‿a DÓK-ter NÁU",
+    "features": [
+      "Linking",
+      "Formas fracas"
+    ],
+    "speech": "Need‿a liga d ao artigo fraco. Now recebe destaque quando a urgência importa; falar com clareza pode reduzir as contrações.",
+    "compare": "ZH põe 现在 antes de 需要; PT e EN permitem agora/now ao final. ZH não exige artigo antes de 医生.",
+    "literal": "Eu + agora + precisar + médico.",
+    "pt": {
+      "text": "Eu preciso de um médico agora.",
+      "tokens": [
+        {
+          "text": "Eu",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "preciso",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "de",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "um",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "médico",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "agora",
+          "c": "adv",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "I need a doctor now.",
+      "tokens": [
+        {
+          "text": "I",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "need",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "a",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "doctor",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "now",
+          "c": "adv",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "我现在需要医生。",
+      "tokens": [
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "现在",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "需要",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "医生",
+          "c": "n",
+          "punct": "。"
+        }
+      ]
+    },
+    "topicId": "health"
+  },
+  {
+    "id": "elo-077",
+    "level": "A1",
+    "topic": "Lazer e cultura",
+    "title": "Gostar de música",
+    "pinyin": "wo3 xi3 huan5 yin1 yue4",
+    "natural": "I like music.",
+    "phonetic": "ai LÁIK MIÚ-zik",
+    "features": [
+      "Ritmo"
+    ],
+    "speech": "Like e music recebem destaque. O k final de like se encadeia com m sem uma vogal extra entre eles.",
+    "compare": "Gostar pede de em PT; like e 喜欢 recebem o objeto diretamente. Não se traduz cada preposição isoladamente.",
+    "literal": "Eu + gostar + música.",
+    "pt": {
+      "text": "Eu gosto de música.",
+      "tokens": [
+        {
+          "text": "Eu",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "gosto",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "de",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "música",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "I like music.",
+      "tokens": [
+        {
+          "text": "I",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "like",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "music",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "我喜欢音乐。",
+      "tokens": [
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "喜欢",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "音乐",
+          "c": "n",
+          "punct": "。"
+        }
+      ]
+    },
+    "topicId": "leisure"
+  },
+  {
+    "id": "elo-078",
+    "level": "A2",
+    "topic": "Lazer e cultura",
+    "title": "Convidar para o cinema",
+    "pinyin": "ni3 xiang3 qu4 kan4 dian4 ying3 ma5",
+    "natural": "Do you wanna go to the movies?",
+    "phonetic": "dja UÓ-na GÔU ta dha MÚ-viz",
+    "features": [
+      "Redução",
+      "Assimilation",
+      "Formas fracas"
+    ],
+    "speech": "Want to pode virar wanna em conversa informal. Do you pode aproximar-se de /dʒə/. A escrita formal mantém do you want to.",
+    "compare": "EN usa do para perguntar e go to the movies. ZH usa ir + ver + filme, encerrando com 吗.",
+    "literal": "Você + querer + ir + ver + filme + pergunta.",
+    "pt": {
+      "text": "Você quer ir ao cinema?",
+      "tokens": [
+        {
+          "text": "Você",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "quer",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "ir",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "ao",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "cinema",
+          "c": "n",
+          "punct": "?"
+        }
+      ]
+    },
+    "en": {
+      "text": "Do you want to go to the movies?",
+      "tokens": [
+        {
+          "text": "Do",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "you",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "want",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "to",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "go",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "to",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "the",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "movies",
+          "c": "n",
+          "punct": "?"
+        }
+      ]
+    },
+    "zh": {
+      "text": "你想去看电影吗？",
+      "tokens": [
+        {
+          "text": "你",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "想",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "去",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "看",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "电影",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "吗",
+          "c": "part",
+          "punct": "？"
+        }
+      ]
+    },
+    "topicId": "leisure"
+  },
+  {
+    "id": "elo-079",
+    "level": "B1",
+    "topic": "Lazer e cultura",
+    "title": "Consultar o horário do museu",
+    "pinyin": "bo2 wu4 guan3 ji3 dian3 guan1 men2",
+    "natural": "What time does the museum close?",
+    "phonetic": "uat TÁIM daz dha miu-ZÍI-am KLÔUZ",
+    "features": [
+      "Formas fracas",
+      "Linking"
+    ],
+    "speech": "Does e the ficam curtos; close, como verbo, termina em /z/. Encadeie does‿the sem acrescentar uma pausa.",
+    "compare": "EN desloca a pergunta para o início e usa does. ZH mantém 几点 antes do verbo, na posição da informação de horário.",
+    "literal": "Museu + quantas + horas + fechar.",
+    "pt": {
+      "text": "A que horas o museu fecha?",
+      "tokens": [
+        {
+          "text": "A",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "que",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "horas",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "o",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "museu",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "fecha",
+          "c": "v",
+          "punct": "?"
+        }
+      ]
+    },
+    "en": {
+      "text": "What time does the museum close?",
+      "tokens": [
+        {
+          "text": "What",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "time",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "does",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "the",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "museum",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "close",
+          "c": "v",
+          "punct": "?"
+        }
+      ]
+    },
+    "zh": {
+      "text": "博物馆几点关门？",
+      "tokens": [
+        {
+          "text": "博物馆",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "几",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "点",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "关门",
+          "c": "v",
+          "punct": "？"
+        }
+      ]
+    },
+    "topicId": "leisure"
+  },
+  {
+    "id": "elo-080",
+    "level": "B2",
+    "topic": "Lazer e cultura",
+    "title": "Conversar sobre um filme",
+    "pinyin": "zhe4 bu4 dian4 ying3 rang4 wo3 xiang3 qi3 le5 tong2 nian2",
+    "natural": "The film made me think about my childhood.",
+    "phonetic": "dha FÍLM mêid mi THÍNK‿a-báut mai TCHÁILD-rud",
+    "features": [
+      "Linking",
+      "Formas fracas"
+    ],
+    "speech": "The e o início de about são fracos. Think‿about une k e vogal. Th de think é soprado, com língua entre os dentes.",
+    "compare": "EN usa made + pessoa + verbo sem to. ZH usa 让 para causar a lembrança, e 部 classifica o filme.",
+    "literal": "Este + classificador + filme + fazer + eu + lembrar + aspecto + infância.",
+    "pt": {
+      "text": "O filme me fez pensar na minha infância.",
+      "tokens": [
+        {
+          "text": "O",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "filme",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "me",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "fez",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "pensar",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "na",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "minha",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "infância",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "The film made me think about my childhood.",
+      "tokens": [
+        {
+          "text": "The",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "film",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "made",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "me",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "think",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "about",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "my",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "childhood",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "这部电影让我想起了童年。",
+      "tokens": [
+        {
+          "text": "这",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "部",
+          "c": "clf",
+          "punct": ""
+        },
+        {
+          "text": "电影",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "让",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "想起",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "了",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "童年",
+          "c": "n",
+          "punct": "。"
+        }
+      ]
+    },
+    "topicId": "leisure"
+  },
+  {
+    "id": "elo-081",
+    "level": "A1",
+    "topic": "Serviços e tecnologia",
+    "title": "Pedir a senha da internet",
+    "pinyin": "mi4 ma3 shi4 shen2 me5",
+    "natural": "What's the password?",
+    "phonetic": "uats dha PÉS-uârd",
+    "features": [
+      "Contração",
+      "Formas fracas"
+    ],
+    "speech": "What is → what's. The fica curto; password é o foco. O contexto indica a rede cuja senha se pede.",
+    "compare": "EN traz what ao início. ZH mantém 什么 depois de 是, na posição da resposta esperada.",
+    "literal": "Senha + ser + o quê?",
+    "pt": {
+      "text": "Qual é a senha?",
+      "tokens": [
+        {
+          "text": "Qual",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "é",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "a",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "senha",
+          "c": "n",
+          "punct": "?"
+        }
+      ]
+    },
+    "en": {
+      "text": "What is the password?",
+      "tokens": [
+        {
+          "text": "What",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "is",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "the",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "password",
+          "c": "n",
+          "punct": "?"
+        }
+      ]
+    },
+    "zh": {
+      "text": "密码是什么？",
+      "tokens": [
+        {
+          "text": "密码",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "是",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "什么",
+          "c": "pro",
+          "punct": "？"
+        }
+      ]
+    },
+    "topicId": "services"
+  },
+  {
+    "id": "elo-082",
+    "level": "A2",
+    "topic": "Serviços e tecnologia",
+    "title": "Relatar falta de conexão",
+    "pinyin": "wang3 luo4 bu4 neng2 yong4 le5",
+    "natural": "The internet isn't working.",
+    "phonetic": "dhi ÍN-ter-net Í-zant UÂR-king",
+    "features": [
+      "Contração",
+      "Formas fracas"
+    ],
+    "speech": "Is not → isn't. Antes da vogal de internet, the pode soar /ði/. Não coloque vogal extra depois do t de internet.",
+    "compare": "EN nega o auxiliar is. ZH diz que a rede não pode mais ser usada; 了 marca a mudança de situação.",
+    "literal": "Rede + não poder + usar + nova situação.",
+    "pt": {
+      "text": "A internet não está funcionando.",
+      "tokens": [
+        {
+          "text": "A",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "internet",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "não",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "está",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "funcionando",
+          "c": "v",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "The internet is not working.",
+      "tokens": [
+        {
+          "text": "The",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "internet",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "is",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "not",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "working",
+          "c": "v",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "网络不能用了。",
+      "tokens": [
+        {
+          "text": "网络",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "不能",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "用",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "了",
+          "c": "part",
+          "punct": "。"
+        }
+      ]
+    },
+    "topicId": "services"
+  },
+  {
+    "id": "elo-083",
+    "level": "B1",
+    "topic": "Serviços e tecnologia",
+    "title": "Enviar uma encomenda",
+    "pinyin": "wo3 xiang3 ba3 zhe4 ge5 bao1 guo3 ji4 dao4 ba1 xi1",
+    "natural": "I'd like to send this package to Brazil.",
+    "phonetic": "aid LÁIK ta SÉND dhis PÉ-kidj ta bra-ZÍL",
+    "features": [
+      "Contração",
+      "Formas fracas"
+    ],
+    "speech": "I would → I'd. As duas ocorrências de to podem enfraquecer para /tə/, mantendo send, package e Brazil em destaque.",
+    "compare": "ZH usa 把 para antecipar o pacote antes de 寄到, enviar até. EN e PT normalmente colocam o objeto depois de enviar/send.",
+    "literal": "Eu + querer + marcador de objeto + este + pacote + enviar + até + Brasil.",
+    "pt": {
+      "text": "Eu gostaria de enviar este pacote para o Brasil.",
+      "tokens": [
+        {
+          "text": "Eu",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "gostaria",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "de",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "enviar",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "este",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "pacote",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "para",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "o",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "Brasil",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "I would like to send this package to Brazil.",
+      "tokens": [
+        {
+          "text": "I",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "would",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "like",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "to",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "send",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "this",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "package",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "to",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "Brazil",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "我想把这个包裹寄到巴西。",
+      "tokens": [
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "想",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "把",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "这个",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "包裹",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "寄",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "到",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "巴西",
+          "c": "n",
+          "punct": "。"
+        }
+      ]
+    },
+    "topicId": "services"
+  },
+  {
+    "id": "elo-084",
+    "level": "B2",
+    "topic": "Serviços e tecnologia",
+    "title": "Pedir confirmação por escrito",
+    "pinyin": "ni3 neng2 tong1 guo4 dian4 zi3 you2 jian4 que4 ren4 zhe4 jian4 shi4 ma5",
+    "natural": "Could you confirm that by email?",
+    "phonetic": "ka-dja kan-FÂRM dhét bai‿ÍI-meil",
+    "features": [
+      "Assimilation",
+      "Linking"
+    ],
+    "speech": "Could you pode unir d + y em /dʒ/. By‿email pode ganhar uma transição suave /j/ entre as vogais.",
+    "compare": "PT e EN deixam o meio ao final. ZH coloca 通过电子邮件, por e-mail, antes de 确认.",
+    "literal": "Você + poder + por meio de + e-mail + confirmar + esse assunto + pergunta.",
+    "pt": {
+      "text": "Você poderia confirmar isso por e-mail?",
+      "tokens": [
+        {
+          "text": "Você",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "poderia",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "confirmar",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "isso",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "por",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "e-mail",
+          "c": "n",
+          "punct": "?"
+        }
+      ]
+    },
+    "en": {
+      "text": "Could you confirm that by email?",
+      "tokens": [
+        {
+          "text": "Could",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "you",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "confirm",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "that",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "by",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "email",
+          "c": "n",
+          "punct": "?"
+        }
+      ]
+    },
+    "zh": {
+      "text": "你能通过电子邮件确认这件事吗？",
+      "tokens": [
+        {
+          "text": "你",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "能",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "通过",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "电子邮件",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "确认",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "这件事",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "吗",
+          "c": "part",
+          "punct": "？"
+        }
+      ]
+    },
+    "topicId": "services"
+  },
+  {
+    "id": "elo-085",
+    "level": "A1",
+    "topic": "Relações e comunicação",
+    "title": "Apresentar uma amiga",
+    "pinyin": "zhe4 shi4 wo3 de5 peng2 you5",
+    "natural": "This is my friend.",
+    "phonetic": "dhis‿iz mai FRÉND",
+    "features": [
+      "Linking"
+    ],
+    "speech": "This‿is liga s à vogal seguinte. My recebe menos destaque que friend numa apresentação neutra.",
+    "compare": "PT e EN usam possessivo. ZH usa 我 + 的 antes de 朋友; o substantivo não marca gênero nesta frase.",
+    "literal": "Esta + ser + eu + de + amiga.",
+    "pt": {
+      "text": "Esta é minha amiga.",
+      "tokens": [
+        {
+          "text": "Esta",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "é",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "minha",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "amiga",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "This is my friend.",
+      "tokens": [
+        {
+          "text": "This",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "is",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "my",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "friend",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "这是我的朋友。",
+      "tokens": [
+        {
+          "text": "这",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "是",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "的",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "朋友",
+          "c": "n",
+          "punct": "。"
+        }
+      ]
+    },
+    "topicId": "people"
+  },
+  {
+    "id": "elo-086",
+    "level": "B1",
+    "topic": "Relações e comunicação",
+    "title": "Dizer que sente saudade",
+    "pinyin": "wo3 xiang3 nian4 wo3 de5 jia1 ren2",
+    "natural": "I miss my family.",
+    "phonetic": "ai MÍS mai FÉ-ma-li",
+    "features": [
+      "Ritmo",
+      "Formas fracas"
+    ],
+    "speech": "My pode ficar leve entre miss e family. Encadeie miss my sem acrescentar vogal depois do s.",
+    "compare": "PT usa sentir falta de; EN usa miss diretamente. ZH usa 想念 e liga 我 a 家人 com 的.",
+    "literal": "Eu + sentir saudade + eu + de + família.",
+    "pt": {
+      "text": "Eu sinto falta da minha família.",
+      "tokens": [
+        {
+          "text": "Eu",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "sinto",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "falta",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "da",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "minha",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "família",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "I miss my family.",
+      "tokens": [
+        {
+          "text": "I",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "miss",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "my",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "family",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "我想念我的家人。",
+      "tokens": [
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "想念",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "的",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "家人",
+          "c": "n",
+          "punct": "。"
+        }
+      ]
+    },
+    "topicId": "people"
+  },
+  {
+    "id": "elo-087",
+    "level": "A2",
+    "topic": "Casa e rotina",
+    "title": "Pedir para abrir a janela",
+    "pinyin": "ni3 neng2 da3 kai1 chuang1 hu5 ma5",
+    "natural": "Can you open the window?",
+    "phonetic": "kan ia‿ÔU-pan dha UÍN-dou",
+    "features": [
+      "Formas fracas",
+      "Linking"
+    ],
+    "speech": "Can e you podem ficar leves. You‿open se conecta sem pausa, com transição arredondada entre as vogais.",
+    "compare": "EN coloca can antes de you; ZH mantém 你 antes de 能 e acrescenta 吗. 打开 é uma unidade verbal.",
+    "literal": "Você + poder + abrir + janela + pergunta.",
+    "pt": {
+      "text": "Você pode abrir a janela?",
+      "tokens": [
+        {
+          "text": "Você",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "pode",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "abrir",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "a",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "janela",
+          "c": "n",
+          "punct": "?"
+        }
+      ]
+    },
+    "en": {
+      "text": "Can you open the window?",
+      "tokens": [
+        {
+          "text": "Can",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "you",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "open",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "the",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "window",
+          "c": "n",
+          "punct": "?"
+        }
+      ]
+    },
+    "zh": {
+      "text": "你能打开窗户吗？",
+      "tokens": [
+        {
+          "text": "你",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "能",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "打开",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "窗户",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "吗",
+          "c": "part",
+          "punct": "？"
+        }
+      ]
+    },
+    "topicId": "home"
+  },
+  {
+    "id": "elo-088",
+    "level": "B1",
+    "topic": "Casa e rotina",
+    "title": "Combinar tarefas da casa",
+    "pinyin": "ru2 guo3 ni3 zuo4 fan4 wo3 jiu4 xi3 wan3",
+    "natural": "I'll wash the dishes if you cook.",
+    "phonetic": "ail UÓSH dha DÍ-shiz‿if ia KÚK",
+    "features": [
+      "Contração",
+      "Linking",
+      "Formas fracas"
+    ],
+    "speech": "I will → I'll; dishes‿if liga z à vogal. You pode enfraquecer quando cook recebe o foco.",
+    "compare": "EN usa if + presente para uma condição futura. ZH frequentemente põe 如果 no início e 就 na consequência.",
+    "literal": "Se + você + cozinhar + eu + então + lavar + tigelas.",
+    "pt": {
+      "text": "Eu lavo a louça se você cozinhar.",
+      "tokens": [
+        {
+          "text": "Eu",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "lavo",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "a",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "louça",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "se",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "você",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "cozinhar",
+          "c": "v",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "I will wash the dishes if you cook.",
+      "tokens": [
+        {
+          "text": "I",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "will",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "wash",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "the",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "dishes",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "if",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "you",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "cook",
+          "c": "v",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "如果你做饭，我就洗碗。",
+      "tokens": [
+        {
+          "text": "如果",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "你",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "做饭",
+          "c": "v",
+          "punct": "，"
+        },
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "就",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "洗",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "碗",
+          "c": "n",
+          "punct": "。"
+        }
+      ]
+    },
+    "topicId": "home"
+  },
+  {
+    "id": "elo-089",
+    "level": "A2",
+    "topic": "Transporte e viagens",
+    "title": "Pedir uma parada",
+    "pinyin": "ni3 neng2 zai4 zhe4 li3 ting2 che1 ma5",
+    "natural": "Can you stop here?",
+    "phonetic": "kan ia STÓP HÍR",
+    "features": [
+      "Formas fracas",
+      "Linking"
+    ],
+    "speech": "Can you pode soar /kən jə/. Preserve o h de here e não acrescente vogal depois de stop.",
+    "compare": "PT e EN deixam aqui/here após o verbo. ZH usa 在这里 antes de 停车, parar o veículo.",
+    "literal": "Você + poder + em + aqui + parar o veículo + pergunta.",
+    "pt": {
+      "text": "Você pode parar aqui?",
+      "tokens": [
+        {
+          "text": "Você",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "pode",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "parar",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "aqui",
+          "c": "adv",
+          "punct": "?"
+        }
+      ]
+    },
+    "en": {
+      "text": "Can you stop here?",
+      "tokens": [
+        {
+          "text": "Can",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "you",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "stop",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "here",
+          "c": "adv",
+          "punct": "?"
+        }
+      ]
+    },
+    "zh": {
+      "text": "你能在这里停车吗？",
+      "tokens": [
+        {
+          "text": "你",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "能",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "在",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "这里",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "停车",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "吗",
+          "c": "part",
+          "punct": "？"
+        }
+      ]
+    },
+    "topicId": "transport"
+  },
+  {
+    "id": "elo-090",
+    "level": "B1",
+    "topic": "Transporte e viagens",
+    "title": "Perguntar sobre um atraso",
+    "pinyin": "huo3 che1 wan3 dian3 le5 ma5",
+    "natural": "Is the train delayed?",
+    "phonetic": "iz dha TRÊIN di-LÊID",
+    "features": [
+      "Formas fracas",
+      "Linking"
+    ],
+    "speech": "Is e the são curtos; train e a sílaba final de delayed recebem destaque. Evite vogal extra depois de delayed.",
+    "compare": "EN inverte is numa pergunta. ZH usa 晚点 como predicado e termina com 了吗 para perguntar pela situação atual.",
+    "literal": "Trem + atrasar + situação atual + pergunta.",
+    "pt": {
+      "text": "O trem está atrasado?",
+      "tokens": [
+        {
+          "text": "O",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "trem",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "está",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "atrasado",
+          "c": "adj",
+          "punct": "?"
+        }
+      ]
+    },
+    "en": {
+      "text": "Is the train delayed?",
+      "tokens": [
+        {
+          "text": "Is",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "the",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "train",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "delayed",
+          "c": "adj",
+          "punct": "?"
+        }
+      ]
+    },
+    "zh": {
+      "text": "火车晚点了吗？",
+      "tokens": [
+        {
+          "text": "火车",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "晚点",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "了",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "吗",
+          "c": "part",
+          "punct": "？"
+        }
+      ]
+    },
+    "topicId": "transport"
   }
 ];

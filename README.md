@@ -1,10 +1,10 @@
 # Elo — três idiomas, uma conversa
 
-Aplicativo estático para brasileiros estudarem **português, inglês e mandarim juntos**, comparando a mesma situação. Atualização de 8 de outubro de 2026.
+Aplicativo estático para brasileiros estudarem **português, inglês e mandarim juntos**, comparando a mesma situação. Atualização temática de outubro de 2026.
 
 ## O que há nesta versão
 
-- **60 situações trilingues (180 versões alinhadas)**: dez situações por nível A1, A2, B1, B2, C1 e C2.
+- **90 situações trilingues (270 versões alinhadas)**, organizadas em 13 assuntos de vida real. Os níveis A1–C2 refinam a complexidade das atividades.
 - Português, inglês e mandarim na mesma tela. Não há seletor global que esconda um idioma.
 - Palavras coloridas conforme a classe gramatical, rótulos opcionais e destaque por classe.
 - Connected Speech visível em todos os exemplos ingleses: formas fracas, contrações, linking, assimilation, elision, flapping, glottalization e ritmo, conforme a frase.
@@ -16,6 +16,24 @@ Aplicativo estático para brasileiros estudarem **português, inglês e mandarim
 - Prática de compreensão e ordenação de palavras em inglês e mandarim, mantendo as três referências visíveis.
 - Gravação local da voz para comparação, favoritos e revisões em intervalos de 1, 3, 7 e 14 dias.
 
+## Navegação por situações da vida
+
+O caminho principal é **área da vida → assunto → situação → comparação → prática**. Os três idiomas coexistem em todas as situações. Nível e Connected Speech ficam em “Refinar”, evitando competir com a intenção de uso.
+
+| Área | Assuntos |
+| --- | --- |
+| Dia a dia | Restaurante e alimentação; Casa e rotina; Compras e dinheiro; Saúde e bem-estar; Serviços e tecnologia |
+| Viagens | Hotel e hospedagem; Transporte e viagens |
+| Vida e mundo | Natureza e clima; Lazer e cultura; Relações e comunicação; Sociedade e ideias |
+| Estudo e trabalho | Estudos e aprendizado; Trabalho e negócios |
+
+- Os contadores de assuntos refletem busca, nível e fenômeno atuais. Contadores de áreas ignoram o assunto selecionado, permitindo comparar outras áreas.
+- Selecionar uma área limpa apenas o assunto; clicar novamente no assunto o desmarca. Busca e refinamentos são preservados.
+- Cada filtro aplicado aparece como um chip removível; “Limpar filtros” restaura todo o acervo.
+- Combinações sem conteúdo explicam o motivo e oferecem recuperação. Não se apresenta cobertura completa de todos os níveis em cada assunto.
+- A prática iniciada em uma situação segue o recorte atual. “Rever explicação” preserva esse contexto. Uma prática aberta pela revisão fora do recorte segue o assunto da situação.
+- Identificadores antigos e a chave de progresso foram preservados.
+
 ## Arquivos
 
 - `dist/index.html`: estrutura da interface.
@@ -23,7 +41,8 @@ Aplicativo estático para brasileiros estudarem **português, inglês e mandarim
 - `dist/app.js`: navegação, filtros, reprodução, práticas, favoritos e revisão.
 - `dist/data.js`: acervo gerado, pronto para publicação.
 - `dist/phonetics.js`: pinyin, marcas tonais, notas e mapa de apoio brasileiro por sílaba.
-- `content/lessons.txt`: fonte editável dos 60 estudos.
+- `content/lessons.txt`: fonte editável dos estudos.
+- `content/topics.json`: áreas, assuntos e termos relacionados para busca.
 - `content/build_data.py`: compilador do acervo, sem dependências externas.
 - `tests/content.test.cjs`: verificações do acervo com Node.js.
 - `netlify.toml`: publica a pasta `dist`.
@@ -84,4 +103,4 @@ Não há autenticação própria. O acesso depende da configuração da hospedag
 
 ## Verificação desta atualização
 
-O acervo e a sintaxe JavaScript foram verificados. Testes em DOM simulado conferiram filtros por nível, caracteres e pinyin; presença simultânea dos três idiomas; favoritos; sequência de áudio com vozes simuladas; falta de voz; prática nas duas línguas; atlas e revisão. Microfone e qualidade real das vozes dependem do dispositivo e não foram validados por esses testes.
+O acervo e a sintaxe JavaScript foram verificados. Testes em DOM simulado conferiram áreas e assuntos, contadores facetados, filtros combinados e removíveis, recuperação de resultados vazios, manutenção do tema durante a prática, busca por caracteres e pinyin; presença simultânea dos três idiomas; favoritos; sequência de áudio com vozes simuladas; falta de voz; prática nas duas línguas; atlas e revisão. Microfone e qualidade real das vozes dependem do dispositivo e não foram validados por esses testes.

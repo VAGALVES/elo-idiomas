@@ -17,7 +17,7 @@ function readProgress(){
   } catch {return emptyProgress();}
 }
 let progress=readProgress();
-let view='explorer',selected='elo-011',level='all',highlight='',repeat=false;
+let view='explorer',selected='elo-011',activeTopic='',activeGroup='',level='all',highlight='',repeat=false;
 let audioRun=0,audioTimer,voiceNames={pt:'',en:'',zh:''};
 let exerciseLanguage='en',practiceId=selected,chosen=[],bankOrder=[];
 let recorder=null,recordStream=null,recordUrl=null,recordTimer,recordGeneration=0;
@@ -31,26 +31,54 @@ function setView(next){
   cancelActivity();view=next;
   $$('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===view));
   ['explorer','atlas','practice','review'].forEach(v=>$('#'+v+'-view').hidden=v!==view);
-  const headings={explorer:['Explorar','Três idiomas. Uma conversa.','Compare a estrutura. Veja os sons se conectarem.'],atlas:['Atlas comparativo','A gramática, lado a lado.','O que se parece, o que muda e como as palavras se organizam.'],practice:['Praticar','Conecte as três versões.','Uma ideia em português; prática em inglês e mandarim.'],review:['Minha revisão','Volte às suas conexões.','Favoritos, situações praticadas e revisões neste dispositivo.']};
+  const headings={explorer:['Explorar','Idiomas para a vida real.','Escolha uma situação. Compare português, inglês e mandarim.'],atlas:['Atlas comparativo','A gramática, lado a lado.','O que se parece, o que muda e como as palavras se organizam.'],practice:['Praticar','Conecte as três versões.','Uma ideia em português; prática em inglês e mandarim.'],review:['Minha revisão','Volte às suas conexões.','Favoritos, situações praticadas e revisões neste dispositivo.']};
   $('#view-title').textContent=headings[view][0];$('#page-title').textContent=headings[view][1];$('#page-subtitle').textContent=headings[view][2];
   if(view==='explorer')renderList();if(view==='atlas')renderAtlas();if(view==='practice')renderPractice();if(view==='review')renderReview();
 }
 function fillFilters(){
-  $('#topic').innerHTML='<option value="">Todos os assuntos</option>'+[...new Set(LESSONS.map(d=>d.topic))].map(t=>`<option>${esc(t)}</option>`).join('');
-  $('#feature').innerHTML='<option value="">Toda a fala conectada</option>'+[...new Set(LESSONS.flatMap(d=>d.features))].map(t=>`<option>${esc(t)}</option>`).join('');
+  $('#feature').innerHTML='<option value="">Todos os fenômenos</option>'+[...new Set(LESSONS.flatMap(d=>d.features))].map(t=>`<option>${esc(t)}</option>`).join('');
+  $('#catalog-count').textContent=TOPICS.length+' assuntos · 3 idiomas';
+  $('#catalog-footer').textContent=LESSONS.length+' situações · '+LESSONS.length*3+' versões alinhadas';
 }
-function matches(){
-  const q=normalizeSearch($('#search').value).trim();
-  return LESSONS.filter(d=>(level==='all'||d.level===level)&&(!$('#topic').value||d.topic===$('#topic').value)&&(!$('#feature').value||d.features.includes($('#feature').value))&&normalizeSearch([d.title,d.pt.text,d.en.text,d.zh.text,pinyin(d.pinyin),d.pinyin.replace(/[1-5]/g,''),d.topic,d.phonetic,...d.features].join(' ')).includes(q));
+function matches(overrides={}){
+  const filters={topic:activeTopic,group:activeGroup,level,feature:$('#feature').value,query:$('#search').value,...overrides};
+  const q=normalizeSearch(filters.query).trim();
+  return LESSONS.filter(d=>{
+    const t=TOPICS.find(t=>t.id===d.topicId);
+    return (filters.level==='all'||d.level===filters.level)&&(!filters.topic||d.topicId===filters.topic)&&(!filters.group||t.group===filters.group)&&(!filters.feature||d.features.includes(filters.feature))&&normalizeSearch([d.title,d.pt.text,d.en.text,d.zh.text,pinyin(d.pinyin),d.pinyin.replace(/[1-5]/g,''),d.topic,t.keywords,d.phonetic,...d.features].join(' ')).includes(q);
+  });
 }
-function clearFilters(){level='all';$('#search').value='';$('#topic').value='';$('#feature').value='';$$('[data-level]').forEach(b=>b.classList.toggle('selected',b.dataset.level==='all'))}
+function clearFilters(){level='all';activeTopic='';activeGroup='';$('#search').value='';$('#feature').value=''}
 function openLesson(id){if(!LESSONS.some(d=>d.id===id))throw Error('Situação inexistente');clearFilters();selected=id;setView('explorer')}
+function renderDiscovery(){
+  const focused=document.activeElement;
+  const focusKey=focused?.dataset?.group!==undefined?['group',focused.dataset.group]:focused?.dataset?.topic!==undefined?['topic',focused.dataset.topic]:null;
+  $('#topic-groups').innerHTML=[{id:'',label:'Todas as áreas'},...TOPIC_GROUPS].map(g=>`<button data-group="${g.id}" aria-pressed="${activeGroup===g.id}" class="${activeGroup===g.id?'selected':''}">${esc(g.label)} <small>${matches({group:g.id,topic:''}).length}</small></button>`).join('');
+  const visible=TOPICS.filter(t=>!activeGroup||t.group===activeGroup);
+  $('#topic-options').innerHTML=visible.map(t=>`<button data-topic="${t.id}" aria-pressed="${activeTopic===t.id}" class="topic-option ${activeTopic===t.id?'selected':''}" title="${esc(t.description)}"><span>${esc(t.label)}</span><small>${matches({topic:t.id}).length}</small></button>`).join('');
+  const topic=TOPICS.find(t=>t.id===activeTopic);
+  $('#topic-description').textContent=topic?topic.description+' · Português, inglês e mandarim juntos.':'Escolha um assunto ou explore todos. Os números indicam situações disponíveis com os filtros atuais.';
+  $$('[data-group]').forEach(b=>b.onclick=()=>{cancelActivity();activeGroup=b.dataset.group;activeTopic='';renderList()});
+  $$('[data-topic]').forEach(b=>b.onclick=()=>{cancelActivity();activeTopic=activeTopic===b.dataset.topic?'':b.dataset.topic;renderList()});
+  if(focusKey)$(`[data-${focusKey[0]}="${focusKey[1]}"]`)?.focus();
+  $$('[data-level]').forEach(b=>{const count=matches({level:b.dataset.level}).length;b.classList.toggle('selected',b.dataset.level===level);b.setAttribute('aria-pressed',String(b.dataset.level===level));b.setAttribute('aria-label',(b.dataset.level==='all'?'Todos os níveis':b.dataset.level)+': '+count+' situações');b.title=count+' situações disponíveis';});
+  const applied=[];
+  if(activeGroup)applied.push(['group',TOPIC_GROUPS.find(g=>g.id===activeGroup).label]);
+  if(activeTopic)applied.push(['topic',topic.label]);
+  if(level!=='all')applied.push(['level',level]);
+  if($('#feature').value)applied.push(['feature',$('#feature').value]);
+  if($('#search').value.trim())applied.push(['query','Busca: '+$('#search').value.trim()]);
+  $('#active-filters').innerHTML=applied.map(([key,label])=>`<button data-remove-filter="${key}" aria-label="Remover filtro ${esc(label)}">${esc(label)} <span aria-hidden="true">×</span></button>`).join('');
+  $('#reset-filters').hidden=!applied.length;
+  $('#refine-count').textContent=(level!=='all'?1:0)+($('#feature').value?1:0)||'';
+  $$('[data-remove-filter]').forEach(b=>b.onclick=()=>{cancelActivity();const k=b.dataset.removeFilter;if(k==='group')activeGroup='';if(k==='topic')activeTopic='';if(k==='level')level='all';if(k==='feature')$('#feature').value='';if(k==='query')$('#search').value='';renderList();$('#reset-filters').hidden?$('#search').focus():$('#reset-filters').focus()});
+}
 function renderList(){
-  const found=matches();$('#result-count').textContent=found.length+' situações · '+found.length*3+' versões';
+  renderDiscovery();const found=matches();$('#result-count').textContent=found.length+' situações · '+found.length*3+' versões';
   if(found.length&&!found.some(d=>d.id===selected)){cancelActivity();selected=found[0].id;}
-  $('#results').innerHTML=found.length?found.map(d=>`<button class="result ${d.id===selected?'active':''}" data-id="${d.id}" aria-pressed="${d.id===selected}"><div class="meta"><span class="pill">${d.level}</span>${esc(d.topic)} ${progress.done.includes(d.id)?'· ✓':''}</div><strong>${esc(d.pt.text)}</strong><small lang="en">${esc(d.en.text)}</small><small class="zh-preview" lang="zh-CN">${esc(d.zh.text)}</small></button>`).join(''):'<div class="empty"><p>Nenhuma situação encontrada.</p></div>';
+  $('#results').innerHTML=found.length?found.map(d=>`<button class="result ${d.id===selected?'active':''}" data-id="${d.id}" aria-pressed="${d.id===selected}"><div class="meta"><span class="pill">${d.level}</span>${esc(d.topic)} ${progress.done.includes(d.id)?'· ✓':''}</div><strong>${esc(d.pt.text)}</strong><small lang="en">${esc(d.en.text)}</small><small class="zh-preview" lang="zh-CN">${esc(d.zh.text)}</small></button>`).join(''):'<div class="empty"><p>Nenhuma situação neste recorte.</p></div>';
   $$('[data-id]').forEach(b=>b.onclick=()=>{cancelActivity();selected=b.dataset.id;renderList()});
-  if(found.length)renderLesson();else{$('#lesson').innerHTML='<div class="empty"><strong>Vamos ampliar a busca?</strong><p>Combine outros filtros ou procure nos três idiomas.</p><button id="clear-filters" class="secondary-button">Limpar filtros</button></div>';$('#clear-filters').onclick=()=>{clearFilters();renderList()};}
+  if(found.length)renderLesson();else{$('#lesson').innerHTML='<div class="empty"><strong>Vamos ampliar a busca?</strong><p>Este cruzamento de assunto, nível e busca ainda não tem exemplos. Remova um filtro acima ou explore todo o acervo.</p><button id="clear-filters" class="secondary-button">Limpar filtros</button></div>';$('#clear-filters').onclick=()=>{clearFilters();renderList()};}
 }
 function tokensMarkup(d,lang){return d[lang].tokens.map((t,i)=>`<button class="token ${highlight&&highlight!==t.c?'dim':''}" style="--c:${CLASSES[t.c][1]}" data-token="${i}" data-lang="${lang}" aria-label="${esc(t.text)}, ${esc(CLASSES[t.c][0])}">${esc(t.text)}<small class="token-label">${esc(CLASSES[t.c][0])}</small></button>${t.punct?`<span class="punct" aria-hidden="true">${esc(t.punct)}</span>`:''}`).join('')}
 function playButton(lang,label='Ouvir'){return `<button class="play-btn" data-play="${lang}" aria-label="${label} em ${LABELS[lang]}">▶ ${label}</button>`}
@@ -60,7 +88,7 @@ function panel(d,lang){
 }
 function renderLesson(){
   const d=current(),fav=progress.favorites.includes(d.id),used=[...new Set(LANGS.flatMap(l=>d[l].tokens.map(t=>t.c)))];
-  $('#lesson').innerHTML=`<article class="lesson"><div class="lesson-toolbar"><div class="meta"><span class="pill">${d.level}</span>${esc(d.title)}</div><div class="toolbar-actions"><button id="play-all" class="audio-all">▶ PT · EN · 中</button><button id="favorite" class="icon-btn ${fav?'saved':''}" aria-label="${fav?'Remover favorito':'Favoritar situação'}" aria-pressed="${fav}">${fav?'★':'☆'}</button></div></div><section class="pt-bridge" aria-label="Português"><div class="language-title"><strong><span class="language-code">PT</span>Português · a ideia que conecta</strong><button class="secondary-button" data-play="pt" aria-label="Ouvir em português">▶</button></div><div class="tokens ${progress.labels?'show-labels':''}" lang="pt-BR">${tokensMarkup(d,'pt')}</div></section><div class="comparison">${panel(d,'en')}${panel(d,'zh')}</div><section class="compare-note"><h2>O que muda de um idioma para outro?</h2><p>${esc(d.compare)}</p></section><div class="legend-area"><div class="legend-controls"><label><input type="checkbox" id="show-labels" ${progress.labels?'checked':''}> Mostrar classes sob as palavras</label><label>Destacar <select id="highlight"><option value="">Todas as classes</option>${Object.entries(CLASSES).map(([c,v])=>`<option value="${c}" ${highlight===c?'selected':''}>${v[0]}</option>`).join('')}</select></label></div><div class="legend">${used.map(c=>`<span><i style="background:${CLASSES[c][1]}"></i>${CLASSES[c][0]}</span>`).join('')}</div></div><div class="transport"><label>Velocidade <select id="rate">${[.5,.65,.8,1,1.2].map(r=>`<option value="${r}" ${progress.rate===r?'selected':''}>${String(r).replace('.',',')}×</option>`).join('')}</select></label><button id="stop-audio" class="secondary-button">■ Parar</button><label><input id="repeat" type="checkbox" ${repeat?'checked':''}> Repetir</label><span class="audio-status" role="status" aria-live="polite">Voz sintética do dispositivo.</span></div><details class="audio-settings"><summary>Escolher vozes e entender o áudio</summary><div class="voice-grid">${LANGS.map(l=>`<label>${LABELS[l]}<select data-voice="${l}" aria-label="Voz de ${LABELS[l]}"></select></label>`).join('')}</div><p>Áudio sintético: não é uma gravação humana e pode não reproduzir todas as reduções descritas. A velocidade muda a síntese. Algumas vozes precisam de internet; se faltar um idioma, o app avisa. Para uma reprodução contínua, use PT · EN · 中.</p><button id="play-full" class="secondary-button">Ouvir inglês sem contrações escritas</button></details><div class="lesson-actions"><small>Toque em uma palavra<br>para consultar a classe.</small><button id="practice-this" class="primary-button">Praticar esta situação</button></div></article>`;
+  $('#lesson').innerHTML=`<article class="lesson"><div class="lesson-toolbar"><div class="meta"><span class="pill">${d.level}</span>${esc(d.topic)} · ${esc(d.title)}</div><div class="toolbar-actions"><button id="play-all" class="audio-all">▶ PT · EN · 中</button><button id="favorite" class="icon-btn ${fav?'saved':''}" aria-label="${fav?'Remover favorito':'Favoritar situação'}" aria-pressed="${fav}">${fav?'★':'☆'}</button></div></div><section class="pt-bridge" aria-label="Português"><div class="language-title"><strong><span class="language-code">PT</span>Português · a ideia que conecta</strong><button class="secondary-button" data-play="pt" aria-label="Ouvir em português">▶</button></div><div class="tokens ${progress.labels?'show-labels':''}" lang="pt-BR">${tokensMarkup(d,'pt')}</div></section><div class="comparison">${panel(d,'en')}${panel(d,'zh')}</div><section class="compare-note"><h2>O que muda de um idioma para outro?</h2><p>${esc(d.compare)}</p></section><div class="legend-area"><div class="legend-controls"><label><input type="checkbox" id="show-labels" ${progress.labels?'checked':''}> Mostrar classes sob as palavras</label><label>Destacar <select id="highlight"><option value="">Todas as classes</option>${Object.entries(CLASSES).map(([c,v])=>`<option value="${c}" ${highlight===c?'selected':''}>${v[0]}</option>`).join('')}</select></label></div><div class="legend">${used.map(c=>`<span><i style="background:${CLASSES[c][1]}"></i>${CLASSES[c][0]}</span>`).join('')}</div></div><div class="transport"><label>Velocidade <select id="rate">${[.5,.65,.8,1,1.2].map(r=>`<option value="${r}" ${progress.rate===r?'selected':''}>${String(r).replace('.',',')}×</option>`).join('')}</select></label><button id="stop-audio" class="secondary-button">■ Parar</button><label><input id="repeat" type="checkbox" ${repeat?'checked':''}> Repetir</label><span class="audio-status" role="status" aria-live="polite">Voz sintética do dispositivo.</span></div><details class="audio-settings"><summary>Escolher vozes e entender o áudio</summary><div class="voice-grid">${LANGS.map(l=>`<label>${LABELS[l]}<select data-voice="${l}" aria-label="Voz de ${LABELS[l]}"></select></label>`).join('')}</div><p>Áudio sintético: não é uma gravação humana e pode não reproduzir todas as reduções descritas. A velocidade muda a síntese. Algumas vozes precisam de internet; se faltar um idioma, o app avisa. Para uma reprodução contínua, use PT · EN · 中.</p><button id="play-full" class="secondary-button">Ouvir inglês sem contrações escritas</button></details><div class="lesson-actions"><small>Toque em uma palavra<br>para consultar a classe.</small><button id="practice-this" class="primary-button">Praticar esta situação</button></div></article>`;
   $('#favorite').onclick=()=>{progress.favorites=fav?progress.favorites.filter(id=>id!==d.id):[...progress.favorites,d.id];save();renderLesson()};
   $$('[data-token]').forEach(b=>b.onclick=()=>showWord(d,b.dataset.lang,+b.dataset.token));
   $$('[data-play]').forEach(b=>b.onclick=()=>playLanguage(d,b.dataset.play));
@@ -130,7 +158,7 @@ function renderPractice(){
  renderOrder(d);$('#check-order').onclick=()=>{const answer=chosen.map(i=>d[exerciseLanguage].tokens[i].text).join('|');const target=d[exerciseLanguage].tokens.map(t=>t.text).join('|');const ok=answer===target;$('#order-feedback').textContent=ok?'Ordem correta. '+d.compare:'Ainda não é a ordem original. Observe a posição de tempo, verbo, objeto e partículas.';if(ok)markPracticed(d.id)};
  $('#reset-order').onclick=()=>{chosen=[];renderOrder(d);$('#order-feedback').textContent=''};
  $('#practice-sequence').onclick=()=>speakQueue(LANGS.map(l=>({lang:l,text:l==='en'?d.natural:d[l].text})),true);$('#practice-en').onclick=()=>speakQueue([{lang:'en',text:d.natural}],true);$('#practice-zh').onclick=()=>speakQueue([{lang:'zh',text:d.zh.text}],true);$('#practice-stop').onclick=stopAudio;
- $('#record').onclick=startRecording;$('#back-lesson').onclick=()=>openLesson(d.id);$('#next-practice').onclick=()=>{cancelActivity();practiceId=LESSONS[(LESSONS.findIndex(x=>x.id===d.id)+1)%LESSONS.length].id;renderPractice()};
+ $('#record').onclick=startRecording;$('#back-lesson').onclick=()=>{selected=d.id;if(!matches().some(x=>x.id===d.id))clearFilters();setView('explorer')};$('#next-practice').onclick=()=>{cancelActivity();const pool=matches().some(x=>x.id===d.id)?matches():LESSONS.filter(x=>x.topicId===d.topicId);practiceId=pool[(pool.findIndex(x=>x.id===d.id)+1)%pool.length].id;renderPractice()};
 }
 function renderOrder(d){
  const ts=d[exerciseLanguage].tokens;
@@ -152,7 +180,7 @@ function renderReview(){
  $$('[data-review]').forEach(b=>b.onclick=()=>{practiceId=b.dataset.review;setView('practice')});if($('#review-start'))$('#review-start').onclick=()=>setView('explorer');
 }
 $$('[data-view]').forEach(b=>b.onclick=()=>setView(b.dataset.view));$('.brand').onclick=e=>{e.preventDefault();setView('explorer')};
-$('#search').oninput=()=>{stopAudio();renderList()};$('#topic').onchange=()=>{stopAudio();renderList()};$('#feature').onchange=()=>{stopAudio();renderList()};
+$('#search').oninput=()=>{stopAudio();renderList()};$('#reset-filters').onclick=()=>{cancelActivity();clearFilters();renderList();$('#search').focus()};$('#feature').onchange=()=>{stopAudio();renderList()};
 $$('[data-level]').forEach(b=>b.onclick=()=>{cancelActivity();level=b.dataset.level;$$('[data-level]').forEach(x=>x.classList.toggle('selected',x===b));renderList()});
 $('.close').onclick=()=>{$('#word-modal').close();stopAudio()};$('#word-modal').addEventListener('click',e=>{if(e.target===$('#word-modal')){$('#word-modal').close();stopAudio()}});$('#word-modal').addEventListener('cancel',stopAudio);
 if('speechSynthesis' in window)speechSynthesis.addEventListener('voiceschanged',populateVoices);

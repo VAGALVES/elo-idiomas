@@ -1,0 +1,113 @@
+{
+  "groups": [
+    {
+      "id": "dia",
+      "label": "Dia a dia"
+    },
+    {
+      "id": "viagem",
+      "label": "Viagens"
+    },
+    {
+      "id": "mundo",
+      "label": "Vida e mundo"
+    },
+    {
+      "id": "projetos",
+      "label": "Estudo e trabalho"
+    }
+  ],
+  "topics": [
+    {
+      "id": "food",
+      "label": "Restaurante e alimentação",
+      "group": "dia",
+      "description": "Pedidos, cardápio, bebidas e conta",
+      "keywords": "restaurante comida café jantar almoço alimentação"
+    },
+    {
+      "id": "home",
+      "label": "Casa e rotina",
+      "group": "dia",
+      "description": "Moradia, tarefas e vida em casa",
+      "keywords": "casa moradia rotina aluguel limpeza"
+    },
+    {
+      "id": "shopping",
+      "label": "Compras e dinheiro",
+      "group": "dia",
+      "description": "Preços, pagamentos e escolhas",
+      "keywords": "compras dinheiro loja mercado cartão banco"
+    },
+    {
+      "id": "health",
+      "label": "Saúde e bem-estar",
+      "group": "dia",
+      "description": "Sintomas, consulta e necessidades",
+      "keywords": "saúde médico hospital farmácia emergência bem-estar"
+    },
+    {
+      "id": "services",
+      "label": "Serviços e tecnologia",
+      "group": "dia",
+      "description": "Internet, telefone e encomendas",
+      "keywords": "serviços tecnologia internet telefone correio wifi"
+    },
+    {
+      "id": "hotel",
+      "label": "Hotel e hospedagem",
+      "group": "viagem",
+      "description": "Reserva, chegada, quarto e saída",
+      "keywords": "hotel hospedagem reserva check-in checkout recepção"
+    },
+    {
+      "id": "transport",
+      "label": "Transporte e viagens",
+      "group": "viagem",
+      "description": "Deslocamentos, passagens e horários",
+      "keywords": "transporte viagem metrô ônibus táxi trem aeroporto"
+    },
+    {
+      "id": "nature",
+      "label": "Natureza e clima",
+      "group": "mundo",
+      "description": "Tempo, paisagens e cuidado ambiental",
+      "keywords": "natureza clima chuva parque trilha ambiente sustentabilidade"
+    },
+    {
+      "id": "leisure",
+      "label": "Lazer e cultura",
+      "group": "mundo",
+      "description": "Cinema, museu, música e convites",
+      "keywords": "lazer cultura cinema museu música esporte entretenimento"
+    },
+    {
+      "id": "people",
+      "label": "Relações e comunicação",
+      "group": "mundo",
+      "description": "Apresentações, ajuda e convivência",
+      "keywords": "relações família amigos comunicação apresentação sentimentos"
+    },
+    {
+      "id": "society",
+      "label": "Sociedade e ideias",
+      "group": "mundo",
+      "description": "Opiniões, evidências e debate",
+      "keywords": "sociedade ideias opinião debate cidadania argumentos"
+    },
+    {
+      "id": "study",
+      "label": "Estudos e aprendizado",
+      "group": "projetos",
+      "description": "Compreensão, idiomas e estudo",
+      "keywords": "estudos aprendizado escola universidade idioma educação"
+    },
+    {
+      "id": "work",
+      "label": "Trabalho e negócios",
+      "group": "projetos",
+      "description": "Reuniões, projetos e decisões",
+      "keywords": "trabalho negócios emprego reunião relatório dados fornecedor"
+    }
+  ]
+}
