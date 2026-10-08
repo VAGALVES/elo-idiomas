@@ -19,6 +19,10 @@ function readProgress(){
 let progress=readProgress();
 let view='explorer',selected='elo-011',activeTopic='',activeGroup='',level='all',highlight='',repeat=false;
 let audioRun=0,audioTimer,voiceNames={pt:'',en:'',zh:''};
+// Estimativas iniciais ajustáveis: caracteres chineses representam mais fala por unidade.
+const SHADOWING_MIN_PAUSE_MS=1500;
+const SHADOWING_MS_PER_CHARACTER={pt:90,en:90,zh:350};
+const AUDIO_GAP_MS=650;
 let exerciseLanguage='en',practiceId=selected,chosen=[],bankOrder=[];
 let practiceAttempt=null,reviewQueue=null,reviewIndex=0;
 let recorder=null,recordStream=null,recordUrl=null,recordTimer,recordGeneration=0;
@@ -122,7 +126,33 @@ function speakQueue(items,once=false){
   if(missing.length){toast('Sem voz instalada: '+missing.join(', ')+'. Ative o idioma nas configurações de voz do dispositivo.');}
   const queue=items.filter(item=>voiceFor(item.lang));if(!queue.length){setAudioStatus('Nenhuma voz compatível disponível.');return;}
   const run=audioRun;let i=0;
-  function next(){if(run!==audioRun)return;const item=queue[i],voice=voiceFor(item.lang);if(!voice){setAudioStatus('Voz indisponível. Escolha outra voz.');return;}const u=new SpeechSynthesisUtterance(item.text);u.voice=voice;u.lang=voice.lang;u.rate=progress.rate;u.onstart=()=>setAudioStatus(LABELS[item.lang]+' · '+String(progress.rate).replace('.',',')+'×');u.onend=()=>{if(run!==audioRun)return;i++;if(i<queue.length)audioTimer=setTimeout(next,650);else if(repeat&&!once){i=0;setAudioStatus('Sua vez de repetir…');audioTimer=setTimeout(next,2000)}else setAudioStatus(missing.length?'Concluído; sem voz para '+missing.join(', ')+'.':'Concluído. Repita em voz alta.');};u.onerror=e=>{if(['canceled','interrupted'].includes(e.error))return;setAudioStatus('Falha no áudio. Experimente outra voz.');toast('A voz selecionada não reproduziu. Verifique a conexão ou troque a voz.')};speechSynthesis.speak(u)}next();
+  const finish=()=>setAudioStatus(missing.length?'Concluído; sem voz para '+missing.join(', ')+'.':'Concluído. Repita em voz alta.');
+  function next(){
+    if(run!==audioRun)return;
+    const item=queue[i],voice=voiceFor(item.lang);
+    if(!voice){setAudioStatus('Voz indisponível. Escolha outra voz.');return;}
+    const u=new SpeechSynthesisUtterance(item.text);u.voice=voice;u.lang=voice.lang;u.rate=progress.rate;
+    u.onstart=()=>setAudioStatus(LABELS[item.lang]+' · '+String(progress.rate).replace('.',',')+'×');
+    u.onend=()=>{
+      if(run!==audioRun)return;
+      i++;
+      if(repeat){
+        // Reservamos uma tentativa de fala após cada idioma, inclusive o último da fila.
+        const pause=Math.max(SHADOWING_MIN_PAUSE_MS,item.text.length*SHADOWING_MS_PER_CHARACTER[item.lang]/progress.rate);
+        setAudioStatus('Sua vez: repita em voz alta');
+        audioTimer=setTimeout(()=>{
+          if(run!==audioRun)return;
+          if(i<queue.length)next();
+          else if(!once){i=0;next();}
+          else finish();
+        },pause);
+      }else if(i<queue.length)audioTimer=setTimeout(next,AUDIO_GAP_MS);
+      else finish();
+    };
+    u.onerror=e=>{if(['canceled','interrupted'].includes(e.error))return;setAudioStatus('Falha no áudio. Experimente outra voz.');toast('A voz selecionada não reproduziu. Verifique a conexão ou troque a voz.')};
+    speechSynthesis.speak(u);
+  }
+  next();
 }
 function showWord(d,lang,index){
   const t=d[lang].tokens[index],c=CLASSES[t.c];
