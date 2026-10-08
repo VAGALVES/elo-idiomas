@@ -20,6 +20,7 @@ let progress=readProgress();
 let view='explorer',selected='elo-011',activeTopic='',activeGroup='',level='all',highlight='',repeat=false;
 let audioRun=0,audioTimer,voiceNames={pt:'',en:'',zh:''};
 let exerciseLanguage='en',practiceId=selected,chosen=[],bankOrder=[];
+let practiceAttempt=null,reviewQueue=null,reviewIndex=0;
 let recorder=null,recordStream=null,recordUrl=null,recordTimer,recordGeneration=0;
 function current(){return LESSONS.find(d=>d.id===selected)||LESSONS[0]}
 function save(){try{localStorage.setItem('elo-progress-v2',JSON.stringify(progress))}catch{toast('Não foi possível salvar neste navegador.')}updateCount()}
@@ -28,7 +29,11 @@ function toast(message){$('#toast').textContent=message;$('#toast').style.displa
 function cancelActivity(){stopAudio();stopRecording()}
 function setView(next){
   if(!['explorer','atlas','practice','review'].includes(next))return;
-  cancelActivity();view=next;
+  cancelActivity();
+  // Trocar de tela encerra a tentativa; trocar de idioma dentro dela não duplica a nota.
+  if(next==='practice'&&view!=='practice')practiceAttempt=null;
+  if(next!=='practice')reviewQueue=null;
+  view=next;
   $$('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===view));
   ['explorer','atlas','practice','review'].forEach(v=>$('#'+v+'-view').hidden=v!==view);
   const headings={explorer:['Explorar','Idiomas para a vida real.','Escolha uma situação. Compare português, inglês e mandarim.'],atlas:['Atlas comparativo','A gramática, lado a lado.','O que se parece, o que muda e como as palavras se organizam.'],practice:['Praticar','Conecte as três versões.','Uma ideia em português; prática em inglês e mandarim.'],review:['Minha revisão','Volte às suas conexões.','Favoritos, situações praticadas e revisões neste dispositivo.']};
@@ -143,18 +148,37 @@ function renderAtlas(){
  $$('[data-class]').forEach(b=>b.onclick=()=>{const d=LESSONS.find(d=>LANGS.some(l=>d[l].tokens.some(t=>t.c===b.dataset.class)));if(d){highlight=b.dataset.class;openLesson(d.id)}});
 }
 function shuffle(a){const out=[...a];for(let i=out.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[out[i],out[j]]=[out[j],out[i]]}return out}
-function markPracticed(id){
- if(!progress.done.includes(id))progress.done.push(id);
- const today=Date.now(),r=progress.reviews[id];
- if(!r||today>=r.due){const stage=r?Math.min(r.stage+1,3):0;const days=[1,3,7,14][stage];progress.reviews[id]={stage,due:today+days*86400000};}
- save();
+function submitPracticeGrade(d,nota){
+ if(practiceAttempt.graded)return;
+ const effectiveGrade=practiceAttempt.revealed?0:nota;
+ gradeReview(progress.reviews,d.id,effectiveGrade);
+ // done registra uma prática autoavaliada com acerto; erros não apagam o histórico anterior.
+ if(effectiveGrade>=1&&!progress.done.includes(d.id))progress.done.push(d.id);
+ practiceAttempt.graded=true;save();
+ $$('[data-grade]').forEach(b=>b.disabled=true);
+ const due=new Date(progress.reviews[d.id].due).toLocaleDateString('pt-BR');
+ $('#grade-feedback').textContent=(practiceAttempt.revealed?'Resposta revelada: Errei registrado. ':'Autoavaliação registrada. ')+'Próxima revisão: '+due+'.';
+ $('#reset-order').disabled=true;$('#next-practice').disabled=false;
+}
+function nextPractice(d){
+ cancelActivity();
+ if(reviewQueue){
+  // A fila não incorpora favoritos nem itens futuros; rechecamos vencimento ao avançar.
+  do{reviewIndex++;}while(reviewIndex<reviewQueue.length&&!isDue(progress.reviews[reviewQueue[reviewIndex]]));
+  if(reviewIndex>=reviewQueue.length){setView('review');toast('Fila de hoje concluída.');return;}
+  practiceId=reviewQueue[reviewIndex];
+ }else{
+  const pool=matches().some(x=>x.id===d.id)?matches():LESSONS.filter(x=>x.topicId===d.topicId);
+  practiceId=pool[(pool.findIndex(x=>x.id===d.id)+1)%pool.length].id;
+ }
+ practiceAttempt=null;renderPractice();
 }
 function renderPractice(step=1){
- stopRecording();const d=LESSONS.find(d=>d.id===practiceId)||current();practiceId=d.id;chosen=[];bankOrder=shuffle(d[exerciseLanguage].tokens.map((_,i)=>i));
+ stopRecording();const d=LESSONS.find(d=>d.id===practiceId)||current();practiceId=d.id;if(!practiceAttempt||practiceAttempt.id!==d.id)practiceAttempt={id:d.id,graded:false,revealed:false};chosen=[];bankOrder=shuffle(d[exerciseLanguage].tokens.map((_,i)=>i));
  // As etapas são sequenciais para que a referência de uma não entregue a resposta da outra.
  const recognition=step===1,referenceLanguages=recognition?['en','zh']:LANGS.filter(l=>l!==exerciseLanguage);
  const alternatives=shuffle([d,...shuffle(LESSONS.filter(x=>x.id!==d.id&&x.level===d.level)).slice(0,2)]);
- $('#practice').innerHTML=`<article class="practice-card"><div class="meta"><span class="pill">${d.level}</span>${esc(d.title)} · ${esc(d.topic)}</div><h2>${recognition?'1. Reconheça a ideia em português':'2. Reconstrua a frase original'}</h2><div class="practice-reference">${referenceLanguages.map(l=>`<div class="reference-language"><small>${LABELS[l]}</small><p lang="${l==='zh'?'zh-CN':l}">${esc(d[l].text)}</p></div>`).join('')}</div><div class="practice-toolbar"><label>Treinar a ordem em <select id="exercise-language"><option value="en" ${exerciseLanguage==='en'?'selected':''}>Inglês</option><option value="zh" ${exerciseLanguage==='zh'?'selected':''}>Mandarim</option></select></label><label>Velocidade <select id="practice-rate">${[.5,.65,.8,1,1.2].map(r=>`<option value="${r}" ${r===progress.rate?'selected':''}>${r}×</option>`).join('')}</select></label><button id="practice-sequence" class="secondary-button">${recognition?'▶ Ouvir inglês e mandarim':'▶ Ouvir idioma treinado'}</button><button id="practice-stop" class="secondary-button">■ Parar</button></div><p class="audio-status" role="status" aria-live="polite">${recognition?'Compare as referências e escolha a tradução.':'Use o português como pista; escute se precisar.'}</p>${recognition?`<p class="literal">Leia e escute: ${esc(d[exerciseLanguage].text)}</p><div class="options">${alternatives.map(a=>`<button class="option" data-answer="${a.id}" aria-pressed="false">${esc(a.pt.text)}</button>`).join('')}</div><p id="quiz-feedback" class="feedback" aria-live="polite"></p><button id="start-production" class="primary-button" disabled>Continuar para produção</button>`:`<p class="literal">Toque nos blocos. Toque novamente para devolver um bloco. A pontuação aparece junto da palavra.</p><div class="order-tray" id="chosen"></div><div class="order-tray" id="bank"></div><button id="check-order" class="primary-button">Conferir ordem</button><button id="show-answer" class="secondary-button">Mostrar resposta</button><button id="reset-order" class="secondary-button">Recomeçar</button><p id="order-feedback" class="feedback" aria-live="polite"></p><div id="practice-answer"></div>`}<div class="lesson-actions"><button id="back-lesson" class="secondary-button">Rever explicação</button><button id="next-practice" class="primary-button">Próxima situação</button></div></article>`;
+ $('#practice').innerHTML=`<article class="practice-card"><div class="meta"><span class="pill">${d.level}</span>${esc(d.title)} · ${esc(d.topic)}</div><h2>${recognition?'1. Reconheça a ideia em português':'2. Reconstrua a frase original'}</h2><div class="practice-reference">${referenceLanguages.map(l=>`<div class="reference-language"><small>${LABELS[l]}</small><p lang="${l==='zh'?'zh-CN':l}">${esc(d[l].text)}</p></div>`).join('')}</div><div class="practice-toolbar"><label>Treinar a ordem em <select id="exercise-language"><option value="en" ${exerciseLanguage==='en'?'selected':''}>Inglês</option><option value="zh" ${exerciseLanguage==='zh'?'selected':''}>Mandarim</option></select></label><label>Velocidade <select id="practice-rate">${[.5,.65,.8,1,1.2].map(r=>`<option value="${r}" ${r===progress.rate?'selected':''}>${r}×</option>`).join('')}</select></label><button id="practice-sequence" class="secondary-button">${recognition?'▶ Ouvir inglês e mandarim':'▶ Ouvir idioma treinado'}</button><button id="practice-stop" class="secondary-button">■ Parar</button></div><p class="audio-status" role="status" aria-live="polite">${recognition?'Compare as referências e escolha a tradução.':'Use o português como pista; escute se precisar.'}</p>${recognition?`<p class="literal">Leia e escute: ${esc(d[exerciseLanguage].text)}</p><div class="options">${alternatives.map(a=>`<button class="option" data-answer="${a.id}" aria-pressed="false">${esc(a.pt.text)}</button>`).join('')}</div><p id="quiz-feedback" class="feedback" aria-live="polite"></p><button id="start-production" class="primary-button" disabled>Continuar para produção</button>`:`<p class="literal">Toque nos blocos. Toque novamente para devolver um bloco. A pontuação aparece junto da palavra.</p><div class="order-tray" id="chosen"></div><div class="order-tray" id="bank"></div><button id="check-order" class="primary-button">Conferir ordem</button><button id="show-answer" class="secondary-button">Mostrar resposta</button><button id="reset-order" class="secondary-button">Recomeçar</button><p id="order-feedback" class="feedback" aria-live="polite"></p><div id="practice-answer"></div>`}<div class="lesson-actions"><button id="back-lesson" class="secondary-button">Rever explicação</button><button id="next-practice" class="primary-button" ${reviewQueue&&!practiceAttempt.graded?'disabled':''}>${reviewQueue?(reviewIndex===reviewQueue.length-1?'Concluir revisões':'Próxima revisão'):'Próxima situação'}</button></div></article>`;
  $('#exercise-language').onchange=e=>{cancelActivity();exerciseLanguage=e.target.value;renderPractice()};$('#practice-rate').onchange=e=>{progress.rate=+e.target.value;stopAudio();save()};
  if(recognition){
   $$('[data-answer]').forEach(b=>b.onclick=()=>{const ok=b.dataset.answer===d.id;b.classList.add(ok?'correct':'wrong');b.setAttribute('aria-pressed','true');$('#quiz-feedback').textContent=ok?'Correto. Agora tente reconstruir a frase.':'Essa frase expressa outra ideia. Compare a ação e os participantes.';if(ok){$$('[data-answer]').forEach(x=>x.disabled=true);$('#start-production').disabled=false}});
@@ -162,16 +186,19 @@ function renderPractice(step=1){
  }else{
   renderOrder(d);
   $('#check-order').onclick=()=>{const answer=chosen.map(i=>d[exerciseLanguage].tokens[i].text).join('|');const target=d[exerciseLanguage].tokens.map(t=>t.text).join('|');const ok=answer===target;$('#order-feedback').textContent=ok?'Ordem correta. Compare com a resposta abaixo.':'Ainda não é a ordem original. Compare sua tentativa com a resposta abaixo.';renderPracticeAnswer(d)};
-  $('#show-answer').onclick=()=>{$('#order-feedback').textContent='Resposta revelada. Compare a ordem dos blocos.';renderPracticeAnswer(d)};
+  $('#show-answer').onclick=()=>{practiceAttempt.revealed=true;$('#order-feedback').textContent='Resposta revelada. Compare a ordem dos blocos.';renderPracticeAnswer(d);submitPracticeGrade(d,0)};
   $('#reset-order').onclick=()=>{cancelActivity();renderPractice(2);$('#check-order').focus()};
+  $('#reset-order').disabled=practiceAttempt.graded;
  }
  $('#practice-sequence').onclick=()=>speakQueue((recognition?['en','zh']:[exerciseLanguage]).map(l=>({lang:l,text:l==='en'?d.natural:d[l].text})),true);$('#practice-stop').onclick=stopAudio;
- $('#back-lesson').onclick=()=>{selected=d.id;if(!matches().some(x=>x.id===d.id))clearFilters();setView('explorer')};$('#next-practice').onclick=()=>{cancelActivity();const pool=matches().some(x=>x.id===d.id)?matches():LESSONS.filter(x=>x.topicId===d.topicId);practiceId=pool[(pool.findIndex(x=>x.id===d.id)+1)%pool.length].id;renderPractice()};
+ $('#back-lesson').onclick=()=>{selected=d.id;if(!matches().some(x=>x.id===d.id))clearFilters();setView('explorer')};$('#next-practice').onclick=()=>nextPractice(d);
 }
 function renderPracticeAnswer(d){
  // Nem o gabarito nem suas transcrições são inseridos no DOM antes da conferência/revelação.
- $('#practice-answer').innerHTML=`<div class="reference-language"><small>Resposta · ${LABELS[exerciseLanguage]}</small><p lang="${exerciseLanguage==='zh'?'zh-CN':'en'}">${esc(d[exerciseLanguage].text)}</p></div><p class="prompt">3. Compare e fale</p><p class="explanation">${esc(d.compare)}</p><p class="literal"><strong>Inglês conectado:</strong></p><p class="phonetic">${esc(d.phonetic)}</p><p class="literal"><strong>Mandarim:</strong> ${esc(pinyin(d.pinyin))}</p><p class="phonetic">${esc(chinesePronunciation(d.pinyin))}</p><div class="record-row"><button id="practice-en" class="secondary-button">▶ English</button><button id="practice-zh" class="secondary-button">▶ 中文</button><button id="record" class="secondary-button">● Gravar minha voz</button><audio id="recording" controls hidden></audio></div><p id="record-status" class="literal" aria-live="polite">Gravação local, temporária e de até 60 segundos. Sem envio e sem nota automática.</p>`;
+ $('#practice-answer').innerHTML=`<div class="reference-language"><small>Resposta · ${LABELS[exerciseLanguage]}</small><p lang="${exerciseLanguage==='zh'?'zh-CN':'en'}">${esc(d[exerciseLanguage].text)}</p></div><p class="prompt">Como foi sua tentativa?</p><div class="record-row" role="group" aria-label="Autoavaliação"><button class="secondary-button" data-grade="0">Errei</button><button class="secondary-button" data-grade="1">Acertei com esforço</button><button class="secondary-button" data-grade="2">Acertei fácil</button></div><p id="grade-feedback" class="feedback" aria-live="polite"></p><p class="prompt">3. Compare e fale</p><p class="explanation">${esc(d.compare)}</p><p class="literal"><strong>Inglês conectado:</strong></p><p class="phonetic">${esc(d.phonetic)}</p><p class="literal"><strong>Mandarim:</strong> ${esc(pinyin(d.pinyin))}</p><p class="phonetic">${esc(chinesePronunciation(d.pinyin))}</p><div class="record-row"><button id="practice-en" class="secondary-button">▶ English</button><button id="practice-zh" class="secondary-button">▶ 中文</button><button id="record" class="secondary-button">● Gravar minha voz</button><audio id="recording" controls hidden></audio></div><p id="record-status" class="literal" aria-live="polite">Gravação local, temporária e de até 60 segundos. Sem envio e sem nota automática.</p>`;
  $('#practice-en').onclick=()=>speakQueue([{lang:'en',text:d.natural}],true);$('#practice-zh').onclick=()=>speakQueue([{lang:'zh',text:d.zh.text}],true);$('#record').onclick=startRecording;
+ $$('[data-grade]').forEach(b=>{b.disabled=practiceAttempt.graded;b.onclick=()=>submitPracticeGrade(d,+b.dataset.grade)});
+ if(practiceAttempt.graded)$('#grade-feedback').textContent='Esta tentativa já foi avaliada. Continue para a próxima situação.';
  $('#check-order').disabled=true;$('#show-answer').disabled=true;
 }
 function renderOrder(d){
@@ -189,9 +216,17 @@ async function startRecording(){
  }catch{stopRecording();toast('Microfone indisponível. Confira a permissão e use HTTPS ou localhost.');}
 }
 function renderReview(){
- const now=Date.now(),data=LESSONS.filter(d=>progress.favorites.includes(d.id)||progress.done.includes(d.id)).sort((a,b)=>(progress.reviews[a.id]?.due||Infinity)-(progress.reviews[b.id]?.due||Infinity));
- $('#review').innerHTML=data.length?'<p class="section-intro">Revisões após 1, 3, 7 e 14 dias, conforme você volta a praticar. O progresso fica neste navegador.</p><div class="review-grid">'+data.map(d=>{const r=progress.reviews[d.id];const due=r?(r.due<=now?'Revisar hoje':'Próxima: '+new Date(r.due).toLocaleDateString('pt-BR')):'Ainda sem revisão agendada';return `<article class="review-card"><div class="meta"><span class="pill">${d.level}</span>${progress.favorites.includes(d.id)?'★ Favorito':''} ${progress.done.includes(d.id)?'✓ Praticado':''}</div><h3>${esc(d.pt.text)}</h3><p lang="en">${esc(d.en.text)}</p><p lang="zh-CN">${esc(d.zh.text)}</p><p>${due}</p><button class="secondary-button" data-review="${d.id}">Revisar nos três idiomas</button></article>`}).join('')+'</div>':'<div class="empty"><strong>Suas conexões começam aqui.</strong><p>Favorite uma situação com ☆ ou conclua um exercício para encontrá-la aqui.</p><button id="review-start" class="primary-button">Explorar situações</button></div>';
- $$('[data-review]').forEach(b=>b.onclick=()=>{practiceId=b.dataset.review;setView('practice')});if($('#review-start'))$('#review-start').onclick=()=>setView('explorer');
+ const now=Date.now(),data=LESSONS.filter(d=>progress.favorites.includes(d.id)||progress.done.includes(d.id)||progress.reviews[d.id]).sort((a,b)=>(progress.reviews[a.id]?.due??Infinity)-(progress.reviews[b.id]?.due??Infinity));
+ const dueIds=data.filter(d=>isDue(progress.reviews[d.id],now)).map(d=>d.id);
+ const queueHeader=`<div class="lesson-actions"><strong>Para hoje: ${dueIds.length}</strong><button id="review-due" class="primary-button" ${dueIds.length?'':'disabled'}>Revisar hoje (${dueIds.length})</button></div>`;
+ $('#review').innerHTML=queueHeader+(data.length?'<p class="section-intro">Sua autoavaliação agenda a revisão em 1, 3, 7, 14, 30 ou 60 dias. Erros reiniciam o intervalo. O progresso fica neste navegador.</p><div class="review-grid">'+data.map(d=>{const r=progress.reviews[d.id];const due=r?(isDue(r,now)?'Revisar hoje':'Próxima: '+new Date(r.due).toLocaleDateString('pt-BR')):'Ainda sem revisão agendada';return `<article class="review-card"><div class="meta"><span class="pill">${d.level}</span>${progress.favorites.includes(d.id)?'★ Favorito':''} ${progress.done.includes(d.id)?'✓ Praticado':''}</div><h3>${esc(d.pt.text)}</h3><p lang="en">${esc(d.en.text)}</p><p lang="zh-CN">${esc(d.zh.text)}</p><p>${due}</p><button class="secondary-button" data-review="${d.id}">Revisar nos três idiomas</button></article>`}).join('')+'</div>':'<div class="empty"><strong>Suas conexões começam aqui.</strong><p>Favorite uma situação com ☆ ou registre uma autoavaliação para encontrá-la aqui.</p><button id="review-start" class="primary-button">Explorar situações</button></div>');
+ $('#review-due').onclick=()=>{
+  // O relógio pode ter avançado desde a abertura da aba; atualizamos o recorte no clique.
+  reviewQueue=LESSONS.filter(d=>isDue(progress.reviews[d.id])).sort((a,b)=>progress.reviews[a.id].due-progress.reviews[b.id].due).map(d=>d.id);
+  reviewIndex=0;if(!reviewQueue.length){reviewQueue=null;renderReview();return;}
+  practiceId=reviewQueue[0];setView('practice');
+ };
+ $$('[data-review]').forEach(b=>b.onclick=()=>{reviewQueue=null;practiceId=b.dataset.review;setView('practice')});if($('#review-start'))$('#review-start').onclick=()=>setView('explorer');
 }
 $$('[data-view]').forEach(b=>b.onclick=()=>setView(b.dataset.view));$('.brand').onclick=e=>{e.preventDefault();setView('explorer')};
 $('#search').oninput=()=>{stopAudio();renderList()};$('#reset-filters').onclick=()=>{cancelActivity();clearFilters();renderList();$('#search').focus()};$('#feature').onchange=()=>{stopAudio();renderList()};
