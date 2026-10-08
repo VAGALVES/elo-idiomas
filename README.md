@@ -1,73 +1,87 @@
-# Elo — Laboratório de idiomas
+# Elo — três idiomas, uma conversa
 
-Aplicativo estático de inglês e mandarim com interface em português. Exportação da primeira versão, em 8 de outubro de 2026.
+Aplicativo estático para brasileiros estudarem **português, inglês e mandarim juntos**, comparando a mesma situação. Atualização de 8 de outubro de 2026.
+
+## O que há nesta versão
+
+- **60 situações trilingues (180 versões alinhadas)**: dez situações por nível A1, A2, B1, B2, C1 e C2.
+- Português, inglês e mandarim na mesma tela. Não há seletor global que esconda um idioma.
+- Palavras coloridas conforme a classe gramatical, rótulos opcionais e destaque por classe.
+- Connected Speech visível em todos os exemplos ingleses: formas fracas, contrações, linking, assimilation, elision, flapping, glottalization e ritmo, conforme a frase.
+- Pinyin tonal, ponte aproximada de leitura para brasileiros, notas de mudanças de tom e ordem chinesa explicada em português.
+- Comparação de estrutura específica para cada situação.
+- Áudio separado nos três idiomas ou sequência PT → EN → 中文, de 0,5× a 1,2×.
+- Atlas comparativo de 12 classes/categorias, sempre com os três idiomas.
+- Busca por português, inglês, caracteres ou pinyin; filtros por nível, tema e fenômeno.
+- Prática de compreensão e ordenação de palavras em inglês e mandarim, mantendo as três referências visíveis.
+- Gravação local da voz para comparação, favoritos e revisões em intervalos de 1, 3, 7 e 14 dias.
 
 ## Arquivos
 
-- `dist/index.html`: interface e estrutura da página.
-- `dist/style.css`: estilos responsivos.
-- `dist/data.js`: 24 estudos, traduções, classes gramaticais, pronúncia e exercícios.
-- `dist/app.js`: filtros, navegação, áudio, exercícios, favoritos e gravação.
-- `netlify.toml`: configuração de publicação.
+- `dist/index.html`: estrutura da interface.
+- `dist/style.css`: layout responsivo e cores.
+- `dist/app.js`: navegação, filtros, reprodução, práticas, favoritos e revisão.
+- `dist/data.js`: acervo gerado, pronto para publicação.
+- `dist/phonetics.js`: pinyin, marcas tonais, notas e mapa de apoio brasileiro por sílaba.
+- `content/lessons.txt`: fonte editável dos 60 estudos.
+- `content/build_data.py`: compilador do acervo, sem dependências externas.
+- `tests/content.test.cjs`: verificações do acervo com Node.js.
+- `netlify.toml`: publica a pasta `dist`.
 
-Não exige npm, build, servidor de aplicação, banco de dados ou chave de API. Os quatro arquivos de dist são também o código-fonte editável.
+## Publicar no Netlify com GitHub
 
-## GitHub
+Importe `VAGALVES/elo-idiomas` e configure:
 
-1. Extraia o ZIP.
-2. Crie um repositório no GitHub.
-3. Adicione o conteúdo da pasta `elo-idiomas` à raiz do repositório: `README.md`, `netlify.toml`, `.gitignore` e a pasta `dist`.
-4. Faça o commit. Envie os arquivos extraídos, não apenas o ZIP.
+| Campo | Valor |
+| --- | --- |
+| Branch | `main` |
+| Diretório base | vazio |
+| Comando de build | vazio |
+| Diretório de publicação | `dist` |
 
-Opcionalmente, em um terminal dentro da pasta extraída:
-
-```sh
-git init
-git add .
-git commit -m "Adiciona primeira versão do Elo"
-git branch -M main
-git remote add origin URL_DO_SEU_REPOSITORIO
-git push -u origin main
-```
-
-Substitua `URL_DO_SEU_REPOSITORIO` pela URL do seu repositório vazio.
-
-## Netlify conectado ao GitHub
-
-Importe o repositório do GitHub no Netlify e selecione:
-
-- Diretório base: raiz do repositório (deixar vazio).
-- Comando de build: deixar vazio.
-- Diretório de publicação: `dist`.
-
-O arquivo `netlify.toml` já informa o diretório de publicação. Nenhuma variável de ambiente é necessária. Para publicação manual, envie a pasta `dist` contendo o `index.html`.
+Não exige npm, banco, chave de API ou variáveis de ambiente. O acervo já está compilado no repositório. O script Python é usado somente ao editar o conteúdo. Um site Netlify ligado à branch main pode publicar automaticamente os novos commits, conforme a configuração da conta.
 
 Documentação: https://docs.netlify.com/build/configure-builds/file-based-configuration/
 
-## Executar localmente
-
-Com Python instalado, na raiz do projeto:
+## Executar e validar
 
 ```sh
 python -m http.server 8000 --directory dist
 ```
 
-Abra http://localhost:8000. O servidor local facilita testar gravação e recursos do navegador; a publicação no Netlify oferece HTTPS.
+Abra http://localhost:8000.
 
-## Como editar
+Ao editar os estudos:
 
-Edite `dist/data.js` para ampliar o acervo, `dist/style.css` para o visual e `dist/app.js` para o comportamento. Preserve a assinatura da função `add` e atribua classes existentes em `CLASSES` aos tokens. Cada estudo contém três alternativas e uma explicação do exercício.
+```sh
+python content/build_data.py
+node --test tests/content.test.cjs
+node --check dist/app.js
+node --check dist/phonetics.js
+```
 
-## Limites da primeira versão
+Cada linha em `content/lessons.txt` possui 13 campos separados por `|`: nível, assunto, título, português anotado, inglês anotado, mandarim anotado, pinyin numérico, inglês natural, apoio de pronúncia BR, fenômenos separados por vírgula, explicação do Connected Speech, comparação gramatical e ordem chinesa em português.
 
-- São 24 estudos, dois por nível e idioma; não é um curso completo A1–C2. Os níveis são orientativos das atividades, sem equivalência automática ao HSK.
-- A pronúncia escrita para brasileiros é aproximada; pinyin, IPA e tons complementam o apoio.
-- O áudio utiliza `speechSynthesis` e as vozes disponíveis no dispositivo. Pode exigir internet e não garante a realização exata de todas as reduções fonéticas indicadas. Não há gravações humanas incluídas nem pacote de áudios para download.
-- Favoritos e estudos praticados ficam em `localStorage`, neste navegador e domínio. Não são sincronizados entre dispositivos e não migram automaticamente do endereço antigo para o Netlify.
-- A gravação usa o microfone com permissão, é temporária e local, sem upload nem avaliação automática. Requer navegador compatível e contexto seguro (HTTPS ou localhost).
-- Esta exportação não inclui autenticação. O controle de acesso da hospedagem anterior não acompanha os arquivos; o acesso no Netlify depende da configuração feita lá.
-- Não foram incluídas credenciais, histórico Git ou configurações da hospedagem anterior.
+Tokens usam `palavra/classe`, com pontuação após a classe: `you/pro?`. As palavras chinesas são segmentadas por unidades lexicais; elementos gramaticais como classificadores podem aparecer separados. Não atribua uma classe a cada caractere indiscriminadamente.
 
-## Verificação desta exportação
+## Limites e critérios pedagógicos
 
-Os quatro arquivos do app foram preservados byte a byte em relação à cópia publicada disponível. JavaScript verificado quanto à sintaxe; ZIP verificado quanto à integridade. A publicação na sua conta Netlify será feita por você.
+A1–C2 orienta a complexidade da atividade, incluindo registro e argumentação; não é certificação da frase, equivalência HSK ou curso completo. Traduções preservam a intenção comunicativa e podem reorganizar ou explicitar elementos.
+
+A ponte brasileira é aproximada. Ela não reproduz todos os sons estrangeiros. No mandarim, os números indicam tons de referência; 一 e 不 podem ter o tom contextual já anotado. As notas explicam terceiros tons consecutivos sem impor uma transformação mecânica a sequências longas. A pronúncia real depende do agrupamento prosódico.
+
+A classificação é contextual e didática. Auxiliares são verbos. Contrações portuguesas podem conter mais de uma classe. Construções de vários elementos recebem explicação própria; classe lexical não é sinônimo de sujeito, objeto ou função adverbial.
+
+O áudio usa `speechSynthesis` e vozes disponíveis no dispositivo. Não contém gravações humanas e não garante a realização exata de todas as reduções ensinadas. As opções de velocidade alteram a síntese, não a reprodução de uma gravação original. Algumas vozes precisam de internet. O app avisa quando um idioma não possui voz instalada.
+
+## Privacidade e progresso
+
+Favoritos e prática ficam em `localStorage`, no navegador e domínio utilizados, sem sincronização entre dispositivos. A gravação é temporária e local, não é enviada a um servidor e não recebe nota automática. O microfone requer HTTPS ou localhost e permissão do usuário.
+
+A versão nova usa `elo-progress-v2`. O estado antigo `elo-progress` não é apagado. Favoritos e prática de estudos antigos com correspondência temática são migrados quando possível. Mudar do domínio Sites para Netlify não transfere o armazenamento local automaticamente.
+
+Não há autenticação própria. O acesso depende da configuração da hospedagem.
+
+## Verificação desta atualização
+
+O acervo e a sintaxe JavaScript foram verificados. Testes em DOM simulado conferiram filtros por nível, caracteres e pinyin; presença simultânea dos três idiomas; favoritos; sequência de áudio com vozes simuladas; falta de voz; prática nas duas línguas; atlas e revisão. Microfone e qualidade real das vozes dependem do dispositivo e não foram validados por esses testes.

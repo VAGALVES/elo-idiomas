@@ -1,27 +1,7591 @@
-const CLASSES={n:['Substantivo','#235fa5','Nomeia pessoas, coisas e ideias.'],v:['Verbo','#b63645','Expressa ação, estado ou processo.'],adj:['Adjetivo','#8149aa','Caracteriza um nome ou participa do predicado.'],adv:['Advérbio','#a6530b','Modifica verbos, adjetivos ou a frase.'],pro:['Pronome','#197051','Representa participantes ou retoma elementos.'],det:['Determinante','#157780','Delimita o nome: artigos, possessivos e demonstrativos.'],prep:['Preposição','#876039','Estabelece relações entre elementos.'],conj:['Conjunção','#b53b79','Liga palavras, orações ou ideias.'],num:['Numeral','#5053a3','Expressa quantidade ou ordem.'],clf:['Classificador','#82670b','Acompanha a contagem de nomes em mandarim.'],part:['Partícula','#586174','Marca relações gramaticais, aspecto ou modalidade.']};
-const D=[];
-function add(lang,level,title,topic,tokens,translation,literal,phonetic,notation,natural,features,steps,note,structure,quiz){D.push({id:lang+(D.length+1),lang,level,title,topic,tokens:tokens.split('|').map(s=>{let [text,c,gloss]=s.split('~');return {text,c,gloss}}),translation,literal,phonetic,notation,natural,features:features.split('|'),steps:steps.split('|'),note,structure:structure.split('|'),quiz});}
-add('en','A2','Preciso ir','Cotidiano','I~pro~eu|have~v~auxiliar|got~v~ter / obrigação|to~part~marcador de infinitivo|go~v~ir','Eu preciso ir.','Eu + tenho que + ir.','aiv GÁɾa GÔU','/aɪv ˈɡɑɾə ˈɡoʊ/','I’ve gotta go.','Flapping|Formas fracas','I have got to go.|I’ve got to go.|I’ve gotta go.|aiv GÁɾa GÔU','Inglês americano informal. Got to pode soar gotta; o t pode virar [ɾ], parecido com o r de caro. I gotta go (ai GÁɾa GÔU) também ocorre na conversa, com omissão de have. Essa grafia informal não substitui a forma padrão na escrita.','I · sujeito|have got to · obrigação|go · ação',['Qual trecho expressa obrigação?','have got to','go','I','Have got to expressa necessidade; go é a ação necessária.']);
-add('en','A1','Uma maçã, por favor','Compras','I~pro~eu|want~v~quero|an~det~uma|apple~n~maçã','Eu quero uma maçã.','Eu + quero + uma maçã.','ai UÓNT‿an É-pol','/aɪ wɑnt ən ˈæpəl/','I want an apple.','Linking|Formas fracas','want + an|want‿an · sem pausa|an + apple|an‿apple','O n de an se liga à vogal inicial de apple. An costuma ter a vogal fraca /ə/. O /æ/ de apple não tem equivalente exato em português.','I · sujeito|want · verbo|an apple · objeto',['Qual é o artigo?','an','want','apple','An determina apple; usamos an antes de som vocálico.']);
-add('en','A1','Consegue ajudar?','Cotidiano','Can~v~auxiliar de possibilidade|you~pro~você|help~v~ajudar|me~pro~me','Você pode me ajudar?','Pode + você + ajudar + me?','kan-ia HÉLP mi','/kən jə ˈhɛlp mi/','Can you help me?','Formas fracas|Linking','can /kæn/ → /kən/|you /juː/ → /jə/|can‿you help me?','Em um pedido sem ênfase em can ou you, as vogais podem enfraquecer. H indica sopro, não silêncio; não acrescente i ao final de help.','Can · auxiliar|you · sujeito|help · verbo|me · objeto',['Como a pergunta começa?','Auxiliar + sujeito','Objeto + verbo','Artigo + nome','Can vem antes do sujeito you em perguntas desse tipo.']);
-add('en','A2','O que você comeu?','Cotidiano','Did~v~auxiliar de passado|you~pro~você|eat~v~comer','Você comeu?','Auxiliar de passado + você + comer?','DÍ-dju ÍIT','/dɪdʒu ˈiːt/','Did you eat?','Assimilation|Linking','did + you|/d/ + /j/ → /dʒ/|did‿you → didju','Uma realização possível na fala conectada: o encontro de /d/ com /j/ pode produzir /dʒ/. O passado está no auxiliar did; eat permanece na forma base.','Did · auxiliar|you · sujeito|eat · verbo',['Por que eat não vira ate?','Did já marca o passado','Eat nunca muda','You exige eat','Depois de did, usamos a forma base do verbo.']);
-add('en','B1','Encontro no dia seguinte','Trabalho','We~pro~nós|can~v~podemos|meet~v~encontrar|the~det~o|next~adj~próximo|day~n~dia','Podemos nos encontrar no dia seguinte.','Nós + podemos + encontrar + no dia seguinte.','ui kan MÍIT dha néks DÊI','/wi kən miːt ðə nɛks deɪ/','We can meet the next day.','Elision|Formas fracas','next day /nekst deɪ/|/t/ pode cair entre consoantes|next day → nex day','O t de next pode não ser realizado antes de day. A omissão é uma possibilidade da fala, não uma exigência. Neste contexto, next day equivale a no dia seguinte.','We · sujeito|can meet · grupo verbal|the next day · tempo',['Que som pode desaparecer em next day?','/t/','/n/','/d/','O grupo de consoantes pode ser simplificado pela omissão de /t/.']);
-add('en','B1','Um pouco melhor','Trabalho','It~pro~isso|is~v~está|a~det~um|little~adj~pequeno|better~adj~melhor','Está um pouco melhor.','Isso + está + um pouco + melhor.','its a LÍ-ɾol BÉ-ɾer','/ɪts ə ˈlɪɾəl ˈbɛɾɚ/','It’s a little better.','Flapping|Formas fracas','It is → It’s|little /t/ → [ɾ]|better /t/ → [ɾ]','Realização comum no inglês americano. A little é uma expressão de grau que modifica better; isso não transforma automaticamente cada palavra da expressão em advérbio.','It · sujeito|is · ligação|a little · grau|better · predicativo',['O que a little faz neste contexto?','Atenua better','Nomeia um objeto','Marca o futuro','A little indica um pequeno grau de melhora.']);
-add('en','B2','Envie a atualização','Trabalho','Could~v~auxiliar de pedido|you~pro~você|send~v~enviar|an~det~uma|update~n~atualização','Você poderia enviar uma atualização?','Poderia + você + enviar + uma atualização?','KÚ-dja sénd‿an ÂP-deit','/kʊdʒə sɛnd ən ˈʌpdeɪt/','Could you send an update?','Assimilation|Linking|Formas fracas','could + you → couldja|send + an → send‿an|an + update → an‿update','Pedido polido com could. /d/ + /j/ pode se combinar em /dʒ/. A vogal de update é /ʌ/, apenas aproximada por â.','Could · modal|you · sujeito|send · verbo|an update · objeto',['Que efeito could traz ao pedido?','Mais polidez','Obrigação absoluta','Passado concluído','Could pode suavizar um pedido sem expressar passado.']);
-add('en','B2','A amostra foi aprovada','Trabalho','The~det~a|sample~n~amostra|has~v~auxiliar|been~v~auxiliar da passiva|approved~v~aprovada','A amostra foi aprovada.','A amostra + tem sido + aprovada (estrutura inglesa).','dha SÉM-pol haz bin‿a-PRÚUVD','/ðə ˈsæmpəl həz bɪn əˈpruːvd/','The sample has been approved.','Linking|Formas fracas','has /hæz/ → /həz/|been + approved|been‿approved','Present perfect na voz passiva: has + been + particípio. A tradução natural pode usar foi aprovada. Dh representa /ð/: língua entre os dentes com voz.','The sample · sujeito|has been approved · passiva',['Qual construção forma a passiva aqui?','has been approved','has approved','sample approved','Been + approved forma a passiva dentro do present perfect.']);
-add('en','C1','Ainda não exatamente','Trabalho','Not~adv~não|quite~adv~exatamente|what~pro~o que|I~pro~eu|expected~v~esperava','Não é exatamente o que eu esperava.','Não + exatamente + o que + eu + esperava.','nóʔ KUAIT uót‿ai ik-SPÉK-tid','/nɒʔ kwaɪt wɒt aɪ ɪkˈspɛktɪd/','Not quite what I expected.','Glottalization|Linking','not /nɒt/|antes de /k/: /t/ pode virar [ʔ]|not quite → noʔ quite','Exemplo britânico de substituição de /t/ por parada glotal antes de consoante. ʔ é um fechamento breve na garganta, não uma vogal. A expressão suaviza uma avaliação negativa.','Not quite · atenuação|what I expected · referência',['Qual é o efeito de not quite?','Suavizar a discordância','Concordar totalmente','Dar uma ordem','A expressão indica diferença em relação à expectativa sem uma rejeição direta.']);
-add('en','C1','Se eu soubesse','Trabalho','If~conj~se|I~pro~eu|had~v~auxiliar|known~v~sabido|I~pro~eu|would~v~modal|have~v~auxiliar|waited~v~esperado','Se eu soubesse, teria esperado.','Se eu tivesse sabido + eu teria esperado.','if aid NÔUN, aid-av UÊI-ɾid','/ɪf aɪd noʊn aɪdəv ˈweɪɾɪd/','If I’d known, I’d have waited.','Formas fracas|Flapping','I had → I’d|I would → I’d|would have → /dəv/ após I|waited /t/ → [ɾ]','O primeiro I’d significa I had; o segundo, I would. O contexto resolve a contração. Não escreva would of no lugar de would have.','If I had known · condição irreal passada|I would have waited · consequência',['O primeiro I’d significa o quê?','I had','I would','I did','Known precisa do auxiliar had na condição irreal passada.']);
-add('en','C2','Uma conclusão cautelosa','Dados','It~pro~isso|would~v~modal|be~v~ser|premature~adj~prematuro|to~part~infinitivo|draw~v~tirar|conclusions~n~conclusões','Seria prematuro tirar conclusões.','Isso + seria + prematuro + tirar conclusões.','it uad bi pri-ma-TCHÚR ta DRÓ kan-KLÚU-janz','/ɪt wəd bi ˌpriːməˈtʃʊr tə drɔ kənˈkluːʒənz/','It would be premature to draw conclusions.','Formas fracas|Linking','would /wʊd/ → /wəd/|to /tuː/ → /tə/|draw conclusions · bloco de sentido','Uma formulação cautelosa para argumentação. O nível é da atividade de escolha de registro e nuance, não uma afirmação de que esta frase isolada exige C2. Draw conclusions é uma combinação recorrente.','It · sujeito antecipador|would be premature · avaliação|to draw conclusions · conteúdo',['Por que usar would aqui?','Tornar a avaliação mais cautelosa','Marcar obrigação','Relatar uma certeza absoluta','O modal ajuda a apresentar a avaliação com distanciamento.']);
-add('en','C2','Apesar de tudo','Trabalho','Be~v~seja|that~pro~isso|as~conj~como|it~pro~isso|may~v~modal|we~pro~nós|need~v~precisamos|a~det~um|plan~n~plano','Seja como for, precisamos de um plano.','Seja isso como possa ser + nós precisamos de um plano.','bi DHÉT‿az it MÊI, ui NÍID‿a PLÉN','/bi ðæt əz ɪt meɪ wi niːd ə plæn/','Be that as it may, we need a plan.','Linking|Formas fracas','as /æz/ → /əz/|that + as → that‿as|need + a → need‿a','Expressão concessiva de registro mais formal. Reconhece um ponto anterior e redireciona o argumento; use com atenção ao tom.','Be that as it may · concessão|we · sujeito|need · verbo|a plan · objeto',['Qual relação a expressão inicial marca?','Concessão','Causa','Sequência cronológica','Aceita provisoriamente o ponto anterior, mas introduz outra consideração.']);
-add('zh','A1','Olá, tudo bem?','Cotidiano','你~pro~você|好~adj~bem / bom','Olá!','Você + bem.','ní↗ rráu↘↗','Nǐ hǎo.','你好。','Terceiro tom','nǐ + hǎo|3º + 3º → 2º + 3º|na fala: ní hǎo','O pinyin usual mantém nǐ; na fala, o primeiro terceiro tom sobe. H de hǎo é um sopro com fricção; rráu é apenas uma ponte aproximada, não o r de todo sotaque brasileiro.','你 · participante|好 · qualidade',['O primeiro tom de nǐ hǎo soa como qual tom?','Segundo','Quarto','Neutro','Antes de outro terceiro tom, o primeiro passa a soar como segundo.']);
-add('zh','A1','Eu bebo chá','Cotidiano','我~pro~eu|喝~v~beber|茶~n~chá','Eu bebo chá.','Eu + beber + chá.','uó(baixo) rrã̄ tchhá↗','Wǒ hē chá.','我喝茶。','Terceiro tom|Aspiração','我 + 喝 + 茶|sujeito + verbo + objeto|wǒ fica baixo antes de hē','喝 não muda para pessoa ou tempo. O terceiro tom antes de outro tom costuma ser baixo, sem a subida completa. Em chá, ch é retroflexo e aspirado; a escrita brasileira é aproximada.','我 · sujeito|喝 · verbo|茶 · objeto',['Que elemento é o objeto?','茶','我','喝','茶, chá, é aquilo que a pessoa bebe.']);
-add('zh','A2','Um café, por favor','Compras','我~pro~eu|要~v~querer|一~num~um|杯~clf~copo / xícara|咖啡~n~café','Eu quero um café.','Eu + quero + uma + xícara + café.','uó(baixo) iáu↘ ì↘ bêī kā-fêī','Wǒ yào yì bēi kāfēi.','我要一杯咖啡。','Tom de 一|Classificadores','一 yī · forma de dicionário|antes de 杯 bēi: yī → yì|一杯咖啡 · um café','O numeral vem antes do classificador e do nome. 一 muda para quarto tom antes de primeiro, segundo ou terceiro tom. Aqui o pinyin já mostra a mudança de 一.','我 · sujeito|要 · verbo|一杯咖啡 · objeto',['Qual é o classificador?','杯','一','咖啡','杯 indica o recipiente/unidade para a bebida.']);
-add('zh','A2','Não é meu','Cotidiano','这~pro~isto|不~adv~não|是~v~ser|我~pro~eu|的~part~posse','Isto não é meu.','Isto + não + ser + eu + posse.','djâ↘ bú↗ shrr↘ uó(baixo) da·','Zhè bú shì wǒ de.','这不是我的。','Tom de 不|Tom neutro','不 bù · forma de dicionário|antes de 是 shì: bù → bú|的 de · leve e breve','不 vira segundo tom antes de outro quarto tom. 的 marca posse; o nome possuído fica implícito. Shì não é simplesmente o xi português: a posição da língua é retroflexa.','这 · sujeito|不是 · negação + verbo|我的 · posse',['Por que 不 soa bú?','Vem antes de quarto tom','Sempre tem segundo tom','Está no fim','Antes de shì, de quarto tom, bù passa a segundo tom.']);
-add('zh','B1','Chinês em casa','Estudo','我~pro~eu|今天~n~hoje (nome temporal)|在~prep~em|家~n~casa|学习~v~estudar|中文~n~chinês','Hoje eu estudo chinês em casa.','Eu + hoje + em casa + estudo + chinês.','uó(baixo) djien̄-thien̄ dzái↘ djiā shüé↗-shí↗ djonḡ-uén↗','Wǒ jīntiān zài jiā xuéxí Zhōngwén.','我今天在家学习中文。','Ordem da frase','我 · sujeito|今天 · tempo|在家 · lugar|学习中文 · ação + objeto','今天 é um nome temporal com função adverbial. Classe da palavra e função na frase são camadas diferentes. O ü de xué não existe em português: arredonde os lábios mantendo a língua à frente.','我 · sujeito|今天 · tempo|在家 · lugar|学习 · verbo|中文 · objeto',['Onde aparece o lugar nesta frase?','Antes do verbo','Depois do objeto','Entre 学 e 习','在家 vem antes de 学习 e localiza a atividade.']);
-add('zh','B1','Já recebi a amostra','Trabalho','我~pro~eu|已经~adv~já|收到~v~receber (resultado)|样品~n~amostra|了~part~mudança de situação','Eu já recebi a amostra.','Eu + já + receber + amostra + partícula.','uó↗ í(baixo)-djinḡ shôū-dáu↘ iàng↘-phin(baixo) la·','Wǒ yǐjīng shōudào yàngpǐn le.','我已经收到样品了。','Tom neutro|Aspecto','已经 · já|收 + 到 · receber com resultado|了 · nova situação relevante','了 não é uma terminação de passado equivalente ao português. Aqui, no final, sinaliza uma nova situação: a amostra agora foi recebida. A realização de terceiros tons depende do agrupamento da fala.','我 · sujeito|已经 · advérbio|收到 · verbo resultativo|样品 · objeto|了 · partícula',['O que 了 indica aqui?','Uma nova situação','Plural de amostras','Futuro obrigatório','A frase comunica que agora o recebimento aconteceu.']);
-add('zh','B2','Coloque a amostra aqui','Trabalho','请~v~por favor / solicitar|把~prep~marcador de disposição|样品~n~amostra|放~v~colocar|在~prep~em|这里~pro~aqui','Por favor, coloque a amostra aqui.','Por favor + 把 + amostra + colocar + em + aqui.','tching↗ bá(baixo) iàng↘-phin(baixo) fàng↘ dzái↘ djâ↘-li(baixo)','Qǐng bǎ yàngpǐn fàng zài zhèlǐ.','请把样品放在这里。','Construção 把','把 + 样品 · objeto antecipado|放在这里 · ação e destino|objeto antes da ação','把 introduz aquilo que será afetado pela ação. O predicado especifica o destino. 请 funciona como expressão de pedido polido. As setas são apoio; escute o agrupamento completo.','请 · pedido|把样品 · objeto afetado|放在这里 · ação + destino',['O que 把 introduz?','O objeto afetado','Quem fala','Uma pergunta','样品 é aquilo que a ação de colocar vai afetar.']);
-add('zh','B2','Embora haja um problema','Trabalho','虽然~conj~embora|有~v~haver|问题~n~problema|但是~conj~mas|我们~pro~nós|可以~v~poder|解决~v~resolver','Embora haja um problema, podemos resolvê-lo.','Embora + haver problema + mas + nós + podemos resolver.','suêī-rán↗ iôu(baixo) uén↘-thi↗, dàn↘-shrr↘ uó(baixo)-men· khé(baixo)-i(baixo) djié(baixo)-djüé↗','Suīrán yǒu wèntí, dànshì wǒmen kěyǐ jiějué.','虽然有问题，但是我们可以解决。','Concessão|Terceiro tom','虽然 + dificuldade|但是 + resposta à dificuldade|可以解决 · possibilidade de resolver','Mandarim pode combinar 虽然 e 但是 na mesma construção. A tradução natural em português não precisa repetir embora e mas. Sequências de terceiros tons variam com os grupos prosódicos.','虽然有问题 · concessão|但是 · contraste|我们 · sujeito|可以解决 · predicado',['Como traduzir naturalmente 虽然…但是…?','Embora…, …','Porque…, então…','Antes…, depois…','Em português, embora já introduz a concessão; não é preciso duplicar mas.']);
-add('zh','C1','Mais do que preço','Trabalho','我们~pro~nós|不仅~adv~não apenas|关注~v~prestar atenção|价格~n~preço|还~adv~também|重视~v~valorizar|质量~n~qualidade','Não olhamos apenas o preço; também valorizamos a qualidade.','Nós + não apenas + observar preço + também + valorizar qualidade.','uó(baixo)-men· bù↘-djin(baixo) guan̄-djù↘ djià↘-gã↗, rrái↗ djòng↘-shrr↘ djrr↘-liàng↘','Wǒmen bùjǐn guānzhù jiàgé, hái zhòngshì zhìliàng.','我们不仅关注价格，还重视质量。','Correlação','不仅 · não apenas|还 · também|duas ações paralelas','不仅…还… acrescenta um argumento. Os verbos diferentes são intencionais: 关注 é prestar atenção; 重视 é atribuir importância. Aqui 重 se lê zhòng.','我们 · sujeito|不仅关注价格 · primeiro foco|还重视质量 · ampliação',['O que 还 acrescenta?','Um segundo critério','Uma negação total','Uma ordem','Além de preço, o falante acrescenta qualidade.']);
-add('zh','C1','Melhor do que esperávamos','Dados','结果~n~resultado|比~prep~comparação|我们~pro~nós|预期~v~esperar / prever|的~part~nominalização|更~adv~ainda mais|好~adj~bom','O resultado foi melhor do que esperávamos.','Resultado + comparado a + o que esperávamos + mais + bom.','djié↗-guó(baixo) bi↗ uó(baixo)-men· ü↘-tchī da· gâng↘ rráu↘↗','Jiéguǒ bǐ wǒmen yùqī de gèng hǎo.','结果比我们预期的更好。','Comparação','结果 · tema comparado|比我们预期的 · referência|更好 · avaliação','比 introduz a referência de comparação. 的 permite recuperar o resultado esperado sem repetir o nome. Terceiros tons em sequência precisam ser ouvidos em grupos, não convertidos mecanicamente.','结果 · sujeito|比我们预期的 · comparação|更好 · predicado',['Qual palavra introduz a comparação?','比','的','结果','比 coloca o resultado em relação à expectativa.']);
-add('zh','C2','Ainda é cedo para concluir','Dados','现在~n~agora|下~v~formular|结论~n~conclusão|为时过早~adj~prematuro (expressão)','Ainda é cedo para tirar conclusões.','Agora + formular conclusão + ser prematuro.','shièn↘-dzái↘ shià↘ djié↗-luên↘ uéi↗-shrr↗-guó↘-dzáu↘↗','Xiànzài xià jiélùn wéi shí guò zǎo.','现在下结论为时过早。','Registro formal','下结论 · tirar uma conclusão|为时过早 · prematuro|avaliação de uma ação inteira','为时过早 é uma expressão de registro formal. A atividade avançada é escolher esse registro e compará-lo a formas mais cotidianas; a frase isolada não certifica C2.','现在 · tempo|下结论 · ação avaliada|为时过早 · avaliação',['O que 为时过早 avalia?','O momento de concluir','A quantidade de dados explicitamente','A pessoa que fala','A conclusão está sendo feita cedo demais.']);
-add('zh','C2','Mesmo assim, verificar','Trabalho','即便~conj~mesmo que|如此~pro~assim|我们~pro~nós|仍然~adv~ainda|需要~v~precisar|核实~v~verificar|细节~n~detalhes','Mesmo assim, ainda precisamos verificar os detalhes.','Mesmo que + assim + nós + ainda + precisar + verificar + detalhes.','dji↗-bièn↘ rú↗-tsrr(baixo), uó(baixo)-men· râng↗-rán↗ shǖ-iáu↘ rrã↗-shrr↗ shi↘-djié↗','Jíbiàn rúcǐ, wǒmen réngrán xūyào héshí xìjié.','即便如此，我们仍然需要核实细节。','Concessão|Registro formal','即便如此 · mesmo assim|仍然 · persistência|核实细节 · verificar detalhes','即便如此 retoma uma condição já mencionada e mantém a necessidade da ação. Compare 仍然, mais formal, com 还是 em contextos adequados; não são substitutos universais.','即便如此 · concessão|我们 · sujeito|仍然需要 · necessidade mantida|核实细节 · ação',['O que 仍然 comunica?','A necessidade permanece','A ação terminou','O sujeito mudou','Mesmo com a situação anterior, verificar continua necessário.']);
+// Gerado por content/build_data.py. Edite content/lessons.txt.
+const CLASSES = {"n": ["Substantivo", "#235fa5", "Nomeia pessoas, objetos, lugares e ideias."], "v": ["Verbo", "#b63645", "Expressa ação, estado ou processo; inclui auxiliares e modais."], "adj": ["Adjetivo", "#8149aa", "Caracteriza nomes ou participa do predicado."], "adv": ["Advérbio", "#a6530b", "Modifica ações, características ou a frase inteira."], "pro": ["Pronome", "#197051", "Representa participantes ou retoma elementos."], "det": ["Determinante / artigo", "#157780", "Delimita o nome; inclui artigos e possessivos usados antes dele."], "prep": ["Preposição", "#876039", "Relaciona elementos; contrações portuguesas aparecem na mesma palavra."], "conj": ["Conjunção", "#b53b79", "Liga ideias ou orações."], "num": ["Numeral", "#5053a3", "Expressa quantidade ou ordem."], "clf": ["Classificador", "#82670b", "Organiza a contagem de nomes em mandarim."], "part": ["Partícula", "#586174", "Marca infinitivo, aspecto, relação ou modalidade conforme o idioma."], "loc": ["Localizador", "#566f38", "Situa algo no espaço ou no tempo em mandarim."]};
+const LESSONS = [
+  {
+    "id": "elo-001",
+    "level": "A1",
+    "topic": "Cotidiano",
+    "title": "Pedir ajuda",
+    "pinyin": "ni3 neng2 bang1 wo3 ma5",
+    "natural": "Can you help me?",
+    "phonetic": "kan-ia HÉLP mi",
+    "features": [
+      "Formas fracas",
+      "Linking"
+    ],
+    "speech": "Can pode enfraquecer para /kən/; you pode soar /jə/: can + you → can‿you → kan-ia.",
+    "compare": "PT permite você pode…?; EN inverte can e you; ZH mantém a ordem e acrescenta 吗 ao final.",
+    "literal": "Você + pode + ajudar + eu + pergunta.",
+    "pt": {
+      "text": "Você pode me ajudar?",
+      "tokens": [
+        {
+          "text": "Você",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "pode",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "me",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "ajudar",
+          "c": "v",
+          "punct": "?"
+        }
+      ]
+    },
+    "en": {
+      "text": "Can you help me?",
+      "tokens": [
+        {
+          "text": "Can",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "you",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "help",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "me",
+          "c": "pro",
+          "punct": "?"
+        }
+      ]
+    },
+    "zh": {
+      "text": "你能帮我吗？",
+      "tokens": [
+        {
+          "text": "你",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "能",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "帮",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "吗",
+          "c": "part",
+          "punct": "？"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-002",
+    "level": "A1",
+    "topic": "Cotidiano",
+    "title": "Apresentar-se",
+    "pinyin": "wo3 lai2 zi4 ba1 xi1",
+    "natural": "I'm from Brazil.",
+    "phonetic": "aim fram bra-ZÍL",
+    "features": [
+      "Contração",
+      "Formas fracas"
+    ],
+    "speech": "I am → I'm; from pode soar /frəm/ sem ênfase. A contração não elimina o sujeito.",
+    "compare": "PT usa ser de; EN usa be from; ZH usa 来自, vir de, como um verbo inteiro.",
+    "literal": "Eu + venho de + Brasil.",
+    "pt": {
+      "text": "Eu sou do Brasil.",
+      "tokens": [
+        {
+          "text": "Eu",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "sou",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "do",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "Brasil",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "I am from Brazil.",
+      "tokens": [
+        {
+          "text": "I",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "am",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "from",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "Brazil",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "我来自巴西。",
+      "tokens": [
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "来自",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "巴西",
+          "c": "n",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-003",
+    "level": "A1",
+    "topic": "Compras",
+    "title": "Pedir uma maçã",
+    "pinyin": "wo3 xiang3 yao4 yi2 ge4 ping2 guo3",
+    "natural": "I want an apple.",
+    "phonetic": "ai UÓNT‿an É-pol",
+    "features": [
+      "Linking",
+      "Formas fracas"
+    ],
+    "speech": "An costuma ter /ə/; seu n se liga ao começo de apple: an + apple → an‿apple. /æ/ não é o é exato do português.",
+    "compare": "PT e EN usam artigo; ZH usa numeral + classificador 个 + nome. 想 suaviza a vontade.",
+    "literal": "Eu + gostaria + querer + um + classificador + maçã.",
+    "pt": {
+      "text": "Eu quero uma maçã.",
+      "tokens": [
+        {
+          "text": "Eu",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "quero",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "uma",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "maçã",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "I want an apple.",
+      "tokens": [
+        {
+          "text": "I",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "want",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "an",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "apple",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "我想要一个苹果。",
+      "tokens": [
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "想",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "要",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "一",
+          "c": "num",
+          "punct": ""
+        },
+        {
+          "text": "个",
+          "c": "clf",
+          "punct": ""
+        },
+        {
+          "text": "苹果",
+          "c": "n",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-004",
+    "level": "A1",
+    "topic": "Cotidiano",
+    "title": "Beber chá",
+    "pinyin": "wo3 he1 cha2",
+    "natural": "I drink tea.",
+    "phonetic": "ai DRÍNK TÍI",
+    "features": [
+      "Ritmo"
+    ],
+    "speech": "Destaque drink e tea; não acrescente uma vogal depois de /k/. Nem toda frase exige apagar sons.",
+    "compare": "Nos três idiomas, a ordem aqui é sujeito + verbo + objeto. 喝 não recebe conjugação de pessoa.",
+    "literal": "Eu + beber + chá.",
+    "pt": {
+      "text": "Eu bebo chá.",
+      "tokens": [
+        {
+          "text": "Eu",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "bebo",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "chá",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "I drink tea.",
+      "tokens": [
+        {
+          "text": "I",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "drink",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "tea",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "我喝茶。",
+      "tokens": [
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "喝",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "茶",
+          "c": "n",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-005",
+    "level": "A1",
+    "topic": "Transporte",
+    "title": "Procurar o metrô",
+    "pinyin": "di4 tie3 zhan4 zai4 nar3",
+    "natural": "Where's the station?",
+    "phonetic": "UÉRZ dha STÊI-shan",
+    "features": [
+      "Contração",
+      "Formas fracas"
+    ],
+    "speech": "Where is → where's. The antes de consoante costuma ser /ðə/: dh exige língua entre os dentes com voz.",
+    "compare": "PT e EN começam com onde; ZH mantém a pergunta na posição do lugar: estação + estar + onde.",
+    "literal": "Estação de metrô + fica + onde?",
+    "pt": {
+      "text": "Onde fica a estação?",
+      "tokens": [
+        {
+          "text": "Onde",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "fica",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "a",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "estação",
+          "c": "n",
+          "punct": "?"
+        }
+      ]
+    },
+    "en": {
+      "text": "Where is the station?",
+      "tokens": [
+        {
+          "text": "Where",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "is",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "the",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "station",
+          "c": "n",
+          "punct": "?"
+        }
+      ]
+    },
+    "zh": {
+      "text": "地铁站在哪儿？",
+      "tokens": [
+        {
+          "text": "地铁站",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "在",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "哪儿",
+          "c": "pro",
+          "punct": "？"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-006",
+    "level": "A1",
+    "topic": "Compras",
+    "title": "Perguntar o preço",
+    "pinyin": "zhe4 ge5 duo1 shao5 qian2",
+    "natural": "How much is this?",
+    "phonetic": "ráu MÂTCH‿iz DHÍS",
+    "features": [
+      "Linking"
+    ],
+    "speech": "Ligue much‿is sem inserir pausa. This começa com /ð/, não com d puro.",
+    "compare": "How much funciona como bloco interrogativo. Em ZH, 多少钱 pergunta a quantidade de dinheiro após o tópico 这个.",
+    "literal": "Isto + quanto + dinheiro?",
+    "pt": {
+      "text": "Quanto custa isto?",
+      "tokens": [
+        {
+          "text": "Quanto",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "custa",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "isto",
+          "c": "pro",
+          "punct": "?"
+        }
+      ]
+    },
+    "en": {
+      "text": "How much is this?",
+      "tokens": [
+        {
+          "text": "How",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "much",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "is",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "this",
+          "c": "pro",
+          "punct": "?"
+        }
+      ]
+    },
+    "zh": {
+      "text": "这个多少钱？",
+      "tokens": [
+        {
+          "text": "这个",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "多少",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "钱",
+          "c": "n",
+          "punct": "？"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-007",
+    "level": "A1",
+    "topic": "Cotidiano",
+    "title": "Dizer que não entende",
+    "pinyin": "wo3 bu4 ming2 bai5",
+    "natural": "I don't understand.",
+    "phonetic": "ai DÔUNT‿an-der-STÉND",
+    "features": [
+      "Contração",
+      "Linking"
+    ],
+    "speech": "Do not → don't; ligue a consoante final ao início de understand. Não precisa apagar o t para soar natural.",
+    "compare": "EN exige o auxiliar do para negar esse verbo; PT e ZH colocam não/不 antes do verbo.",
+    "literal": "Eu + não + entender.",
+    "pt": {
+      "text": "Eu não entendo.",
+      "tokens": [
+        {
+          "text": "Eu",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "não",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "entendo",
+          "c": "v",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "I do not understand.",
+      "tokens": [
+        {
+          "text": "I",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "do",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "not",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "understand",
+          "c": "v",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "我不明白。",
+      "tokens": [
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "不",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "明白",
+          "c": "v",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-008",
+    "level": "A1",
+    "topic": "Cotidiano",
+    "title": "Agradecer",
+    "pinyin": "fei1 chang2 gan3 xie4 ni3",
+    "natural": "Thank you very much.",
+    "phonetic": "THÉNK-iu VÉ-ri MÂTCH",
+    "features": [
+      "Linking"
+    ],
+    "speech": "Thank + you → thank‿you. Th aqui é /θ/, um sopro com língua entre os dentes, diferente de /ð/ em the.",
+    "compare": "As três formas cumprem a mesma função social; não são traduções palavra por palavra. ZH mantém um verbo explícito, 感谢.",
+    "literal": "Muito + agradecer + você.",
+    "pt": {
+      "text": "Muito obrigado.",
+      "tokens": [
+        {
+          "text": "Muito",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "obrigado",
+          "c": "adj",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "Thank you very much.",
+      "tokens": [
+        {
+          "text": "Thank",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "you",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "very",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "much",
+          "c": "adv",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "非常感谢你。",
+      "tokens": [
+        {
+          "text": "非常",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "感谢",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "你",
+          "c": "pro",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-009",
+    "level": "A1",
+    "topic": "Moradia",
+    "title": "Morar aqui",
+    "pinyin": "wo3 men5 zhu4 zai4 zhe4 li3",
+    "natural": "We live here.",
+    "phonetic": "ui LÍV HÍR",
+    "features": [
+      "Ritmo"
+    ],
+    "speech": "Live aqui é /lɪv/, não /laɪv/. O h de here é um sopro: mantenha a ligação rítmica sem inserir i depois de live.",
+    "compare": "PT/EN colocam aqui após o verbo. 住在 introduz o local de residência; nem todo lugar em ZH precisa vir antes do verbo.",
+    "literal": "Nós + morar + em + aqui.",
+    "pt": {
+      "text": "Nós moramos aqui.",
+      "tokens": [
+        {
+          "text": "Nós",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "moramos",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "aqui",
+          "c": "adv",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "We live here.",
+      "tokens": [
+        {
+          "text": "We",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "live",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "here",
+          "c": "adv",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "我们住在这里。",
+      "tokens": [
+        {
+          "text": "我们",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "住",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "在",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "这里",
+          "c": "pro",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-010",
+    "level": "A1",
+    "topic": "Compras",
+    "title": "Pedir dois ingressos",
+    "pinyin": "wo3 xu1 yao4 liang3 zhang1 piao4",
+    "natural": "I need two tickets.",
+    "phonetic": "ai NÍID tu TÍ-kits",
+    "features": [
+      "Ritmo"
+    ],
+    "speech": "Two indica quantidade e mantém a vogal /uː/; não confunda com to fraco. Tickets termina em /ts/, sem i extra.",
+    "compare": "PT flexiona ingressos; EN tickets recebe s; ZH usa 两 + 张 + 票, sem plural obrigatório no nome.",
+    "literal": "Eu + preciso + dois + classificador de itens planos + ingresso.",
+    "pt": {
+      "text": "Eu preciso de dois ingressos.",
+      "tokens": [
+        {
+          "text": "Eu",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "preciso",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "de",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "dois",
+          "c": "num",
+          "punct": ""
+        },
+        {
+          "text": "ingressos",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "I need two tickets.",
+      "tokens": [
+        {
+          "text": "I",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "need",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "two",
+          "c": "num",
+          "punct": ""
+        },
+        {
+          "text": "tickets",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "我需要两张票。",
+      "tokens": [
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "需要",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "两",
+          "c": "num",
+          "punct": ""
+        },
+        {
+          "text": "张",
+          "c": "clf",
+          "punct": ""
+        },
+        {
+          "text": "票",
+          "c": "n",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-011",
+    "level": "A2",
+    "topic": "Cotidiano",
+    "title": "Preciso ir",
+    "pinyin": "wo3 dei3 zou3 le5",
+    "natural": "I've gotta go.",
+    "phonetic": "aiv GÁɾa GÔU",
+    "features": [
+      "Contração",
+      "Flapping",
+      "Formas fracas"
+    ],
+    "speech": "I have got to go → I've got to go → I've gotta go. No americano, o t de gotta pode soar [ɾ], como r de caro. I gotta go, ai GÁɾa GÔU, omite have na conversa informal.",
+    "compare": "PT tem tenho que; EN have got to indica obrigação; 得 aqui se lê děi e indica necessidade. 了 sinaliza a nova situação.",
+    "literal": "Eu + preciso + ir embora + mudança de situação.",
+    "pt": {
+      "text": "Eu tenho que ir.",
+      "tokens": [
+        {
+          "text": "Eu",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "tenho",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "que",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "ir",
+          "c": "v",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "I have got to go.",
+      "tokens": [
+        {
+          "text": "I",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "have",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "got",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "to",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "go",
+          "c": "v",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "我得走了。",
+      "tokens": [
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "得",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "走",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "了",
+          "c": "part",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-012",
+    "level": "A2",
+    "topic": "Compras",
+    "title": "Pedir café",
+    "pinyin": "wo3 xiang3 yao4 yi4 bei1 ka1 fei1",
+    "natural": "I'd like a cup of coffee.",
+    "phonetic": "aid LÁIK‿a KÂP-av KÓ-fi",
+    "features": [
+      "Contração",
+      "Linking",
+      "Formas fracas"
+    ],
+    "speech": "I would → I'd; like + a → like‿a; of sem ênfase → /əv/. Cup of se aproxima de câp-av.",
+    "compare": "EN would like torna o pedido polido; 想要 também suaviza a vontade. ZH conta com 杯, sem equivalente obrigatório de de.",
+    "literal": "Eu + gostaria + querer + uma + xícara + café.",
+    "pt": {
+      "text": "Eu quero uma xícara de café.",
+      "tokens": [
+        {
+          "text": "Eu",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "quero",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "uma",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "xícara",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "de",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "café",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "I would like a cup of coffee.",
+      "tokens": [
+        {
+          "text": "I",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "would",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "like",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "a",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "cup",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "of",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "coffee",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "我想要一杯咖啡。",
+      "tokens": [
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "想",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "要",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "一",
+          "c": "num",
+          "punct": ""
+        },
+        {
+          "text": "杯",
+          "c": "clf",
+          "punct": ""
+        },
+        {
+          "text": "咖啡",
+          "c": "n",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-013",
+    "level": "A2",
+    "topic": "Cotidiano",
+    "title": "Perguntar se comeu",
+    "pinyin": "ni3 chi1 fan4 le5 ma5",
+    "natural": "Did you eat?",
+    "phonetic": "DÍ-dju ÍIT",
+    "features": [
+      "Assimilation",
+      "Linking"
+    ],
+    "speech": "Did + you: /d/ + /j/ pode virar /dʒ/. Did you → didju é uma realização, não uma nova grafia padrão.",
+    "compare": "Did marca passado e eat fica na base. ZH usa 吃饭, comer uma refeição, e 了吗 para perguntar pela situação.",
+    "literal": "Você + comer + refeição + situação + pergunta.",
+    "pt": {
+      "text": "Você comeu?",
+      "tokens": [
+        {
+          "text": "Você",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "comeu",
+          "c": "v",
+          "punct": "?"
+        }
+      ]
+    },
+    "en": {
+      "text": "Did you eat?",
+      "tokens": [
+        {
+          "text": "Did",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "you",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "eat",
+          "c": "v",
+          "punct": "?"
+        }
+      ]
+    },
+    "zh": {
+      "text": "你吃饭了吗？",
+      "tokens": [
+        {
+          "text": "你",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "吃",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "饭",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "了",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "吗",
+          "c": "part",
+          "punct": "？"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-014",
+    "level": "A2",
+    "topic": "Moradia",
+    "title": "Dizer que não é seu",
+    "pinyin": "zhe4 bu2 shi4 wo3 de5",
+    "natural": "This isn't mine.",
+    "phonetic": "dhis Í-zant MÁIN",
+    "features": [
+      "Contração",
+      "Formas fracas"
+    ],
+    "speech": "Is not → isn't. A vogal de -n't é fraca; não acrescente i depois do t final.",
+    "compare": "Mine já expressa posse; 我的 usa 的 e omite o nome possuído. 不 vira bú antes do quarto tom de 是.",
+    "literal": "Isto + não + ser + eu + posse.",
+    "pt": {
+      "text": "Isto não é meu.",
+      "tokens": [
+        {
+          "text": "Isto",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "não",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "é",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "meu",
+          "c": "pro",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "This is not mine.",
+      "tokens": [
+        {
+          "text": "This",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "is",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "not",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "mine",
+          "c": "pro",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "这不是我的。",
+      "tokens": [
+        {
+          "text": "这",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "不",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "是",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "的",
+          "c": "part",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-015",
+    "level": "A2",
+    "topic": "Trabalho",
+    "title": "Pedir repetição",
+    "pinyin": "ni3 neng2 zai4 shuo1 yi2 bian4 ma5",
+    "natural": "Can you say that again?",
+    "phonetic": "kan-ia SÊI dhét‿a-GUÉN",
+    "features": [
+      "Linking",
+      "Formas fracas"
+    ],
+    "speech": "Can e you podem enfraquecer; that + again → that‿again liga t à vogal seguinte.",
+    "compare": "EN usa again depois do objeto; ZH põe 再 antes de 说 e conta a repetição com 一遍.",
+    "literal": "Você + pode + novamente + falar + uma + vez completa + pergunta.",
+    "pt": {
+      "text": "Você pode repetir isso?",
+      "tokens": [
+        {
+          "text": "Você",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "pode",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "repetir",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "isso",
+          "c": "pro",
+          "punct": "?"
+        }
+      ]
+    },
+    "en": {
+      "text": "Can you say that again?",
+      "tokens": [
+        {
+          "text": "Can",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "you",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "say",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "that",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "again",
+          "c": "adv",
+          "punct": "?"
+        }
+      ]
+    },
+    "zh": {
+      "text": "你能再说一遍吗？",
+      "tokens": [
+        {
+          "text": "你",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "能",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "再",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "说",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "一",
+          "c": "num",
+          "punct": ""
+        },
+        {
+          "text": "遍",
+          "c": "clf",
+          "punct": ""
+        },
+        {
+          "text": "吗",
+          "c": "part",
+          "punct": "？"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-016",
+    "level": "A2",
+    "topic": "Transporte",
+    "title": "Perguntar a duração",
+    "pinyin": "zhe4 xu1 yao4 duo1 chang2 shi2 jian1",
+    "natural": "How long does it take?",
+    "phonetic": "ráu LÓNG daz‿it TÊIK",
+    "features": [
+      "Linking",
+      "Formas fracas"
+    ],
+    "speech": "Does pode ter vogal fraca; o z final liga a it. Long termina em /ŋ/, sem um g separado.",
+    "compare": "EN usa does como auxiliar; ZH pergunta quanto tempo com 多长时间 como objeto de 需要.",
+    "literal": "Isto + requer + quanto + tempo?",
+    "pt": {
+      "text": "Quanto tempo leva?",
+      "tokens": [
+        {
+          "text": "Quanto",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "tempo",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "leva",
+          "c": "v",
+          "punct": "?"
+        }
+      ]
+    },
+    "en": {
+      "text": "How long does it take?",
+      "tokens": [
+        {
+          "text": "How",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "long",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "does",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "it",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "take",
+          "c": "v",
+          "punct": "?"
+        }
+      ]
+    },
+    "zh": {
+      "text": "这需要多长时间？",
+      "tokens": [
+        {
+          "text": "这",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "需要",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "多长",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "时间",
+          "c": "n",
+          "punct": "？"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-017",
+    "level": "A2",
+    "topic": "Compras",
+    "title": "Pagar com cartão",
+    "pinyin": "wo3 ke3 yi3 shua1 ka3 ma5",
+    "natural": "Can I pay by card?",
+    "phonetic": "kan‿ai PÊI bai KÁRD",
+    "features": [
+      "Linking",
+      "Formas fracas"
+    ],
+    "speech": "Can sem ênfase → /kən/; o n liga com I: can‿I. By mantém /baɪ/.",
+    "compare": "PT pode omitir eu; EN mantém I. 刷卡 descreve usar o cartão, sem uma preposição equivalente a by.",
+    "literal": "Eu + posso + passar + cartão + pergunta.",
+    "pt": {
+      "text": "Posso pagar com cartão?",
+      "tokens": [
+        {
+          "text": "Posso",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "pagar",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "com",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "cartão",
+          "c": "n",
+          "punct": "?"
+        }
+      ]
+    },
+    "en": {
+      "text": "Can I pay by card?",
+      "tokens": [
+        {
+          "text": "Can",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "I",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "pay",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "by",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "card",
+          "c": "n",
+          "punct": "?"
+        }
+      ]
+    },
+    "zh": {
+      "text": "我可以刷卡吗？",
+      "tokens": [
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "可以",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "刷",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "卡",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "吗",
+          "c": "part",
+          "punct": "？"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-018",
+    "level": "A2",
+    "topic": "Moradia",
+    "title": "Estar a caminho",
+    "pinyin": "wo3 yi3 jing1 zai4 lu4 shang4 le5",
+    "natural": "I'm on my way.",
+    "phonetic": "aim‿on mai UÊI",
+    "features": [
+      "Contração",
+      "Linking"
+    ],
+    "speech": "I am → I'm; I'm + on → I'm‿on. Way recebe o destaque principal.",
+    "compare": "On my way é uma expressão, não caminho possuído literalmente. 路上 combina nome + localizador 上.",
+    "literal": "Eu + já + em + estrada + sobre + situação.",
+    "pt": {
+      "text": "Eu estou a caminho.",
+      "tokens": [
+        {
+          "text": "Eu",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "estou",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "a",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "caminho",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "I am on my way.",
+      "tokens": [
+        {
+          "text": "I",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "am",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "on",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "my",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "way",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "我已经在路上了。",
+      "tokens": [
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "已经",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "在",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "路",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "上",
+          "c": "loc",
+          "punct": ""
+        },
+        {
+          "text": "了",
+          "c": "part",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-019",
+    "level": "A2",
+    "topic": "Trabalho",
+    "title": "Marcar amanhã",
+    "pinyin": "wo3 men5 ming2 tian1 ke3 yi3 tan2 yi2 xia4 ma5",
+    "natural": "Can we talk tomorrow?",
+    "phonetic": "kan ui TÓK ta-MÓ-rou",
+    "features": [
+      "Formas fracas"
+    ],
+    "speech": "Can → /kən/; a primeira sílaba de tomorrow é fraca. O acento recai na segunda.",
+    "compare": "A posição comum de amanhã em PT/EN é final; 明天 aparece antes do verbo em ZH. 一下 suaviza o pedido.",
+    "literal": "Nós + amanhã + podemos + conversar + um pouco + pergunta.",
+    "pt": {
+      "text": "Podemos conversar amanhã?",
+      "tokens": [
+        {
+          "text": "Podemos",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "conversar",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "amanhã",
+          "c": "adv",
+          "punct": "?"
+        }
+      ]
+    },
+    "en": {
+      "text": "Can we talk tomorrow?",
+      "tokens": [
+        {
+          "text": "Can",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "we",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "talk",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "tomorrow",
+          "c": "adv",
+          "punct": "?"
+        }
+      ]
+    },
+    "zh": {
+      "text": "我们明天可以谈一下吗？",
+      "tokens": [
+        {
+          "text": "我们",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "明天",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "可以",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "谈",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "一下",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "吗",
+          "c": "part",
+          "punct": "？"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-020",
+    "level": "A2",
+    "topic": "Compras",
+    "title": "Escolher o menor",
+    "pinyin": "wo3 geng4 xi3 huan5 xiao3 yi4 dianr3 de5",
+    "natural": "I prefer the smaller one.",
+    "phonetic": "ai pri-FÂR dha SMÓ-ler uân",
+    "features": [
+      "Formas fracas",
+      "Linking"
+    ],
+    "speech": "The → /ðə/; ligue smaller‿one sem pausa. One substitui o objeto já conhecido.",
+    "compare": "PT pode omitir o nome após menor; EN usa one; ZH usa 的 para recuperar o objeto qualificado.",
+    "literal": "Eu + mais + gostar + pequeno + um pouco + nominalização.",
+    "pt": {
+      "text": "Eu prefiro o menor.",
+      "tokens": [
+        {
+          "text": "Eu",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "prefiro",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "o",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "menor",
+          "c": "adj",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "I prefer the smaller one.",
+      "tokens": [
+        {
+          "text": "I",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "prefer",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "the",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "smaller",
+          "c": "adj",
+          "punct": ""
+        },
+        {
+          "text": "one",
+          "c": "pro",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "我更喜欢小一点儿的。",
+      "tokens": [
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "更",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "喜欢",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "小",
+          "c": "adj",
+          "punct": ""
+        },
+        {
+          "text": "一点儿",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "的",
+          "c": "part",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-021",
+    "level": "B1",
+    "topic": "Estudo",
+    "title": "Estudar em casa",
+    "pinyin": "wo3 jin1 tian1 zai4 jia1 xue2 xi2 zhong1 wen2",
+    "natural": "I study Chinese at home today.",
+    "phonetic": "ai STÂ-di tchai-NÍIZ‿at HÔUM ta-DÊI",
+    "features": [
+      "Linking",
+      "Formas fracas"
+    ],
+    "speech": "Chinese + at → Chinese‿at; at pode enfraquecer para /ət/. Today começa com sílaba fraca.",
+    "compare": "今天 é nome temporal usado como circunstância. ZH põe tempo e 在家 antes de 学习; EN aceita ambos no fim.",
+    "literal": "Eu + hoje + em + casa + estudar + chinês.",
+    "pt": {
+      "text": "Hoje eu estudo chinês em casa.",
+      "tokens": [
+        {
+          "text": "Hoje",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "eu",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "estudo",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "chinês",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "em",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "casa",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "I study Chinese at home today.",
+      "tokens": [
+        {
+          "text": "I",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "study",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "Chinese",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "at",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "home",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "today",
+          "c": "adv",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "我今天在家学习中文。",
+      "tokens": [
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "今天",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "在",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "家",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "学习",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "中文",
+          "c": "n",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-022",
+    "level": "B1",
+    "topic": "Trabalho",
+    "title": "Receber a amostra",
+    "pinyin": "wo3 yi3 jing1 shou1 dao4 yang4 pin3 le5",
+    "natural": "I've already received the sample.",
+    "phonetic": "aiv‿ol-RÉ-di ri-SÍIVD dha SÉM-pol",
+    "features": [
+      "Contração",
+      "Linking"
+    ],
+    "speech": "I have → I've; o v liga à vogal de already. Received termina em /vd/, sem uma sílaba extra.",
+    "compare": "EN usa present perfect; PT traduz naturalmente pelo passado. Em ZH, 已经 e 了 mostram a situação atual sem conjugar 收到.",
+    "literal": "Eu + já + receber com resultado + amostra + situação.",
+    "pt": {
+      "text": "Eu já recebi a amostra.",
+      "tokens": [
+        {
+          "text": "Eu",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "já",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "recebi",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "a",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "amostra",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "I have already received the sample.",
+      "tokens": [
+        {
+          "text": "I",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "have",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "already",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "received",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "the",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "sample",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "我已经收到样品了。",
+      "tokens": [
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "已经",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "收到",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "样品",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "了",
+          "c": "part",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-023",
+    "level": "B1",
+    "topic": "Trabalho",
+    "title": "Um pouco melhor",
+    "pinyin": "zhe4 hao3 yi4 dianr3 le5",
+    "natural": "It's a little better.",
+    "phonetic": "its a LÍɾol BÉɾer",
+    "features": [
+      "Contração",
+      "Flapping"
+    ],
+    "speech": "It is → it's; little e better podem ter [ɾ] no americano. A little é uma expressão de grau.",
+    "compare": "PT/EN usam um elemento antes de melhor/better; ZH coloca 一点儿 depois de 好. Não acrescente 是 automaticamente antes do adjetivo.",
+    "literal": "Isto + bom + um pouco + mudança.",
+    "pt": {
+      "text": "Está um pouco melhor.",
+      "tokens": [
+        {
+          "text": "Está",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "um",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "pouco",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "melhor",
+          "c": "adj",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "It is a little better.",
+      "tokens": [
+        {
+          "text": "It",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "is",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "a",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "little",
+          "c": "adj",
+          "punct": ""
+        },
+        {
+          "text": "better",
+          "c": "adj",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "这好一点儿了。",
+      "tokens": [
+        {
+          "text": "这",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "好",
+          "c": "adj",
+          "punct": ""
+        },
+        {
+          "text": "一点儿",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "了",
+          "c": "part",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-024",
+    "level": "B1",
+    "topic": "Transporte",
+    "title": "Encontro na próxima semana",
+    "pinyin": "wo3 men5 xia4 zhou1 ke3 yi3 jian4 mian4",
+    "natural": "We can meet next week.",
+    "phonetic": "ui kan MÍIT néks UÍIK",
+    "features": [
+      "Elision",
+      "Formas fracas"
+    ],
+    "speech": "Next week: /t/ entre /s/ e /w/ pode desaparecer. Next week → nex week. Can perde destaque.",
+    "compare": "EN permite o tempo no fim; ZH coloca 下周 antes de 可以见面. 见面 é uma unidade lexical.",
+    "literal": "Nós + próxima semana + podemos + encontrar.",
+    "pt": {
+      "text": "Nós podemos nos encontrar na próxima semana.",
+      "tokens": [
+        {
+          "text": "Nós",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "podemos",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "nos",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "encontrar",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "na",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "próxima",
+          "c": "adj",
+          "punct": ""
+        },
+        {
+          "text": "semana",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "We can meet next week.",
+      "tokens": [
+        {
+          "text": "We",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "can",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "meet",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "next",
+          "c": "adj",
+          "punct": ""
+        },
+        {
+          "text": "week",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "我们下周可以见面。",
+      "tokens": [
+        {
+          "text": "我们",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "下周",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "可以",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "见面",
+          "c": "v",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-025",
+    "level": "B1",
+    "topic": "Cotidiano",
+    "title": "Já esteve em Xangai?",
+    "pinyin": "ni3 qu4 guo5 shang4 hai3 ma5",
+    "natural": "Have you ever been to Shanghai?",
+    "phonetic": "hav-ia É-ver bin ta shang-HÁI",
+    "features": [
+      "Formas fracas",
+      "Linking"
+    ],
+    "speech": "Have you pode soar /həv jə/; to pode ser /tə/. Ligue you‿ever.",
+    "compare": "Ever busca experiência de vida; 过 após 去 marca experiência. O nome Shanghai tem pronúncia inglesa e chinesa diferentes.",
+    "literal": "Você + ir + experiência + Xangai + pergunta.",
+    "pt": {
+      "text": "Você já esteve em Xangai?",
+      "tokens": [
+        {
+          "text": "Você",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "já",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "esteve",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "em",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "Xangai",
+          "c": "n",
+          "punct": "?"
+        }
+      ]
+    },
+    "en": {
+      "text": "Have you ever been to Shanghai?",
+      "tokens": [
+        {
+          "text": "Have",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "you",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "ever",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "been",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "to",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "Shanghai",
+          "c": "n",
+          "punct": "?"
+        }
+      ]
+    },
+    "zh": {
+      "text": "你去过上海吗？",
+      "tokens": [
+        {
+          "text": "你",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "去",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "过",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "上海",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "吗",
+          "c": "part",
+          "punct": "？"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-026",
+    "level": "B1",
+    "topic": "Trabalho",
+    "title": "Explicar um atraso",
+    "pinyin": "yin1 wei4 xia4 yu3 song4 huo4 yan2 chi2 le5",
+    "natural": "The delivery was delayed because it rained.",
+    "phonetic": "dha di-LÍ-ve-ri waz di-LÊID bi-KÓZ‿it RÊIND",
+    "features": [
+      "Formas fracas",
+      "Linking"
+    ],
+    "speech": "Was pode soar /wəz/; because + it liga /z/ à vogal. Rained tem uma sílaba.",
+    "compare": "EN explicita it para o clima; ZH usa 下雨 sem sujeito equivalente e pode colocar a causa primeiro.",
+    "literal": "Porque + chover + entrega + atrasar + aspecto.",
+    "pt": {
+      "text": "A entrega atrasou porque choveu.",
+      "tokens": [
+        {
+          "text": "A",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "entrega",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "atrasou",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "porque",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "choveu",
+          "c": "v",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "The delivery was delayed because it rained.",
+      "tokens": [
+        {
+          "text": "The",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "delivery",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "was",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "delayed",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "because",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "it",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "rained",
+          "c": "v",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "因为下雨，送货延迟了。",
+      "tokens": [
+        {
+          "text": "因为",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "下雨",
+          "c": "v",
+          "punct": "，"
+        },
+        {
+          "text": "送货",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "延迟",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "了",
+          "c": "part",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-027",
+    "level": "B1",
+    "topic": "Cotidiano",
+    "title": "Se chover, ficar em casa",
+    "pinyin": "ru2 guo3 xia4 yu3 wo3 jiu4 dai1 zai4 jia1 li3",
+    "natural": "If it rains, I'll stay home.",
+    "phonetic": "if‿it RÊINZ, ail STÊI HÔUM",
+    "features": [
+      "Contração",
+      "Linking"
+    ],
+    "speech": "I will → I'll; if + it → if‿it. Rains recebe /z/ final.",
+    "compare": "Na condição futura, EN usa presente após if. ZH pode combinar 如果 com 就 para ligar condição e consequência.",
+    "literal": "Se + chover + eu + então + ficar + em + casa + dentro.",
+    "pt": {
+      "text": "Se chover, eu fico em casa.",
+      "tokens": [
+        {
+          "text": "Se",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "chover",
+          "c": "v",
+          "punct": ","
+        },
+        {
+          "text": "eu",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "fico",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "em",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "casa",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "If it rains, I will stay home.",
+      "tokens": [
+        {
+          "text": "If",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "it",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "rains",
+          "c": "v",
+          "punct": ","
+        },
+        {
+          "text": "I",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "will",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "stay",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "home",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "如果下雨，我就待在家里。",
+      "tokens": [
+        {
+          "text": "如果",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "下雨",
+          "c": "v",
+          "punct": "，"
+        },
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "就",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "待",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "在",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "家",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "里",
+          "c": "loc",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-028",
+    "level": "B1",
+    "topic": "Trabalho",
+    "title": "Pedir que fale mais devagar",
+    "pinyin": "ni3 neng2 shuo1 de5 man4 yi4 dianr3 ma5",
+    "natural": "Could you speak more slowly?",
+    "phonetic": "KÚ-dja SPÍIK mor SLÔU-li",
+    "features": [
+      "Assimilation",
+      "Formas fracas"
+    ],
+    "speech": "Could + you pode soar couldja: /d/ + /j/ → /dʒ/. Could mantém a função de pedido polido.",
+    "compare": "EN modifica speak com advérbio; ZH usa 得 para introduzir a descrição da maneira de falar.",
+    "literal": "Você + pode + falar + ligação + lento + um pouco + pergunta.",
+    "pt": {
+      "text": "Você poderia falar mais devagar?",
+      "tokens": [
+        {
+          "text": "Você",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "poderia",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "falar",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "mais",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "devagar",
+          "c": "adv",
+          "punct": "?"
+        }
+      ]
+    },
+    "en": {
+      "text": "Could you speak more slowly?",
+      "tokens": [
+        {
+          "text": "Could",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "you",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "speak",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "more",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "slowly",
+          "c": "adv",
+          "punct": "?"
+        }
+      ]
+    },
+    "zh": {
+      "text": "你能说得慢一点儿吗？",
+      "tokens": [
+        {
+          "text": "你",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "能",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "说",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "得",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "慢",
+          "c": "adj",
+          "punct": ""
+        },
+        {
+          "text": "一点儿",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "吗",
+          "c": "part",
+          "punct": "？"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-029",
+    "level": "B1",
+    "topic": "Moradia",
+    "title": "Ainda não terminou",
+    "pinyin": "wo3 hai2 mei2 zuo4 wan2",
+    "natural": "I haven't finished yet.",
+    "phonetic": "ai HÉ-vant FÍ-nisht IÉT",
+    "features": [
+      "Contração",
+      "Linking"
+    ],
+    "speech": "Have not → haven't; finished termina em /t/. Ligue finished‿yet sem criar uma sílaba id extra.",
+    "compare": "Yet vai frequentemente no final; 还没 vem antes de 做完. 完 é complemento de resultado: fazer até terminar.",
+    "literal": "Eu + ainda + não + fazer + terminar.",
+    "pt": {
+      "text": "Eu ainda não terminei.",
+      "tokens": [
+        {
+          "text": "Eu",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "ainda",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "não",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "terminei",
+          "c": "v",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "I have not finished yet.",
+      "tokens": [
+        {
+          "text": "I",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "have",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "not",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "finished",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "yet",
+          "c": "adv",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "我还没做完。",
+      "tokens": [
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "还",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "没",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "做",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "完",
+          "c": "v",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-030",
+    "level": "B1",
+    "topic": "Compras",
+    "title": "Comparar preços",
+    "pinyin": "zhe4 ge5 xing2 hao4 bi3 na4 ge5 pian2 yi5",
+    "natural": "This model's cheaper than that one.",
+    "phonetic": "dhis MÓ-dolz TCHÍ-per dhan DHÉT uân",
+    "features": [
+      "Contração",
+      "Formas fracas"
+    ],
+    "speech": "Model is → model's; than pode soar /ðən/. Aqui 's significa is, não posse.",
+    "compare": "EN usa cheaper + than; ZH põe 比 + referência antes de 便宜. O comparativo não exige 更 nesta estrutura.",
+    "literal": "Este + modelo + comparado a + aquele + barato.",
+    "pt": {
+      "text": "Este modelo é mais barato que aquele.",
+      "tokens": [
+        {
+          "text": "Este",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "modelo",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "é",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "mais",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "barato",
+          "c": "adj",
+          "punct": ""
+        },
+        {
+          "text": "que",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "aquele",
+          "c": "pro",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "This model is cheaper than that one.",
+      "tokens": [
+        {
+          "text": "This",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "model",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "is",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "cheaper",
+          "c": "adj",
+          "punct": ""
+        },
+        {
+          "text": "than",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "that",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "one",
+          "c": "pro",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "这个型号比那个便宜。",
+      "tokens": [
+        {
+          "text": "这",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "个",
+          "c": "clf",
+          "punct": ""
+        },
+        {
+          "text": "型号",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "比",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "那个",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "便宜",
+          "c": "adj",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-031",
+    "level": "B2",
+    "topic": "Trabalho",
+    "title": "Enviar atualização",
+    "pinyin": "ni3 neng2 fa1 yi2 fen4 jin4 zhan3 bao4 gao4 ma5",
+    "natural": "Could you send an update?",
+    "phonetic": "KÚ-dja sénd‿an ÂP-deit",
+    "features": [
+      "Assimilation",
+      "Linking"
+    ],
+    "speech": "Could you → couldja; send an → send‿an; an update → an‿update. As ligações não mudam os limites das palavras escritas.",
+    "compare": "EN pede update de forma ampla; ZH explicita relatório de andamento e usa 份 para contar documentos.",
+    "literal": "Você + pode + enviar + um + classificador + progresso + relatório + pergunta.",
+    "pt": {
+      "text": "Você poderia enviar uma atualização?",
+      "tokens": [
+        {
+          "text": "Você",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "poderia",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "enviar",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "uma",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "atualização",
+          "c": "n",
+          "punct": "?"
+        }
+      ]
+    },
+    "en": {
+      "text": "Could you send an update?",
+      "tokens": [
+        {
+          "text": "Could",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "you",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "send",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "an",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "update",
+          "c": "n",
+          "punct": "?"
+        }
+      ]
+    },
+    "zh": {
+      "text": "你能发一份进展报告吗？",
+      "tokens": [
+        {
+          "text": "你",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "能",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "发",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "一",
+          "c": "num",
+          "punct": ""
+        },
+        {
+          "text": "份",
+          "c": "clf",
+          "punct": ""
+        },
+        {
+          "text": "进展",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "报告",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "吗",
+          "c": "part",
+          "punct": "？"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-032",
+    "level": "B2",
+    "topic": "Trabalho",
+    "title": "Aprovar uma amostra",
+    "pinyin": "yang4 pin3 yi3 jing1 tong1 guo4 shen3 he2 le5",
+    "natural": "The sample has been approved.",
+    "phonetic": "dha SÉM-pol haz bin‿a-PRÚUVD",
+    "features": [
+      "Linking",
+      "Formas fracas"
+    ],
+    "speech": "Has pode soar /həz/; been‿approved une o n à vogal. Approved termina em /vd/.",
+    "compare": "PT/EN usam passiva; ZH pode dizer naturalmente que a amostra passou pela revisão, sem usar 被.",
+    "literal": "Amostra + já + passar por + revisão + situação.",
+    "pt": {
+      "text": "A amostra foi aprovada.",
+      "tokens": [
+        {
+          "text": "A",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "amostra",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "foi",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "aprovada",
+          "c": "v",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "The sample has been approved.",
+      "tokens": [
+        {
+          "text": "The",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "sample",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "has",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "been",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "approved",
+          "c": "v",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "样品已经通过审核了。",
+      "tokens": [
+        {
+          "text": "样品",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "已经",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "通过",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "审核",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "了",
+          "c": "part",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-033",
+    "level": "B2",
+    "topic": "Trabalho",
+    "title": "Colocar a amostra aqui",
+    "pinyin": "qing3 ba3 yang4 pin3 fang4 zai4 zhe4 li3",
+    "natural": "Please put the sample here.",
+    "phonetic": "plíiz PUT dha SÉM-pol HÍR",
+    "features": [
+      "Formas fracas",
+      "Ritmo"
+    ],
+    "speech": "The perde destaque; não insira i depois de put. Sample e here carregam a informação principal.",
+    "compare": "PT/EN deixam o objeto após o verbo; 把 coloca o objeto afetado antes de 放. O destino completa a ação.",
+    "literal": "Por favor + objeto afetado + amostra + colocar + em + aqui.",
+    "pt": {
+      "text": "Por favor, coloque a amostra aqui.",
+      "tokens": [
+        {
+          "text": "Por",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "favor",
+          "c": "n",
+          "punct": ","
+        },
+        {
+          "text": "coloque",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "a",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "amostra",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "aqui",
+          "c": "adv",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "Please put the sample here.",
+      "tokens": [
+        {
+          "text": "Please",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "put",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "the",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "sample",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "here",
+          "c": "adv",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "请把样品放在这里。",
+      "tokens": [
+        {
+          "text": "请",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "把",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "样品",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "放",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "在",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "这里",
+          "c": "pro",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-034",
+    "level": "B2",
+    "topic": "Trabalho",
+    "title": "Resolver apesar do problema",
+    "pinyin": "sui1 ran2 you3 wen4 ti2 dan4 shi4 wo3 men5 ke3 yi3 jie3 jue2",
+    "natural": "Although there's a problem, we can solve it.",
+    "phonetic": "ol-DHÔU dhérz a PRÓ-blam, ui kan SÓLV‿it",
+    "features": [
+      "Contração",
+      "Linking"
+    ],
+    "speech": "There is → there's; can pode ser fraco; solve + it → solve‿it. Não acrescente vogal entre v e it.",
+    "compare": "虽然…但是… é um par natural em ZH. PT/EN não precisam duplicar embora e mas na mesma estrutura.",
+    "literal": "Embora + haver + problema + mas + nós + poder + resolver.",
+    "pt": {
+      "text": "Embora haja um problema, podemos resolvê-lo.",
+      "tokens": [
+        {
+          "text": "Embora",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "haja",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "um",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "problema",
+          "c": "n",
+          "punct": ","
+        },
+        {
+          "text": "podemos",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "resolvê-lo",
+          "c": "v",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "Although there is a problem, we can solve it.",
+      "tokens": [
+        {
+          "text": "Although",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "there",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "is",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "a",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "problem",
+          "c": "n",
+          "punct": ","
+        },
+        {
+          "text": "we",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "can",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "solve",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "it",
+          "c": "pro",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "虽然有问题，但是我们可以解决。",
+      "tokens": [
+        {
+          "text": "虽然",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "有",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "问题",
+          "c": "n",
+          "punct": "，"
+        },
+        {
+          "text": "但是",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "我们",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "可以",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "解决",
+          "c": "v",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-035",
+    "level": "B2",
+    "topic": "Dados",
+    "title": "Queda nas vendas",
+    "pinyin": "xiao1 shou4 e2 da4 fu2 xia4 jiang4 le5",
+    "natural": "Sales have declined considerably.",
+    "phonetic": "SÊILZ hav di-KLÁIND kan-SÍ-da-ra-bli",
+    "features": [
+      "Formas fracas",
+      "Ritmo"
+    ],
+    "speech": "Have pode enfraquecer; declined termina em /nd/. O destaque em considerably comunica a intensidade.",
+    "compare": "PT/EN podem colocar intensidade após o verbo; 大幅 vem antes de 下降. 销售额 especifica valor das vendas.",
+    "literal": "Valor das vendas + consideravelmente + cair + aspecto.",
+    "pt": {
+      "text": "As vendas caíram consideravelmente.",
+      "tokens": [
+        {
+          "text": "As",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "vendas",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "caíram",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "consideravelmente",
+          "c": "adv",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "Sales have declined considerably.",
+      "tokens": [
+        {
+          "text": "Sales",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "have",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "declined",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "considerably",
+          "c": "adv",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "销售额大幅下降了。",
+      "tokens": [
+        {
+          "text": "销售额",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "大幅",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "下降",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "了",
+          "c": "part",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-036",
+    "level": "B2",
+    "topic": "Trabalho",
+    "title": "Prazo até sexta-feira",
+    "pinyin": "wo3 men5 xu1 yao4 zai4 xing1 qi1 wu3 zhi1 qian2 wan2 cheng2 zhe4 xiang4 gong1 zuo4",
+    "natural": "We need to finish this by Friday.",
+    "phonetic": "ui NÍID ta FÍ-nish dhis bai FRÁI-dei",
+    "features": [
+      "Formas fracas"
+    ],
+    "speech": "To no infinitivo pode soar /tə/. By é /baɪ/ e indica prazo-limite, não duração.",
+    "compare": "EN deixa o prazo no final; ZH coloca 在星期五之前 antes de 完成. A versão chinesa explicita a tarefa.",
+    "literal": "Nós + precisamos + em + sexta-feira + antes + concluir + esta + tarefa.",
+    "pt": {
+      "text": "Precisamos concluir isso até sexta-feira.",
+      "tokens": [
+        {
+          "text": "Precisamos",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "concluir",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "isso",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "até",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "sexta-feira",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "We need to finish this by Friday.",
+      "tokens": [
+        {
+          "text": "We",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "need",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "to",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "finish",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "this",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "by",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "Friday",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "我们需要在星期五之前完成这项工作。",
+      "tokens": [
+        {
+          "text": "我们",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "需要",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "在",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "星期五",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "之前",
+          "c": "loc",
+          "punct": ""
+        },
+        {
+          "text": "完成",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "这",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "项",
+          "c": "clf",
+          "punct": ""
+        },
+        {
+          "text": "工作",
+          "c": "n",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-037",
+    "level": "B2",
+    "topic": "Trabalho",
+    "title": "Esperar confirmação",
+    "pinyin": "wo3 men5 zheng4 zai4 deng3 gong1 ying4 shang1 que4 ren4",
+    "natural": "We're waiting for the supplier to confirm.",
+    "phonetic": "uir UÊIɾing fer dha sa-PLÁI-er ta kan-FÂRM",
+    "features": [
+      "Contração",
+      "Flapping",
+      "Formas fracas"
+    ],
+    "speech": "We are → we're; waiting pode ter [ɾ] no americano; for e to perdem força.",
+    "compare": "PT usa confirmação como nome; EN e ZH podem explicitar o fornecedor como quem confirma. 正在 indica ação em andamento.",
+    "literal": "Nós + em andamento + esperar + fornecedor + confirmar.",
+    "pt": {
+      "text": "Estamos esperando a confirmação do fornecedor.",
+      "tokens": [
+        {
+          "text": "Estamos",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "esperando",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "a",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "confirmação",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "do",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "fornecedor",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "We are waiting for the supplier to confirm.",
+      "tokens": [
+        {
+          "text": "We",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "are",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "waiting",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "for",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "the",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "supplier",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "to",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "confirm",
+          "c": "v",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "我们正在等供应商确认。",
+      "tokens": [
+        {
+          "text": "我们",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "正在",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "等",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "供应商",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "确认",
+          "c": "v",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-038",
+    "level": "B2",
+    "topic": "Trabalho",
+    "title": "Revisar antes de enviar",
+    "pinyin": "wo3 men5 xian1 he2 dui4 xi4 jie2 zai4 fa1 bao4 gao4",
+    "natural": "Let's review the details before we send the report.",
+    "phonetic": "lets ri-VIÚU dha DÍI-teils bi-FÓR ui SÉND dha ri-PÓRT",
+    "features": [
+      "Contração",
+      "Formas fracas"
+    ],
+    "speech": "Let us → let's; os dois the tendem a /ðə/. Dê destaque às ações review e send.",
+    "compare": "EN conecta com before; ZH organiza a sequência com 先…再…, primeiro e depois. São estratégias equivalentes, não cópia literal.",
+    "literal": "Nós + primeiro + conferir + detalhes + depois + enviar + relatório.",
+    "pt": {
+      "text": "Vamos revisar os detalhes antes de enviar o relatório.",
+      "tokens": [
+        {
+          "text": "Vamos",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "revisar",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "os",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "detalhes",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "antes",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "de",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "enviar",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "o",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "relatório",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "Let us review the details before we send the report.",
+      "tokens": [
+        {
+          "text": "Let",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "us",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "review",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "the",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "details",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "before",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "we",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "send",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "the",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "report",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "我们先核对细节，再发报告。",
+      "tokens": [
+        {
+          "text": "我们",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "先",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "核对",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "细节",
+          "c": "n",
+          "punct": "，"
+        },
+        {
+          "text": "再",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "发",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "报告",
+          "c": "n",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-039",
+    "level": "B2",
+    "topic": "Dados",
+    "title": "Preços oscilando",
+    "pinyin": "jia4 ge2 bo1 dong4 hen3 da4",
+    "natural": "Prices are fluctuating widely.",
+    "phonetic": "PRÁI-siz ar FLÂK-tchu-êiɾing UÁID-li",
+    "features": [
+      "Linking",
+      "Flapping"
+    ],
+    "speech": "Ligue prices‿are; no americano, o t de -ating pode virar [ɾ]. A sílaba forte de fluctuating é a primeira.",
+    "compare": "EN usa advérbio para caracterizar a oscilação; ZH avalia a amplitude com 很大. Preço não precisa de marca explícita de plural.",
+    "literal": "Preço + oscilar + muito + grande.",
+    "pt": {
+      "text": "Os preços estão oscilando bastante.",
+      "tokens": [
+        {
+          "text": "Os",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "preços",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "estão",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "oscilando",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "bastante",
+          "c": "adv",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "Prices are fluctuating widely.",
+      "tokens": [
+        {
+          "text": "Prices",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "are",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "fluctuating",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "widely",
+          "c": "adv",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "价格波动很大。",
+      "tokens": [
+        {
+          "text": "价格",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "波动",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "很",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "大",
+          "c": "adj",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-040",
+    "level": "B2",
+    "topic": "Trabalho",
+    "title": "Mudar o plano se necessário",
+    "pinyin": "ru2 guo3 you3 bi4 yao4 wo3 men5 ke3 yi3 tiao2 zheng3 ji4 hua4",
+    "natural": "If necessary, we can adjust the plan.",
+    "phonetic": "if NÉ-sa-sé-ri, ui kan‿a-DJÂST dha PLÉN",
+    "features": [
+      "Linking",
+      "Formas fracas"
+    ],
+    "speech": "Can adjust → can‿adjust, com can fraco. The perde destaque antes de plan.",
+    "compare": "PT/EN abreviam se for necessário; ZH usa 有必要, haver necessidade. Ajustar o plano é 调整计划.",
+    "literal": "Se + houver + necessidade + nós + podemos + ajustar + plano.",
+    "pt": {
+      "text": "Se necessário, podemos ajustar o plano.",
+      "tokens": [
+        {
+          "text": "Se",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "necessário",
+          "c": "adj",
+          "punct": ","
+        },
+        {
+          "text": "podemos",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "ajustar",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "o",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "plano",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "If necessary, we can adjust the plan.",
+      "tokens": [
+        {
+          "text": "If",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "necessary",
+          "c": "adj",
+          "punct": ","
+        },
+        {
+          "text": "we",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "can",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "adjust",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "the",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "plan",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "如果有必要，我们可以调整计划。",
+      "tokens": [
+        {
+          "text": "如果",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "有",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "必要",
+          "c": "n",
+          "punct": "，"
+        },
+        {
+          "text": "我们",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "可以",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "调整",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "计划",
+          "c": "n",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-041",
+    "level": "C1",
+    "topic": "Trabalho",
+    "title": "Discordar com cuidado",
+    "pinyin": "zhe4 he2 wo3 yu4 qi1 de5 bu2 tai4 yi2 yang4",
+    "natural": "It's not quite what I expected.",
+    "phonetic": "its nóʔ KUAIT uót‿ai ik-SPÉK-tid",
+    "features": [
+      "Glottalization",
+      "Linking"
+    ],
+    "speech": "Variante britânica: o t de not antes de /k/ pode ser [ʔ]. Not quite → noʔ quite. Essa parada não é obrigatória em todos os sotaques.",
+    "compare": "Not quite e 不太 suavizam a discordância. 和 introduz a comparação em ZH, e 的 recupera aquilo que se esperava.",
+    "literal": "Isto + com + eu + esperar + nominalização + não + muito + igual.",
+    "pt": {
+      "text": "Não é exatamente o que eu esperava.",
+      "tokens": [
+        {
+          "text": "Não",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "é",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "exatamente",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "o",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "que",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "eu",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "esperava",
+          "c": "v",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "It is not quite what I expected.",
+      "tokens": [
+        {
+          "text": "It",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "is",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "not",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "quite",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "what",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "I",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "expected",
+          "c": "v",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "这和我预期的不太一样。",
+      "tokens": [
+        {
+          "text": "这",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "和",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "预期",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "的",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "不",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "太",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "一样",
+          "c": "adj",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-042",
+    "level": "C1",
+    "topic": "Trabalho",
+    "title": "Condição irreal no passado",
+    "pinyin": "ru2 guo3 wo3 zao3 zhi1 dao4 jiu4 hui4 deng3 yi2 xia4",
+    "natural": "If I'd known, I'd have waited.",
+    "phonetic": "if aid NÔUN, aid-av UÊIɾid",
+    "features": [
+      "Contração",
+      "Formas fracas",
+      "Flapping"
+    ],
+    "speech": "O primeiro I'd = I had; o segundo = I would. I'd have pode soar /aɪdəv/. Waited pode ter [ɾ].",
+    "compare": "EN marca a condição irreal com had known e would have; ZH usa 早知道 e o contexto, sem essas flexões verbais.",
+    "literal": "Se + eu + antes + soubesse + então + teria + esperado + um pouco.",
+    "pt": {
+      "text": "Se eu soubesse, teria esperado.",
+      "tokens": [
+        {
+          "text": "Se",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "eu",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "soubesse",
+          "c": "v",
+          "punct": ","
+        },
+        {
+          "text": "teria",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "esperado",
+          "c": "v",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "If I had known, I would have waited.",
+      "tokens": [
+        {
+          "text": "If",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "I",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "had",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "known",
+          "c": "v",
+          "punct": ","
+        },
+        {
+          "text": "I",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "would",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "have",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "waited",
+          "c": "v",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "如果我早知道，就会等一下。",
+      "tokens": [
+        {
+          "text": "如果",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "早",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "知道",
+          "c": "v",
+          "punct": "，"
+        },
+        {
+          "text": "就",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "会",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "等",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "一下",
+          "c": "adv",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-043",
+    "level": "C1",
+    "topic": "Trabalho",
+    "title": "Preço e qualidade",
+    "pinyin": "wo3 men5 bu4 jin3 kao3 lv4 jia4 ge2 hai2 zhong4 shi4 zhi4 liang4",
+    "natural": "We not only consider price but also value quality.",
+    "phonetic": "ui nat ÔUN-li kan-SÍ-der PRÁIS bat‿ÓL-sou VÉ-liu KUÓ-laɾi",
+    "features": [
+      "Linking",
+      "Flapping"
+    ],
+    "speech": "But + also liga t à vogal; quality pode ter [ɾ] no americano. O destaque alterna price e quality.",
+    "compare": "Not only…but also e 不仅…还… ampliam o argumento. Em ZH, 考虑 e 重视 são escolhas lexicais diferentes, como considerar e valorizar.",
+    "literal": "Nós + não apenas + considerar + preço + também + valorizar + qualidade.",
+    "pt": {
+      "text": "Não consideramos apenas o preço; também valorizamos a qualidade.",
+      "tokens": [
+        {
+          "text": "Não",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "consideramos",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "apenas",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "o",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "preço",
+          "c": "n",
+          "punct": ";"
+        },
+        {
+          "text": "também",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "valorizamos",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "a",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "qualidade",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "We not only consider price but also value quality.",
+      "tokens": [
+        {
+          "text": "We",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "not",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "only",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "consider",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "price",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "but",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "also",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "value",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "quality",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "我们不仅考虑价格，还重视质量。",
+      "tokens": [
+        {
+          "text": "我们",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "不仅",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "考虑",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "价格",
+          "c": "n",
+          "punct": "，"
+        },
+        {
+          "text": "还",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "重视",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "质量",
+          "c": "n",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-044",
+    "level": "C1",
+    "topic": "Dados",
+    "title": "Superar expectativas",
+    "pinyin": "jie2 guo3 bi3 wo3 men5 yu4 qi1 de5 geng4 hao3",
+    "natural": "The result was better than we'd expected.",
+    "phonetic": "dha ri-ZÂLT waz BÉɾer dhan uid‿ik-SPÉK-tid",
+    "features": [
+      "Contração",
+      "Flapping",
+      "Linking"
+    ],
+    "speech": "We had → we'd; ligue we'd‿expected. Better pode ter [ɾ]. Had marca a expectativa anterior ao resultado.",
+    "compare": "比 introduz a referência antes de 更好. EN compara com uma oração; ZH usa 的 para nominalizar a expectativa.",
+    "literal": "Resultado + comparado a + nós + esperar + nominalização + mais + bom.",
+    "pt": {
+      "text": "O resultado foi melhor do que esperávamos.",
+      "tokens": [
+        {
+          "text": "O",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "resultado",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "foi",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "melhor",
+          "c": "adj",
+          "punct": ""
+        },
+        {
+          "text": "do",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "que",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "esperávamos",
+          "c": "v",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "The result was better than we had expected.",
+      "tokens": [
+        {
+          "text": "The",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "result",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "was",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "better",
+          "c": "adj",
+          "punct": ""
+        },
+        {
+          "text": "than",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "we",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "had",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "expected",
+          "c": "v",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "结果比我们预期的更好。",
+      "tokens": [
+        {
+          "text": "结果",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "比",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "我们",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "预期",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "的",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "更",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "好",
+          "c": "adj",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-045",
+    "level": "C1",
+    "topic": "Trabalho",
+    "title": "Esclarecer o objetivo",
+    "pinyin": "mu4 di4 bu2 shi4 xue1 jian3 cheng2 ben3 er2 shi4 jian3 shao3 lang4 fei4",
+    "natural": "The goal isn't to cut costs but to reduce waste.",
+    "phonetic": "dha GÔUL Í-zant ta KÂT KÓSTS bat ta ri-DÚUS UÊIST",
+    "features": [
+      "Contração",
+      "Formas fracas"
+    ],
+    "speech": "Is not → isn't; to pode soar /tə/ nas duas ocorrências. O contraste principal está em costs e waste.",
+    "compare": "PT/EN usam não…mas; ZH tem 不是…而是… para corrigir o enquadramento. 目的 é objetivo, não pessoa.",
+    "literal": "Objetivo + não + ser + cortar + custos + mas sim + reduzir + desperdício.",
+    "pt": {
+      "text": "O objetivo não é cortar custos, mas reduzir desperdício.",
+      "tokens": [
+        {
+          "text": "O",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "objetivo",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "não",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "é",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "cortar",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "custos",
+          "c": "n",
+          "punct": ","
+        },
+        {
+          "text": "mas",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "reduzir",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "desperdício",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "The goal is not to cut costs but to reduce waste.",
+      "tokens": [
+        {
+          "text": "The",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "goal",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "is",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "not",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "to",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "cut",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "costs",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "but",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "to",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "reduce",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "waste",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "目的不是削减成本，而是减少浪费。",
+      "tokens": [
+        {
+          "text": "目的",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "不",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "是",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "削减",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "成本",
+          "c": "n",
+          "punct": "，"
+        },
+        {
+          "text": "而是",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "减少",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "浪费",
+          "c": "n",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-046",
+    "level": "C1",
+    "topic": "Trabalho",
+    "title": "Impedir um erro",
+    "pinyin": "yao4 bu2 shi4 ni3 bang1 mang2 wo3 men5 jiu4 hui4 cuo4 guo4 jie2 zhi3 ri4 qi1",
+    "natural": "Without your help, we'd have missed the deadline.",
+    "phonetic": "ui-DHÁUT yer HÉLP, uid-av MÍST dha DÉD-lain",
+    "features": [
+      "Contração",
+      "Formas fracas"
+    ],
+    "speech": "We would → we'd; we'd have → /wiːdəv/. Your pode perder destaque. Não escreva would of.",
+    "compare": "PT e ZH formulam uma condição negativa; EN compacta a condição em without your help. O resultado passado irreal vem do contexto e do modal.",
+    "literal": "Se não fosse + você + ajudar + nós + então + teríamos + perdido + prazo.",
+    "pt": {
+      "text": "Se não fosse sua ajuda, teríamos perdido o prazo.",
+      "tokens": [
+        {
+          "text": "Se",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "não",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "fosse",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "sua",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "ajuda",
+          "c": "n",
+          "punct": ","
+        },
+        {
+          "text": "teríamos",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "perdido",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "o",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "prazo",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "Without your help, we would have missed the deadline.",
+      "tokens": [
+        {
+          "text": "Without",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "your",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "help",
+          "c": "n",
+          "punct": ","
+        },
+        {
+          "text": "we",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "would",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "have",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "missed",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "the",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "deadline",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "要不是你帮忙，我们就会错过截止日期。",
+      "tokens": [
+        {
+          "text": "要不是",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "你",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "帮忙",
+          "c": "v",
+          "punct": "，"
+        },
+        {
+          "text": "我们",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "就",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "会",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "错过",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "截止日期",
+          "c": "n",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-047",
+    "level": "C1",
+    "topic": "Dados",
+    "title": "Separar correlação e causa",
+    "pinyin": "zhe4 xie1 shu4 ju4 biao3 ming2 cun2 zai4 guan1 lian2 dan4 bu4 neng2 zheng4 ming2 yin1 guo3 guan1 xi5",
+    "natural": "These data suggest a relationship but don't establish causation.",
+    "phonetic": "dhíiz DÊIɾa sa-DJÉST‿a ri-LÊI-shan-ship bat dôunt‿i-STÉ-blish ko-ZÊI-shan",
+    "features": [
+      "Contração",
+      "Linking"
+    ],
+    "speech": "Do not → don't; suggest‿a e don't‿establish conectam consoante e vogal. Data tem mais de uma pronúncia aceita.",
+    "compare": "EN diferencia suggest de establish; ZH contrasta 表明存在 e 不能证明. A escolha verbal calibra a força da conclusão.",
+    "literal": "Estes + dados + indicam + existir + relação + mas + não + poder + provar + causalidade.",
+    "pt": {
+      "text": "Esses dados sugerem uma relação, mas não comprovam causalidade.",
+      "tokens": [
+        {
+          "text": "Esses",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "dados",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "sugerem",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "uma",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "relação",
+          "c": "n",
+          "punct": ","
+        },
+        {
+          "text": "mas",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "não",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "comprovam",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "causalidade",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "These data suggest a relationship but do not establish causation.",
+      "tokens": [
+        {
+          "text": "These",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "data",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "suggest",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "a",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "relationship",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "but",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "do",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "not",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "establish",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "causation",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "这些数据表明存在关联，但不能证明因果关系。",
+      "tokens": [
+        {
+          "text": "这些",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "数据",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "表明",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "存在",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "关联",
+          "c": "n",
+          "punct": "，"
+        },
+        {
+          "text": "但",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "不",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "能",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "证明",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "因果关系",
+          "c": "n",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-048",
+    "level": "C1",
+    "topic": "Trabalho",
+    "title": "Reconhecer uma objeção",
+    "pinyin": "wo3 li3 jie3 ni3 de5 gu4 lv4 dan4 bu4 tong2 yi4 zhe4 ge5 jie2 lun4",
+    "natural": "I understand your concern, although I disagree with the conclusion.",
+    "phonetic": "ai an-der-STÉND yer kan-SÂRN, ol-DHÔU‿ai dis-a-GRÍI uidh dha kan-KLÚU-zhan",
+    "features": [
+      "Formas fracas",
+      "Linking"
+    ],
+    "speech": "Your pode ser fraco; although‿I liga vogais sem uma pausa artificial. O grupo with the contém dois sons dentais próximos.",
+    "compare": "PT/EN usam concessão explícita; ZH usa contraste com 但. 理解 não significa concordar: compreensão e concordância são verbos distintos.",
+    "literal": "Eu + compreender + você + posse + preocupação + mas + não + concordar + esta + conclusão.",
+    "pt": {
+      "text": "Eu entendo sua preocupação, embora discorde da conclusão.",
+      "tokens": [
+        {
+          "text": "Eu",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "entendo",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "sua",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "preocupação",
+          "c": "n",
+          "punct": ","
+        },
+        {
+          "text": "embora",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "discorde",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "da",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "conclusão",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "I understand your concern, although I disagree with the conclusion.",
+      "tokens": [
+        {
+          "text": "I",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "understand",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "your",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "concern",
+          "c": "n",
+          "punct": ","
+        },
+        {
+          "text": "although",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "I",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "disagree",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "with",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "the",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "conclusion",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "我理解你的顾虑，但不同意这个结论。",
+      "tokens": [
+        {
+          "text": "我",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "理解",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "你",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "的",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "顾虑",
+          "c": "n",
+          "punct": "，"
+        },
+        {
+          "text": "但",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "不",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "同意",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "这",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "个",
+          "c": "clf",
+          "punct": ""
+        },
+        {
+          "text": "结论",
+          "c": "n",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-049",
+    "level": "C1",
+    "topic": "Trabalho",
+    "title": "Condicionar a aprovação",
+    "pinyin": "zhi3 yao4 xiu1 gai3 wan2 cheng2 wo3 men5 jiu4 ke3 yi3 pi1 zhun3",
+    "natural": "We can approve it provided that the changes are completed.",
+    "phonetic": "ui kan‿a-PRÚUV‿it pra-VÁI-did dhat dha TCHÊIN-djiz ar kam-PLÍIɾid",
+    "features": [
+      "Linking",
+      "Formas fracas"
+    ],
+    "speech": "Can approve e approve it se ligam. Provided that é um bloco de condição; that tende a perder destaque.",
+    "compare": "Provided that e 只要…就… estabelecem condição suficiente. Não equivalem a promessa incondicional.",
+    "literal": "Desde que + alterações + concluir + nós + então + podemos + aprovar.",
+    "pt": {
+      "text": "Podemos aprovar, desde que os ajustes sejam concluídos.",
+      "tokens": [
+        {
+          "text": "Podemos",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "aprovar",
+          "c": "v",
+          "punct": ","
+        },
+        {
+          "text": "desde",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "que",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "os",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "ajustes",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "sejam",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "concluídos",
+          "c": "v",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "We can approve it provided that the changes are completed.",
+      "tokens": [
+        {
+          "text": "We",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "can",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "approve",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "it",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "provided",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "that",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "the",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "changes",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "are",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "completed",
+          "c": "v",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "只要修改完成，我们就可以批准。",
+      "tokens": [
+        {
+          "text": "只要",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "修改",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "完成",
+          "c": "v",
+          "punct": "，"
+        },
+        {
+          "text": "我们",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "就",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "可以",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "批准",
+          "c": "v",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-050",
+    "level": "C1",
+    "topic": "Dados",
+    "title": "Priorizar a precisão",
+    "pinyin": "fen1 xi1 yue4 xiang2 xi4 jue2 ce4 jiu4 yue4 ke3 kao4",
+    "natural": "The more detailed the analysis, the more reliable the decision.",
+    "phonetic": "dha mor di-TÊILD dhi a-NÉ-la-sis, dha mor ri-LÁI-a-bol dha di-SÍ-zhan",
+    "features": [
+      "Formas fracas",
+      "Linking"
+    ],
+    "speech": "Em the analysis, the pode ter /ði/ antes da vogal; nas outras ocorrências, geralmente /ðə/. Compare os dois grupos rítmicos.",
+    "compare": "The inicial de cada comparativo tem função adverbial, diferente do artigo em the analysis. 越…越… expressa variação correlacionada.",
+    "literal": "Análise + quanto mais + detalhada + decisão + então + mais + confiável.",
+    "pt": {
+      "text": "Quanto mais detalhada a análise, mais confiável a decisão.",
+      "tokens": [
+        {
+          "text": "Quanto",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "mais",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "detalhada",
+          "c": "adj",
+          "punct": ""
+        },
+        {
+          "text": "a",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "análise",
+          "c": "n",
+          "punct": ","
+        },
+        {
+          "text": "mais",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "confiável",
+          "c": "adj",
+          "punct": ""
+        },
+        {
+          "text": "a",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "decisão",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "The more detailed the analysis, the more reliable the decision.",
+      "tokens": [
+        {
+          "text": "The",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "more",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "detailed",
+          "c": "adj",
+          "punct": ""
+        },
+        {
+          "text": "the",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "analysis",
+          "c": "n",
+          "punct": ","
+        },
+        {
+          "text": "the",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "more",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "reliable",
+          "c": "adj",
+          "punct": ""
+        },
+        {
+          "text": "the",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "decision",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "分析越详细，决策就越可靠。",
+      "tokens": [
+        {
+          "text": "分析",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "越",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "详细",
+          "c": "adj",
+          "punct": "，"
+        },
+        {
+          "text": "决策",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "就",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "越",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "可靠",
+          "c": "adj",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-051",
+    "level": "C2",
+    "topic": "Dados",
+    "title": "Evitar uma conclusão precoce",
+    "pinyin": "jin3 ping2 zhe4 xie1 shu4 ju4 jiu4 xia4 jie2 lun4 wei2 shi2 guo4 zao3",
+    "natural": "It would be premature to draw conclusions from these data.",
+    "phonetic": "it uad bi pri-ma-TCHÚR ta DRÓ kan-KLÚU-zhanz fram dhíiz DÊIɾa",
+    "features": [
+      "Formas fracas",
+      "Flapping"
+    ],
+    "speech": "Would, to e from podem enfraquecer; data pode ter [ɾ] no americano. Draw conclusions é uma combinação a aprender inteira.",
+    "compare": "EN usa sujeito antecipador it; ZH antepõe a ação avaliada e encerra com 为时过早. Atividade avançada: calibrar cautela, não apenas traduzir palavras.",
+    "literal": "Somente com base em + estes + dados + já + tirar + conclusão + ser prematuro.",
+    "pt": {
+      "text": "Seria prematuro tirar conclusões com base nesses dados.",
+      "tokens": [
+        {
+          "text": "Seria",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "prematuro",
+          "c": "adj",
+          "punct": ""
+        },
+        {
+          "text": "tirar",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "conclusões",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "com",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "base",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "nesses",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "dados",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "It would be premature to draw conclusions from these data.",
+      "tokens": [
+        {
+          "text": "It",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "would",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "be",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "premature",
+          "c": "adj",
+          "punct": ""
+        },
+        {
+          "text": "to",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "draw",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "conclusions",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "from",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "these",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "data",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "仅凭这些数据就下结论，为时过早。",
+      "tokens": [
+        {
+          "text": "仅",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "凭",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "这些",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "数据",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "就",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "下",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "结论",
+          "c": "n",
+          "punct": "，"
+        },
+        {
+          "text": "为时过早",
+          "c": "adj",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-052",
+    "level": "C2",
+    "topic": "Trabalho",
+    "title": "Retomar o foco",
+    "pinyin": "ji2 bian4 ru2 ci3 wo3 men5 reng2 ran2 xu1 yao4 yi2 ge4 ke3 xing2 de5 ji4 hua4",
+    "natural": "Be that as it may, we still need a workable plan.",
+    "phonetic": "bi dhét‿az it MÊI, ui stil NÍID‿a UÂR-ka-bol PLÉN",
+    "features": [
+      "Linking",
+      "Formas fracas"
+    ],
+    "speech": "That‿as e need‿a se ligam; as pode soar /əz/. A primeira expressão constitui uma unidade de concessão.",
+    "compare": "Be that as it may e 即便如此 retomam um argumento anterior. 可行的计划 põe a descrição antes do nome; PT normalmente usa plano viável.",
+    "literal": "Mesmo que + assim + nós + ainda + precisar + um + classificador + viável + ligação + plano.",
+    "pt": {
+      "text": "Seja como for, ainda precisamos de um plano viável.",
+      "tokens": [
+        {
+          "text": "Seja",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "como",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "for",
+          "c": "v",
+          "punct": ","
+        },
+        {
+          "text": "ainda",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "precisamos",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "de",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "um",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "plano",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "viável",
+          "c": "adj",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "Be that as it may, we still need a workable plan.",
+      "tokens": [
+        {
+          "text": "Be",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "that",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "as",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "it",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "may",
+          "c": "v",
+          "punct": ","
+        },
+        {
+          "text": "we",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "still",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "need",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "a",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "workable",
+          "c": "adj",
+          "punct": ""
+        },
+        {
+          "text": "plan",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "即便如此，我们仍然需要一个可行的计划。",
+      "tokens": [
+        {
+          "text": "即便",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "如此",
+          "c": "pro",
+          "punct": "，"
+        },
+        {
+          "text": "我们",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "仍然",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "需要",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "一",
+          "c": "num",
+          "punct": ""
+        },
+        {
+          "text": "个",
+          "c": "clf",
+          "punct": ""
+        },
+        {
+          "text": "可行",
+          "c": "adj",
+          "punct": ""
+        },
+        {
+          "text": "的",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "计划",
+          "c": "n",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-053",
+    "level": "C2",
+    "topic": "Dados",
+    "title": "Distinguir evidência e ausência",
+    "pinyin": "mei2 you3 zheng4 ju4 bing4 bu4 yi4 wei4 zhe5 mei2 you3 xiao4 guo3",
+    "natural": "The absence of evidence doesn't prove the absence of an effect.",
+    "phonetic": "dhi ÉB-sans av É-va-dans DÂ-zant PRÚUV dhi ÉB-sans av‿an i-FÉKT",
+    "features": [
+      "Contração",
+      "Linking",
+      "Formas fracas"
+    ],
+    "speech": "Does not → doesn't; of an → of‿an. The antes de absence tende a /ði/. Mantenha a oposição entre evidence e effect.",
+    "compare": "PT/EN nominalizam ausência; ZH usa 没有 e 意味着 para construir a relação. A tradução preserva a lógica, não o número de substantivos.",
+    "literal": "Não haver + evidência + enfaticamente + não + significar + não haver + efeito.",
+    "pt": {
+      "text": "A ausência de evidência não prova a ausência de efeito.",
+      "tokens": [
+        {
+          "text": "A",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "ausência",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "de",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "evidência",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "não",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "prova",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "a",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "ausência",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "de",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "efeito",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "The absence of evidence does not prove the absence of an effect.",
+      "tokens": [
+        {
+          "text": "The",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "absence",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "of",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "evidence",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "does",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "not",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "prove",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "the",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "absence",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "of",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "an",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "effect",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "没有证据并不意味着没有效果。",
+      "tokens": [
+        {
+          "text": "没有",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "证据",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "并",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "不",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "意味着",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "没有",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "效果",
+          "c": "n",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-054",
+    "level": "C2",
+    "topic": "Trabalho",
+    "title": "Evitar falsa escolha",
+    "pinyin": "wo3 men5 bu2 bi4 zai4 su4 du4 he2 yan2 jin3 xing4 zhi1 jian1 er4 xuan3 yi1",
+    "natural": "We don't have to choose between speed and rigor.",
+    "phonetic": "ui dôunt HÉF ta TCHÚUZ bi-TUÍIN SPÍID an RÍ-ger",
+    "features": [
+      "Contração",
+      "Assimilation",
+      "Elision"
+    ],
+    "speech": "Have to pode soar /hæf tə/: v torna-se f antes do t. And sem ênfase pode perder d: speed‿and rigor.",
+    "compare": "Don't have to expressa ausência de necessidade, não proibição. 不必 tem sentido semelhante; 之间 enquadra as duas alternativas.",
+    "literal": "Nós + não + precisar + entre + velocidade + e + rigor + entre + escolher uma de duas.",
+    "pt": {
+      "text": "Não precisamos escolher entre rapidez e rigor.",
+      "tokens": [
+        {
+          "text": "Não",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "precisamos",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "escolher",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "entre",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "rapidez",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "e",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "rigor",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "We do not have to choose between speed and rigor.",
+      "tokens": [
+        {
+          "text": "We",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "do",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "not",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "have",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "to",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "choose",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "between",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "speed",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "and",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "rigor",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "我们不必在速度和严谨性之间二选一。",
+      "tokens": [
+        {
+          "text": "我们",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "不",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "必",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "在",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "速度",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "和",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "严谨性",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "之间",
+          "c": "loc",
+          "punct": ""
+        },
+        {
+          "text": "二选一",
+          "c": "v",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-055",
+    "level": "C2",
+    "topic": "Dados",
+    "title": "Rever uma premissa",
+    "pinyin": "zhi3 you3 zui4 chu1 de5 jia3 she4 cheng2 li4 zhe4 ge5 jie2 lun4 cai2 zhan4 de5 zhu4 jiao3",
+    "natural": "The conclusion holds only if the initial assumption is valid.",
+    "phonetic": "dha kan-KLÚU-zhan HÔULDZ‿ÔUN-li if dhi i-NÍ-shal a-SÂMP-shan iz VÉ-lid",
+    "features": [
+      "Linking",
+      "Formas fracas"
+    ],
+    "speech": "Holds‿only liga /z/ à vogal; the initial costuma começar /ði/. Only deve permanecer audível: ele restringe a condição.",
+    "compare": "Only if e 只有…才… marcam condição necessária. Não confunda com 只要…就…, condição suficiente. 站得住脚 é expressão de sustentação argumentativa.",
+    "literal": "Somente se + inicial + ligação + premissa + valer + esta + conclusão + só então + sustentar-se.",
+    "pt": {
+      "text": "A conclusão só se sustenta se a premissa inicial for válida.",
+      "tokens": [
+        {
+          "text": "A",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "conclusão",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "só",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "se",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "sustenta",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "se",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "a",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "premissa",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "inicial",
+          "c": "adj",
+          "punct": ""
+        },
+        {
+          "text": "for",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "válida",
+          "c": "adj",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "The conclusion holds only if the initial assumption is valid.",
+      "tokens": [
+        {
+          "text": "The",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "conclusion",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "holds",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "only",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "if",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "the",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "initial",
+          "c": "adj",
+          "punct": ""
+        },
+        {
+          "text": "assumption",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "is",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "valid",
+          "c": "adj",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "只有最初的假设成立，这个结论才站得住脚。",
+      "tokens": [
+        {
+          "text": "只有",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "最初",
+          "c": "adj",
+          "punct": ""
+        },
+        {
+          "text": "的",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "假设",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "成立",
+          "c": "v",
+          "punct": "，"
+        },
+        {
+          "text": "这",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "个",
+          "c": "clf",
+          "punct": ""
+        },
+        {
+          "text": "结论",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "才",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "站得住脚",
+          "c": "v",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-056",
+    "level": "C2",
+    "topic": "Trabalho",
+    "title": "Concessão sem desistir",
+    "pinyin": "zhe4 xiang4 ti2 yi4 wu2 lun4 kan4 qi3 lai5 duo1 me5 you3 shuo1 fu2 li4 dou1 xu1 yao4 chong2 xin1 shen3 shi4",
+    "natural": "However convincing it may seem, the proposal needs revision.",
+    "phonetic": "rau-É-ver kan-VÍN-sing‿it mei SÍIM, dha pra-PÔU-zal níidz ri-VÍ-zhan",
+    "features": [
+      "Linking",
+      "Formas fracas"
+    ],
+    "speech": "Convincing‿it conecta /ŋ/ à vogal; the perde destaque. However aqui introduz grau concessivo, não apenas porém.",
+    "compare": "PT usa por mais…que; EN however + adjetivo; ZH organiza com 无论…都…. O predicado chinês usa reexaminar em vez do nome revisão.",
+    "literal": "Esta + proposta + independentemente + parecer + quão + convincente + sempre + precisar + novamente + examinar.",
+    "pt": {
+      "text": "Por mais convincente que pareça, a proposta exige revisão.",
+      "tokens": [
+        {
+          "text": "Por",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "mais",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "convincente",
+          "c": "adj",
+          "punct": ""
+        },
+        {
+          "text": "que",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "pareça",
+          "c": "v",
+          "punct": ","
+        },
+        {
+          "text": "a",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "proposta",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "exige",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "revisão",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "However convincing it may seem, the proposal needs revision.",
+      "tokens": [
+        {
+          "text": "However",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "convincing",
+          "c": "adj",
+          "punct": ""
+        },
+        {
+          "text": "it",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "may",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "seem",
+          "c": "v",
+          "punct": ","
+        },
+        {
+          "text": "the",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "proposal",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "needs",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "revision",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "这项提议无论看起来多么有说服力，都需要重新审视。",
+      "tokens": [
+        {
+          "text": "这",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "项",
+          "c": "clf",
+          "punct": ""
+        },
+        {
+          "text": "提议",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "无论",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "看起来",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "多么",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "有说服力",
+          "c": "adj",
+          "punct": "，"
+        },
+        {
+          "text": "都",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "需要",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "重新",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "审视",
+          "c": "v",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-057",
+    "level": "C2",
+    "topic": "Dados",
+    "title": "Separar hipótese e fato",
+    "pinyin": "zhe4 reng2 ran2 shi4 yi4 zhong3 jia3 she4 er2 fei1 yi3 jing1 zheng4 shi2 de5 shi4 shi2",
+    "natural": "This remains a hypothesis rather than an established fact.",
+    "phonetic": "dhis ri-MÊINZ‿a rai-PÓ-tha-sis RÉ-dher dhan‿an i-STÉ-blisht FÉKT",
+    "features": [
+      "Linking",
+      "Formas fracas"
+    ],
+    "speech": "Remains‿a e than‿an se ligam; established termina em /ʃt/. Th em hypothesis é /θ/, não o /ð/ de rather.",
+    "compare": "EN usa rather than para corrigir a classificação. ZH usa 而非 e modifica 事实 com 已经证实的 antes do nome.",
+    "literal": "Isto + ainda + ser + uma + espécie + hipótese + e + não + já + comprovado + ligação + fato.",
+    "pt": {
+      "text": "Isso continua sendo uma hipótese, não um fato comprovado.",
+      "tokens": [
+        {
+          "text": "Isso",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "continua",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "sendo",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "uma",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "hipótese",
+          "c": "n",
+          "punct": ","
+        },
+        {
+          "text": "não",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "um",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "fato",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "comprovado",
+          "c": "adj",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "This remains a hypothesis rather than an established fact.",
+      "tokens": [
+        {
+          "text": "This",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "remains",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "a",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "hypothesis",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "rather",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "than",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "an",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "established",
+          "c": "adj",
+          "punct": ""
+        },
+        {
+          "text": "fact",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "这仍然是一种假设，而非已经证实的事实。",
+      "tokens": [
+        {
+          "text": "这",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "仍然",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "是",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "一",
+          "c": "num",
+          "punct": ""
+        },
+        {
+          "text": "种",
+          "c": "clf",
+          "punct": ""
+        },
+        {
+          "text": "假设",
+          "c": "n",
+          "punct": "，"
+        },
+        {
+          "text": "而",
+          "c": "conj",
+          "punct": ""
+        },
+        {
+          "text": "非",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "已经",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "证实",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "的",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "事实",
+          "c": "n",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-058",
+    "level": "C2",
+    "topic": "Trabalho",
+    "title": "Reconhecer limites",
+    "pinyin": "cheng2 ren4 fang1 fa3 de5 ju2 xian4 xing4 bing4 bu4 yi4 wei4 zhe5 fou3 ding4 qi2 yan2 jiu1 jie2 guo3",
+    "natural": "Acknowledging the method's limitations doesn't invalidate its findings.",
+    "phonetic": "ak-NÓ-la-djing dha MÉ-thadz li-ma-TÊI-shanz DÂ-zant‿in-VÉ-la-deit its FÁIN-dingz",
+    "features": [
+      "Contração",
+      "Linking"
+    ],
+    "speech": "Does not → doesn't; doesn't‿invalidate une t e vogal. Method's contém o s de posse, não a contração de is.",
+    "compare": "A ação de reconhecer é o sujeito em PT/EN; ZH também antepõe 承认… como tópico. 的 liga método a limitações.",
+    "literal": "Reconhecer + método + posse + limitações + enfaticamente + não + significar + negar + seus + pesquisa + resultados.",
+    "pt": {
+      "text": "Reconhecer os limites do método não invalida seus resultados.",
+      "tokens": [
+        {
+          "text": "Reconhecer",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "os",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "limites",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "do",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "método",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "não",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "invalida",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "seus",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "resultados",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "Acknowledging the method's limitations does not invalidate its findings.",
+      "tokens": [
+        {
+          "text": "Acknowledging",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "the",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "method's",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "limitations",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "does",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "not",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "invalidate",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "its",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "findings",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "承认方法的局限性并不意味着否定其研究结果。",
+      "tokens": [
+        {
+          "text": "承认",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "方法",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "的",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "局限性",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "并",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "不",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "意味着",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "否定",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "其",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "研究",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "结果",
+          "c": "n",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-059",
+    "level": "C2",
+    "topic": "Dados",
+    "title": "Reavaliar diante de evidências",
+    "pinyin": "jian4 yu2 xin1 de5 zheng4 ju4 wo3 men5 xu1 yao4 chong2 xin1 kao3 lv4 zi4 ji3 de5 li4 chang3",
+    "natural": "In light of new evidence, we need to reconsider our position.",
+    "phonetic": "in LÁIɾ-av niú É-va-dans, ui níid ta ri-kan-SÍ-der‿áuer pa-ZÍ-shan",
+    "features": [
+      "Flapping",
+      "Linking",
+      "Formas fracas"
+    ],
+    "speech": "Light of pode ter [ɾ] no americano; of e to enfraquecem. Reconsider‿our liga r e vogal.",
+    "compare": "À luz de/in light of/鉴于 introduzem a base para reavaliação. Evidence é normalmente incontável em EN; o plural português não exige evidences.",
+    "literal": "Diante de + nova + ligação + evidência + nós + precisamos + novamente + considerar + própria + posse + posição.",
+    "pt": {
+      "text": "À luz de novas evidências, precisamos reconsiderar nossa posição.",
+      "tokens": [
+        {
+          "text": "À",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "luz",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "de",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "novas",
+          "c": "adj",
+          "punct": ""
+        },
+        {
+          "text": "evidências",
+          "c": "n",
+          "punct": ","
+        },
+        {
+          "text": "precisamos",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "reconsiderar",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "nossa",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "posição",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "In light of new evidence, we need to reconsider our position.",
+      "tokens": [
+        {
+          "text": "In",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "light",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "of",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "new",
+          "c": "adj",
+          "punct": ""
+        },
+        {
+          "text": "evidence",
+          "c": "n",
+          "punct": ","
+        },
+        {
+          "text": "we",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "need",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "to",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "reconsider",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "our",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "position",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "鉴于新的证据，我们需要重新考虑自己的立场。",
+      "tokens": [
+        {
+          "text": "鉴于",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "新",
+          "c": "adj",
+          "punct": ""
+        },
+        {
+          "text": "的",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "证据",
+          "c": "n",
+          "punct": "，"
+        },
+        {
+          "text": "我们",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "需要",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "重新",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "考虑",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "自己",
+          "c": "pro",
+          "punct": ""
+        },
+        {
+          "text": "的",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "立场",
+          "c": "n",
+          "punct": "。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elo-060",
+    "level": "C2",
+    "topic": "Trabalho",
+    "title": "Precisão acima da certeza",
+    "pinyin": "tiao3 zhan4 zai4 yu2 ru2 he2 zai4 bu4 xi1 sheng1 qing1 xi1 du4 de5 qian2 ti2 xia4 chuan2 da2 bu4 que4 ding4 xing4",
+    "natural": "The challenge is to communicate uncertainty without compromising clarity.",
+    "phonetic": "dha TCHÉ-landj‿iz ta ka-MIÚ-na-keit an-SÂR-tan-ti ui-DHÁUT KÓM-pra-mai-zing KLÉ-raɾi",
+    "features": [
+      "Linking",
+      "Flapping",
+      "Formas fracas"
+    ],
+    "speech": "Challenge‿is liga a consoante à vogal; to fica fraco. Clarity pode ter [ɾ]. Uncertainty mantém o destaque em cer.",
+    "compare": "PT/EN usam sem + ação; ZH explicita a condição 在…的前提下 e reorganiza a ação principal para o final.",
+    "literal": "Desafio + reside em + como + sob + não + sacrificar + clareza + ligação + condição + sob + transmitir + incerteza.",
+    "pt": {
+      "text": "O desafio é comunicar incerteza sem comprometer a clareza.",
+      "tokens": [
+        {
+          "text": "O",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "desafio",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "é",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "comunicar",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "incerteza",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "sem",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "comprometer",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "a",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "clareza",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "en": {
+      "text": "The challenge is to communicate uncertainty without compromising clarity.",
+      "tokens": [
+        {
+          "text": "The",
+          "c": "det",
+          "punct": ""
+        },
+        {
+          "text": "challenge",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "is",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "to",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "communicate",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "uncertainty",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "without",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "compromising",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "clarity",
+          "c": "n",
+          "punct": "."
+        }
+      ]
+    },
+    "zh": {
+      "text": "挑战在于如何在不牺牲清晰度的前提下传达不确定性。",
+      "tokens": [
+        {
+          "text": "挑战",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "在于",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "如何",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "在",
+          "c": "prep",
+          "punct": ""
+        },
+        {
+          "text": "不",
+          "c": "adv",
+          "punct": ""
+        },
+        {
+          "text": "牺牲",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "清晰度",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "的",
+          "c": "part",
+          "punct": ""
+        },
+        {
+          "text": "前提",
+          "c": "n",
+          "punct": ""
+        },
+        {
+          "text": "下",
+          "c": "loc",
+          "punct": ""
+        },
+        {
+          "text": "传达",
+          "c": "v",
+          "punct": ""
+        },
+        {
+          "text": "不确定性",
+          "c": "n",
+          "punct": "。"
+        }
+      ]
+    }
+  }
+];
