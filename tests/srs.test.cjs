@@ -41,12 +41,14 @@ for (const [zone, hours] of [['America/New_York', 71], ['America/Sao_Paulo', 72]
   test('calendário preserva 00:00 local em ' + zone, () => {
     const code = `
       const assert = require('node:assert/strict');
-      const { dayStart, dueFrom, gradeReview } = require(${JSON.stringify(require.resolve('../dist/srs.js'))});
+      const { dayStart, dueFrom, gradeReview, isDue } = require(${JSON.stringify(require.resolve('../dist/srs.js'))});
       const now = +new Date(2026, 2, 7, 15, 30);
       const due = dueFrom(now, 3), date = new Date(due);
       assert.deepEqual([date.getFullYear(),date.getMonth(),date.getDate(),date.getHours(),date.getMinutes(),date.getSeconds(),date.getMilliseconds()],[2026,2,10,0,0,0,0]);
       assert.equal((due - +dayStart(now)) / 36e5, ${hours});
       assert.equal(gradeReview({}, 'elo-011', 2, now).due, due);
+      assert.equal(isDue({stage:1,due}, due - 1), false);
+      assert.equal(isDue({stage:1,due}, due), true);
     `;
     const result = spawnSync(process.execPath, ['-e', code], { env: { ...process.env, TZ: zone }, encoding: 'utf8' });
     assert.equal(result.status, 0, result.stderr || String(result.error || ''));
@@ -56,4 +58,16 @@ test('nota inválida não modifica o progresso', () => {
   const reviews = {};
   assert.throws(() => gradeReview(reviews, 'x', 3, now), RangeError);
   assert.deepEqual(reviews, {});
+});
+
+test('errar numa revisão antiga cria lapses sem exigir migração prévia', () => {
+  const reviews = { 'elo-011': { stage: 3, due: now - 1 } };
+  assert.deepEqual(gradeReview(reviews, 'elo-011', 0, now), { stage: 0, lapses: 1, due: dueFrom(now, 1) });
+});
+test('script clássico sem module oferece a mesma lógica do módulo Node', () => {
+  const vm = require('node:vm'), fs = require('node:fs');
+  const context = vm.createContext({ fixedNow: now });
+  vm.runInContext(fs.readFileSync(require.resolve('../dist/srs.js'), 'utf8'), context);
+  const actual = vm.runInContext("JSON.stringify(gradeReview({}, 'elo-011', 2, fixedNow))", context);
+  assert.deepEqual(JSON.parse(actual), gradeReview({}, 'elo-011', 2, now));
 });
