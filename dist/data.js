@@ -9404,9 +9404,8 @@ const LESSONS = [
     "natural": "Do you wanna go to the movies?",
     "phonetic": "dja UÓ-na GÔU ta dha MÚ-viz",
     "features": [
-      "Redução",
-      "Assimilation",
-      "Formas fracas"
+      "Formas fracas",
+      "Assimilation"
     ],
     "speech": "Want to pode virar wanna em conversa informal. Do you pode aproximar-se de /dʒə/. A escrita formal mantém do you want to.",
     "compare": "EN usa do para perguntar e go to the movies. ZH usa ir + ver + filme, encerrando com 吗.",

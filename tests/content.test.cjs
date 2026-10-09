@@ -175,3 +175,11 @@ test('reordenar a fonte e acrescentar uma lição preserva os IDs anteriores', (
     assert.equal(JSON.parse(fs.readFileSync(path.join(root, 'content/id_map.json'), 'utf8'))[extra[0] + '|' + extra[2]], next);
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 });
+
+test('fenômenos de fala pertencem à taxonomia permitida, sem duplicatas', () => {
+  const allowed = new Set(['Formas fracas', 'Contração', 'Linking', 'Assimilation', 'Elision', 'Flapping', 'Glottalization', 'Ritmo']);
+  for (const d of lessons) {
+    for (const feature of d.features) assert(allowed.has(feature), d.id + ': ' + feature);
+    assert.equal(new Set(d.features).size, d.features.length, d.id);
+  }
+});
