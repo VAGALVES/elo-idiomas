@@ -1,2 +1,13 @@
 [build]
   publish = "dist"
+
+# O navegador deve consultar a versão atual do worker e do documento de entrada.
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
+
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "no-cache"

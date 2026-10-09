@@ -78,6 +78,21 @@ Registro de propostas; nenhuma funcionalidade desta lista foi implementada na Ro
 
 Ampliar o estoque de frases por tema e tornar as explicações de mandarim específicas: organização da frase, função dos elementos, partículas, classificadores e diferenças de sentido. Esse trabalho fica fora dos commits pontuais da Rodada A. Antes de acrescentar ou reordenar linhas, concluir o congelamento de IDs previsto no Item 11 da Rodada B.
 
-## Limites desta rodada
+## Histórico — encerramento da Rodada A
 
 Itens 5–9 e 11 da Rodada B aguardam autorização após a entrega da Rodada A. Os testes de SRS do Item 10 foram antecipados por solicitação explícita do usuário, com now fixo e processos nos fusos America/New_York e America/Sao_Paulo. Na futura correção de foco, manter #show-labels como está e limitar a restauração a #favorite e #highlight.
+
+
+## Pendências de publicação — PWA e compartilhamento (Rodada B, Item 9)
+
+A pedido do usuário, estes binários estão **somente referenciados**, não foram criados nem enviados:
+
+| Arquivo pendente | Uso e preparação |
+| --- | --- |
+| `dist/icons/elo-192.png` | Ícone PNG real de 192 × 192, exportado do SVG do favicon atual. |
+| `dist/icons/elo-512.png` | Ícone PNG real de 512 × 512, exportado do mesmo SVG. |
+| `dist/og-image.png` | Imagem social PNG, recomendação de 1200 × 630, no endereço público https://elo-idiomas.netlify.app/og-image.png. |
+
+Sem os ícones não se considera validada a instalação no Android; sem a imagem social, a prévia de compartilhamento fica incompleta. O cache offline não depende desses arquivos pendentes. Após adicioná-los, validar instalação, prévia e cache no aparelho.
+
+O service worker usa cache-first e versão explícita em `CACHE_NAME`. Ao modificar HTML, CSS, JS, acervo ou manifesto, atualizar essa versão no mesmo deploy. Workers atualizados aguardam as abas antigas fecharem; não há ativação forçada durante uma prática. O primeiro acesso e a conclusão do precache exigem internet. O cache do app não inclui vozes: ouvir offline exige uma voz local disponível no dispositivo.

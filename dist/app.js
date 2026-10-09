@@ -135,7 +135,7 @@ function playLanguage(d,lang){speakQueue([{lang,text:lang==='en'?d.natural:d[lan
 function speakQueue(items,once=false){
   stopAudio();if(!('speechSynthesis' in window)){toast('Este navegador não oferece síntese de voz.');setAudioStatus('Áudio indisponível neste navegador.');return;}
   const missing=items.filter(item=>!voiceFor(item.lang)).map(item=>LABELS[item.lang]);
-  if(missing.length){toast('Sem voz instalada: '+missing.join(', ')+'. Ative o idioma nas configurações de voz do dispositivo.');}
+  if(missing.length){toast('Sem voz instalada: '+missing.join(', ')+'. Ative o idioma nas configurações de voz do dispositivo. Para ouvir offline, instale uma voz local desse idioma.');}
   const queue=items.filter(item=>voiceFor(item.lang));if(!queue.length){setAudioStatus('Nenhuma voz compatível disponível.');return;}
   const run=audioRun;let i=0;
   const finish=()=>setAudioStatus(missing.length?'Concluído; sem voz para '+missing.join(', ')+'.':'Concluído. Repita em voz alta.');
@@ -283,3 +283,10 @@ if('speechSynthesis' in window)speechSynthesis.addEventListener('voiceschanged',
 window.addEventListener('pagehide',()=>{cancelActivity();if(recordUrl)URL.revokeObjectURL(recordUrl)});
 fillFilters();updateCount();renderList();
 if(document.modelContext?.registerTool){try{Promise.resolve(document.modelContext.registerTool({name:'explore_language_phrase',title:'Explorar situação trilingue no Elo',description:'Abre uma situação com português, inglês e mandarim juntos, sem alterar o progresso.',inputSchema:{type:'object',properties:{phraseId:{type:'string'}},required:['phraseId'],additionalProperties:false},annotations:{readOnlyHint:false},execute(input){if(!input||typeof input.phraseId!=='string'||!LESSONS.some(d=>d.id===input.phraseId))throw Error('Informe o ID de uma situação existente, como elo-011.');openLesson(input.phraseId);const d=current();return {id:d.id,pt:d.pt.text,en:d.en.text,zh:d.zh.text}}})).catch(()=>{})}catch{}}
+
+// Falha no registro não impede o uso normal do app conectado.
+(async()=>{
+  if(!('serviceWorker' in navigator))return;
+  try{await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});}
+  catch{toast('Não foi possível ativar o modo offline. Você pode continuar usando o app conectado.');}
+})();
