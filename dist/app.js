@@ -5,6 +5,13 @@ const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const LANGS = ['pt','en','zh'];
 const LABELS = {pt:'Português',en:'English',zh:'中文 · Mandarim'};
 const CODES = {pt:'PT',en:'EN',zh:'中'};
+// O acervo é estático nesta sessão: índice e relações são calculados uma única vez.
+const topicById=new Map(TOPICS.map(t=>[t.id,t]));
+LESSONS.forEach(d=>{
+  const t=topicById.get(d.topicId);
+  d._idx=normalizeSearch([d.title,d.pt.text,d.en.text,d.zh.text,pinyin(d.pinyin),d.pinyin.replace(/[1-5]/g,''),d.topic,t.keywords,d.phonetic,...d.features].join(' '));
+});
+let searchTimer;
 const LEGACY = {en1:11,en2:3,en3:1,en4:13,en5:24,en6:23,en7:31,en8:32,en9:41,en10:42,en11:51,en12:52,zh15:12,zh16:14,zh17:21,zh18:22,zh19:33,zh20:34,zh21:43,zh22:44,zh23:51,zh24:52};
 const emptyProgress=()=>({favorites:[],done:[],reviews:{},rate:.8,labels:false});
 function readProgress(){
@@ -35,7 +42,7 @@ function toast(message){$('#toast').textContent=message;$('#toast').style.displa
 function cancelActivity(){stopAudio();stopRecording()}
 function setView(next){
   if(!['explorer','atlas','practice','review'].includes(next))return;
-  cancelActivity();
+  clearTimeout(searchTimer);cancelActivity();
   // Trocar de tela encerra a tentativa; trocar de idioma dentro dela não duplica a nota.
   if(next==='practice'&&view!=='practice')practiceAttempt=null;
   if(next!=='practice')reviewQueue=null;
@@ -55,8 +62,8 @@ function matches(overrides={}){
   const filters={topic:activeTopic,group:activeGroup,level,feature:$('#feature').value,query:$('#search').value,...overrides};
   const q=normalizeSearch(filters.query).trim();
   return LESSONS.filter(d=>{
-    const t=TOPICS.find(t=>t.id===d.topicId);
-    return (filters.level==='all'||d.level===filters.level)&&(!filters.topic||d.topicId===filters.topic)&&(!filters.group||t.group===filters.group)&&(!filters.feature||d.features.includes(filters.feature))&&normalizeSearch([d.title,d.pt.text,d.en.text,d.zh.text,pinyin(d.pinyin),d.pinyin.replace(/[1-5]/g,''),d.topic,t.keywords,d.phonetic,...d.features].join(' ')).includes(q);
+    const t=topicById.get(d.topicId);
+    return (filters.level==='all'||d.level===filters.level)&&(!filters.topic||d.topicId===filters.topic)&&(!filters.group||t.group===filters.group)&&(!filters.feature||d.features.includes(filters.feature))&&d._idx.includes(q);
   });
 }
 function clearFilters(){level='all';activeTopic='';activeGroup='';$('#search').value='';$('#feature').value=''}
@@ -85,7 +92,7 @@ function renderDiscovery(){
   $$('[data-remove-filter]').forEach(b=>b.onclick=()=>{cancelActivity();const k=b.dataset.removeFilter;if(k==='group')activeGroup='';if(k==='topic')activeTopic='';if(k==='level')level='all';if(k==='feature')$('#feature').value='';if(k==='query')$('#search').value='';renderList();$('#reset-filters').hidden?$('#search').focus():$('#reset-filters').focus()});
 }
 function renderList(){
-  renderDiscovery();const found=matches();$('#result-count').textContent=found.length+' situações · '+found.length*3+' versões';
+  clearTimeout(searchTimer);renderDiscovery();const found=matches();$('#result-count').textContent=found.length+' situações · '+found.length*3+' versões';
   if(found.length&&!found.some(d=>d.id===selected)){cancelActivity();selected=found[0].id;}
   $('#results').innerHTML=found.length?found.map(d=>`<button class="result ${d.id===selected?'active':''}" data-id="${d.id}" aria-pressed="${d.id===selected}"><div class="meta"><span class="pill">${d.level}</span>${esc(d.topic)} ${progress.done.includes(d.id)?'· ✓':''}</div><strong>${esc(d.pt.text)}</strong><small lang="en">${esc(d.en.text)}</small><small class="zh-preview" lang="zh-CN">${esc(d.zh.text)}</small></button>`).join(''):'<div class="empty"><p>Nenhuma situação neste recorte.</p></div>';
   $$('[data-id]').forEach(b=>b.onclick=()=>{cancelActivity();selected=b.dataset.id;renderList()});
@@ -265,7 +272,8 @@ function renderReview(){
  $$('[data-review]').forEach(b=>b.onclick=()=>{reviewQueue=null;practiceId=b.dataset.review;setView('practice')});if($('#review-start'))$('#review-start').onclick=()=>setView('explorer');
 }
 $$('[data-view]').forEach(b=>b.onclick=()=>setView(b.dataset.view));$('.brand').onclick=e=>{e.preventDefault();setView('explorer')};
-$('#search').oninput=()=>{stopAudio();renderList()};$('#reset-filters').onclick=()=>{cancelActivity();clearFilters();renderList();$('#search').focus()};$('#feature').onchange=()=>{stopAudio();renderList()};
+// O áudio para imediatamente; apenas a atualização da busca aguarda a digitação.
+$('#search').oninput=()=>{stopAudio();clearTimeout(searchTimer);searchTimer=setTimeout(renderList,150)};$('#reset-filters').onclick=()=>{cancelActivity();clearFilters();renderList();$('#search').focus()};$('#feature').onchange=()=>{stopAudio();renderList()};
 $$('[data-level]').forEach(b=>b.onclick=()=>{cancelActivity();level=b.dataset.level;$$('[data-level]').forEach(x=>x.classList.toggle('selected',x===b));renderList()});
 $('.close').onclick=()=>{$('#word-modal').close();stopAudio()};$('#word-modal').addEventListener('click',e=>{if(e.target===$('#word-modal')){$('#word-modal').close();stopAudio()}});$('#word-modal').addEventListener('cancel',stopAudio);
 if('speechSynthesis' in window)speechSynthesis.addEventListener('voiceschanged',populateVoices);
