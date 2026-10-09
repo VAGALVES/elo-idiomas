@@ -10,3 +10,19 @@
 @media(max-width:1180px){.topic-options{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:640px){.topic-browser{padding:16px 13px}.topic-heading h2{font-size:19px}.topic-heading>span{display:none}.topic-groups{flex-wrap:nowrap;overflow-x:auto;padding-bottom:10px;gap:3px}.topic-groups button{white-space:nowrap;flex:0 0 auto;padding:8px 10px}.topic-options{grid-template-columns:repeat(2,minmax(0,1fr))}.topic-option{font-size:12px;min-height:50px;padding:8px}.topic-description{font-size:11px}.discovery-tools{grid-template-columns:1fr}.refinements[open]{grid-row:auto;grid-column:auto}.refine-content{flex-direction:column;align-items:stretch}.levels{flex-wrap:wrap}.levels button{min-height:38px}.selection-summary{margin-top:19px}.selection-summary .secondary-button{font-size:11px;padding:7px}.topic-heading .eyebrow{font-size:9px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+@media(max-width:640px){
+  /* clip mantém o recorte sem criar o ancestral de rolagem que impediria o sticky. */
+  .lesson{overflow:clip}
+  .eyebrow,.topic-heading .eyebrow,.selection-summary .eyebrow,
+  .sound-caption,.feature,.token-label,.pill,.list-label,
+  .language-title small,.language-code,.phonetic-guide,.step-line small,
+  .literal-box small,.legend span,.reference-language small,
+  .lesson-toolbar .meta,.topic-description,.trilingual-badge,.trilingual-badge b,
+  .voice-grid select,.audio-all,.selection-summary .secondary-button,
+  .nav,footer{font-size:12px}
+  .icon-btn,.play-btn,.audio-all,.order-token,.secondary-button{min-height:44px}
+  /* A faixa também acompanha a rolagem: o botão sozinho ficaria limitado ao pai curto. */
+  .lesson>.lesson-actions{position:sticky;bottom:72px;z-index:5;background:#fff}
+  .lesson-actions .primary-button{position:sticky;bottom:72px;min-height:44px;background:var(--navy);z-index:1}
+}
